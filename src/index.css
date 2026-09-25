@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply bg-white font-sans text-ink-900 antialiased;
+  }
+
+  /* Burmese script: taller lines, no letter-spacing */
+  html[lang='my'] body {
+    line-height: 1.8;
+  }
+  html[lang='my'] :is(h1, h2, h3, h4) {
+    line-height: 1.6;
+  }
+  html[lang='my'] [class*='tracking-'] {
+    letter-spacing: normal;
+  }
+
+  :focus-visible {
+    outline: 2px solid theme('colors.secondary.400');
+    outline-offset: 3px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
