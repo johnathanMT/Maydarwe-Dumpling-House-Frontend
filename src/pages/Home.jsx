@@ -10,7 +10,7 @@ function FeaturedCard({ item, language, onAdd }) {
   const { t } = useTranslation();
 
   return (
-    <article className="flex h-full flex-col overflow-hidden rounded-3xl border border-secondary-400/25 bg-white shadow-[0_18px_40px_-28px_rgb(34_30_27_/_0.45)] transition duration-300 hover:-translate-y-1 hover:border-brand-yellow hover:shadow-[0_24px_50px_-24px_rgb(34_30_27_/_0.5)]">
+    <article className="group flex h-full flex-col overflow-hidden rounded-3xl border border-secondary-400/25 bg-white shadow-[0_18px_40px_-28px_rgb(34_30_27_/_0.45)] transition duration-300 hover:-translate-y-1 hover:border-brand-yellow hover:shadow-[0_24px_50px_-24px_rgb(34_30_27_/_0.5)]">
       <div className="relative">
         <DishPhoto item={item} alt={pickLocale(item.name, language)} />
         <span className="absolute left-4 top-4 rounded-full bg-brand-yellow px-3 py-1 text-xs font-bold text-ink-950 shadow-sm">

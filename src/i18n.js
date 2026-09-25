@@ -27,6 +27,13 @@ const resources = {
         cartCount_other: 'Cart, {{count}} items',
         bottom: 'Bottom navigation',
       },
+      ui: {
+        announcement: 'Open daily, 10:00 AM – 9:00 PM · Cooked to order · Yangon',
+        backToTop: 'Back to top',
+        toastAdded: 'Added to cart',
+        toastView: 'View cart',
+        scrollProgress: 'Page scroll',
+      },
       cart: {
         kicker: 'Order',
         title: 'Your cart',
@@ -135,6 +142,13 @@ const resources = {
         cart: 'ဈေးခြင်း',
         cartCount_other: 'ဈေးခြင်းထဲတွင် {{count}} ခု',
         bottom: 'အောက်ခြေလမ်းညွှန်',
+      },
+      ui: {
+        announcement: 'နေ့စဉ် နံနက် ၁၀:၀၀ – ည ၉:၀၀ · မှာယူသည့်အချိန်ချက် · ရန်ကုန်',
+        backToTop: 'အပေါ်သို့ ပြန်တက်ရန်',
+        toastAdded: 'ဈေးခြင်းထဲ ထည့်ပြီးပါပြီ',
+        toastView: 'ဈေးခြင်းကို ကြည့်ရန်',
+        scrollProgress: 'စာမျက်နှာ လှိမ့်မှု',
       },
       cart: {
         kicker: 'အော်ဒါ',

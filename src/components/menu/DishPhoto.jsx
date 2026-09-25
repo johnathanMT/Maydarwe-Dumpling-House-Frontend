@@ -18,7 +18,7 @@ export default function DishPhoto({ item, alt, className = '' }) {
           alt={alt}
           width={800}
           height={600}
-          className="h-full w-full object-cover object-center"
+          className="h-full w-full object-cover object-center transition duration-700 ease-out group-hover:scale-110"
         />
       ) : (
         <>

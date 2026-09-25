@@ -21,6 +21,13 @@
     "cartCount_other": "Cart, {{count}} items",
     "bottom": "Bottom navigation"
   },
+  "ui": {
+    "announcement": "Open daily, 10:00 AM – 9:00 PM · Cooked to order · Yangon",
+    "backToTop": "Back to top",
+    "toastAdded": "Added to cart",
+    "toastView": "View cart",
+    "scrollProgress": "Page scroll"
+  },
   "cart": {
     "kicker": "Order",
     "title": "Your cart",

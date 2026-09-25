@@ -4,6 +4,10 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import BottomNav from './components/BottomNav';
 import CartDrawer from './components/CartDrawer';
+import AnnouncementBar from './components/ui/AnnouncementBar';
+import ScrollProgress from './components/ui/ScrollProgress';
+import BackToTop from './components/ui/BackToTop';
+import CartToast from './components/ui/CartToast';
 import { CartProvider } from './context/CartContext';
 import Home from './pages/Home';
 import Menu from './pages/Menu';
@@ -14,7 +18,7 @@ function Layout() {
   const { t } = useTranslation();
 
   return (
-    <div className="flex min-h-dvh flex-col bg-white pb-[5.75rem]">
+    <div className="flex min-h-dvh flex-col bg-white pb-[5.75rem] lg:pb-0">
       <a
         href="#main"
         className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-ink-900 focus:px-4 focus:py-2 focus:text-white"
@@ -22,6 +26,8 @@ function Layout() {
         {t('nav.skip')}
       </a>
 
+      <ScrollProgress />
+      <AnnouncementBar />
       <Navbar />
 
       <main id="main" className="flex-1">
@@ -30,6 +36,8 @@ function Layout() {
 
       <Footer />
       <BottomNav />
+      <BackToTop />
+      <CartToast />
       <CartDrawer />
       <ScrollRestoration />
     </div>

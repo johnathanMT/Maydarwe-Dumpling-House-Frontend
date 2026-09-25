@@ -1,13 +1,27 @@
-import { createContext, useCallback, useContext, useMemo, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 
 const CartContext = createContext(null);
 
 export function CartProvider({ children }) {
   const [lines, setLines] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [toast, setToast] = useState(null);
+  const toastTimer = useRef(null);
+
+  const dismissToast = useCallback(() => {
+    setToast(null);
+    if (toastTimer.current) window.clearTimeout(toastTimer.current);
+  }, []);
 
   const openCart = useCallback(() => setIsOpen(true), []);
   const closeCart = useCallback(() => setIsOpen(false), []);
+
+  useEffect(
+    () => () => {
+      if (toastTimer.current) window.clearTimeout(toastTimer.current);
+    },
+    []
+  );
 
   const addItem = useCallback((item) => {
     if (!item?.inStock) return;
@@ -23,6 +37,9 @@ export function CartProvider({ children }) {
         { id: item.id, name: item.name, price: item.price, image: item.image, quantity: 1 },
       ];
     });
+    setToast({ id: item.id, name: item.name, at: Date.now() });
+    if (toastTimer.current) window.clearTimeout(toastTimer.current);
+    toastTimer.current = window.setTimeout(() => setToast(null), 2800);
   }, []);
 
   const updateQuantity = useCallback((id, quantity) => {
@@ -53,8 +70,10 @@ export function CartProvider({ children }) {
       addItem,
       updateQuantity,
       removeItem,
+      toast,
+      dismissToast,
     }),
-    [lines, count, subtotal, isOpen, openCart, closeCart, addItem, updateQuantity, removeItem]
+    [lines, count, subtotal, isOpen, openCart, closeCart, addItem, updateQuantity, removeItem, toast, dismissToast]
   );
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

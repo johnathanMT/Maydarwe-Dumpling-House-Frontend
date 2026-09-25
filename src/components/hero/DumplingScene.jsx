@@ -1,7 +1,7 @@
 import { Suspense, useLayoutEffect, useMemo, useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Center, ContactShadows, useGLTF } from '@react-three/drei';
-import { Box3, Vector3 } from 'three';
+import { Center, ContactShadows, Environment, useGLTF } from '@react-three/drei';
+import { Box3, Color, Vector3 } from 'three';
 import { useReducedMotion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 
@@ -125,10 +125,21 @@ function DumplingModel({ reduce, spinApi }) {
 
   useLayoutEffect(() => {
     clone.traverse((child) => {
-      if (child.isMesh) {
-        child.castShadow = true;
-        child.receiveShadow = true;
-      }
+      if (!child.isMesh) return;
+      child.castShadow = false;
+      child.receiveShadow = false;
+      const materials = Array.isArray(child.material) ? child.material : [child.material];
+      materials.forEach((material) => {
+        if (!material) return;
+        material.roughness = Math.min(material.roughness ?? 0.55, 0.5);
+        material.metalness = Math.min(material.metalness ?? 0, 0.04);
+        if ('envMapIntensity' in material) material.envMapIntensity = 1.2;
+        if (material.emissive) {
+          material.emissive = new Color('#4a3214');
+          material.emissiveIntensity = 0.07;
+        }
+        material.needsUpdate = true;
+      });
     });
   }, [clone]);
 
@@ -160,22 +171,44 @@ function DumplingModel({ reduce, spinApi }) {
   );
 }
 
+function SilverBackdrop() {
+  return (
+    <group>
+      <mesh position={[0, 0.45, -3.6]}>
+        <planeGeometry args={[16, 10]} />
+        <meshStandardMaterial color="#D6DCE4" roughness={0.34} metalness={0.52} />
+      </mesh>
+      <mesh position={[0, 0.32, -2.75]}>
+        <circleGeometry args={[3.7, 64]} />
+        <meshBasicMaterial color="#C5D0DC" transparent opacity={0.3} />
+      </mesh>
+      <mesh position={[0, 0.3, -2.4]}>
+        <circleGeometry args={[2.7, 64]} />
+        <meshBasicMaterial color="#F5F8FC" transparent opacity={0.58} />
+      </mesh>
+    </group>
+  );
+}
+
 function SceneContent({ reduce, spinApi }) {
   const garnishes = useGarnishes(24);
 
   return (
     <>
-      <ambientLight intensity={0.7} color="#fff7ea" />
-      <directionalLight
-        position={[4.2, 7.5, 3.4]}
-        intensity={1.6}
-        color="#fff6ea"
-        castShadow
-        shadow-mapSize-width={1024}
-        shadow-mapSize-height={1024}
-      />
-      <directionalLight position={[-3.4, 2.8, -2.2]} intensity={0.58} color="#E8A006" />
-      <spotLight position={[0, 8, 2.4]} angle={0.42} penumbra={0.55} intensity={0.9} color="#FFE588" />
+      <hemisphereLight args={['#fffaf0', '#d5dbe3', 0.95]} />
+      <ambientLight intensity={0.95} color="#fff8ee" />
+      <directionalLight position={[2.4, 6.2, 5.2]} intensity={2.05} color="#ffffff" />
+      <directionalLight position={[-3.8, 3.4, 2.2]} intensity={0.95} color="#FFE9B0" />
+      <spotLight position={[0, 7.2, 3.6]} angle={0.55} penumbra={0.7} intensity={1.15} color="#FFF6E0" />
+
+      <directionalLight position={[0.2, 2.6, -6.4]} intensity={2.85} color="#F2F6FB" />
+      <directionalLight position={[-3.2, 3.8, -4.8]} intensity={1.45} color="#C5D0DC" />
+      <directionalLight position={[3.4, 2.9, -4.4]} intensity={1.25} color="#D7E0EA" />
+      <spotLight position={[0, 4.2, -6.2]} angle={0.42} penumbra={0.78} intensity={2.8} color="#FFFFFF" />
+      <pointLight position={[0, 1.2, -3.2]} intensity={1.55} color="#E4EAF2" distance={9} decay={2} />
+
+      <Environment preset="studio" environmentIntensity={0.68} />
+      <SilverBackdrop />
 
       <Suspense fallback={null}>
         <DumplingModel reduce={reduce} spinApi={spinApi} />
@@ -185,7 +218,7 @@ function SceneContent({ reduce, spinApi }) {
         <Garnish key={item.id} {...item} reduce={reduce} />
       ))}
 
-      <ContactShadows position={[0, -1.55, 0]} opacity={0.28} scale={10} blur={2.6} far={2.8} />
+      <ContactShadows position={[0, -1.55, 0]} opacity={0.2} scale={10} blur={3.2} far={2.8} />
     </>
   );
 }
@@ -210,11 +243,18 @@ export default function DumplingScene() {
       tabIndex={0}
       aria-label={t('pages.home.tapSpin')}
     >
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            'radial-gradient(ellipse 44% 40% at 50% 56%, rgba(255,255,255,0.92) 0%, rgba(214,222,232,0.5) 40%, transparent 64%), radial-gradient(ellipse 72% 64% at 50% 58%, #e8edf3 0%, #cfd6df 56%, #fdfaf6 100%)',
+        }}
+      />
       <Canvas
-        shadows
-        dpr={[1, 1.75]}
+        dpr={[1, 2]}
         camera={{ position: [0, 1.45, 5], fov: 34 }}
-        gl={{ antialias: true, alpha: true }}
+        gl={{ antialias: true, alpha: true, toneMappingExposure: 1.35 }}
       >
         <SceneContent reduce={Boolean(reduce)} spinApi={spinApi} />
       </Canvas>

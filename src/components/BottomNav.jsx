@@ -78,7 +78,7 @@ export default function BottomNav() {
   return (
     <nav
       aria-label={t('nav.bottom')}
-      className="pointer-events-none fixed inset-x-0 bottom-0 z-[45] px-3 pb-[max(0.7rem,env(safe-area-inset-bottom))] pt-2"
+      className="pointer-events-none fixed inset-x-0 bottom-0 z-[45] px-3 pb-[max(0.7rem,env(safe-area-inset-bottom))] pt-2 lg:hidden"
     >
       <ul className="pointer-events-auto mx-auto flex max-w-md items-center justify-around rounded-[1.75rem] border border-secondary-400/40 bg-white/95 px-2 py-2 shadow-[0_12px_32px_-16px_rgb(34_30_27_/_0.5)] backdrop-blur-md">
         {NAV_LINKS.map(({ to, labelKey, end }) => {
