@@ -13,9 +13,10 @@ export const CONTACT_PHONES = [
   { display: '09-421119495', href: 'tel:+959421119495' },
 ];
 
-// TODO: replace with the real page URLs
+export const FACEBOOK_ORDER_URL = 'https://www.facebook.com/share/19MK2TSnJb/?mibextid=wwXIfr';
+
 export const SOCIAL_LINKS = [
-  { name: 'Facebook', href: 'https://www.facebook.com/' },
+  { name: 'Facebook', href: FACEBOOK_ORDER_URL },
   { name: 'Messenger', href: 'https://m.me/' },
   { name: 'TikTok', href: 'https://www.tiktok.com/' },
 ];

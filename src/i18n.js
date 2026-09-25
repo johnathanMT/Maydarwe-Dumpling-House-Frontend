@@ -33,6 +33,19 @@ const resources = {
         toastAdded: 'Added to cart',
         toastView: 'View cart',
         scrollProgress: 'Page scroll',
+        construction: {
+          kicker: 'Kitchen notice',
+          titleEn: 'We are cooking up something special!',
+          titleMy: 'ဝက်ဘ်ဆိုက် ပြင်ဆင်နေဆဲဖြစ်ပါသည်',
+          bodyEn:
+            'Our website online ordering is still under construction. Please place your order through our official Facebook page or by calling us directly.',
+          bodyMy:
+            'ဝက်ဘ်ဆိုက်မှ အွန်လိုင်းမှာယူခြင်းကို ပြင်ဆင်နေဆဲဖြစ်ပါသည်။ တရားဝင် Facebook စာမျက်နှာမှဖြစ်စေ၊ ဖုန်းဆက်၍ဖြစ်စေ မှာယူပေးပါ။',
+          facebook: 'Order via Facebook',
+          call: 'Call to Order',
+          browse: 'Browse Menu Anyway',
+          close: 'Close notice',
+        },
       },
       cart: {
         kicker: 'Order',
@@ -149,6 +162,19 @@ const resources = {
         toastAdded: 'ဈေးခြင်းထဲ ထည့်ပြီးပါပြီ',
         toastView: 'ဈေးခြင်းကို ကြည့်ရန်',
         scrollProgress: 'စာမျက်နှာ လှိမ့်မှု',
+        construction: {
+          kicker: 'မီးဖိုချောင် အသိပေးချက်',
+          titleEn: 'We are cooking up something special!',
+          titleMy: 'ဝက်ဘ်ဆိုက် ပြင်ဆင်နေဆဲဖြစ်ပါသည်',
+          bodyEn:
+            'Our website online ordering is still under construction. Please place your order through our official Facebook page or by calling us directly.',
+          bodyMy:
+            'ဝက်ဘ်ဆိုက်မှ အွန်လိုင်းမှာယူခြင်းကို ပြင်ဆင်နေဆဲဖြစ်ပါသည်။ တရားဝင် Facebook စာမျက်နှာမှဖြစ်စေ၊ ဖုန်းဆက်၍ဖြစ်စေ မှာယူပေးပါ။',
+          facebook: 'Facebook မှ မှာယူမည်',
+          call: 'ဖုန်းဆက်၍ မှာယူမည်',
+          browse: 'မီနူးကို ကြည့်ရှုမည်',
+          close: 'အသိပေးချက်ကို ပိတ်ရန်',
+        },
       },
       cart: {
         kicker: 'အော်ဒါ',

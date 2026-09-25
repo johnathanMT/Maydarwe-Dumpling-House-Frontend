@@ -8,6 +8,7 @@ import AnnouncementBar from './components/ui/AnnouncementBar';
 import ScrollProgress from './components/ui/ScrollProgress';
 import BackToTop from './components/ui/BackToTop';
 import CartToast from './components/ui/CartToast';
+import ConstructionPopup from './components/ui/ConstructionPopup';
 import { CartProvider } from './context/CartContext';
 import Home from './pages/Home';
 import Menu from './pages/Menu';
@@ -29,6 +30,7 @@ function Layout() {
       <ScrollProgress />
       <AnnouncementBar />
       <Navbar />
+      <ConstructionPopup />
 
       <main id="main" className="flex-1">
         <Outlet />

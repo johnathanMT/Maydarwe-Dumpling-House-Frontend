@@ -26,7 +26,18 @@
     "backToTop": "Back to top",
     "toastAdded": "Added to cart",
     "toastView": "View cart",
-    "scrollProgress": "Page scroll"
+    "scrollProgress": "Page scroll",
+    "construction": {
+      "kicker": "Kitchen notice",
+      "titleEn": "We are cooking up something special!",
+      "titleMy": "ဝက်ဘ်ဆိုက် ပြင်ဆင်နေဆဲဖြစ်ပါသည်",
+      "bodyEn": "Our website online ordering is still under construction. Please place your order through our official Facebook page or by calling us directly.",
+      "bodyMy": "ဝက်ဘ်ဆိုက်မှ အွန်လိုင်းမှာယူခြင်းကို ပြင်ဆင်နေဆဲဖြစ်ပါသည်။ တရားဝင် Facebook စာမျက်နှာမှဖြစ်စေ၊ ဖုန်းဆက်၍ဖြစ်စေ မှာယူပေးပါ။",
+      "facebook": "Order via Facebook",
+      "call": "Call to Order",
+      "browse": "Browse Menu Anyway",
+      "close": "Close notice"
+    }
   },
   "cart": {
     "kicker": "Order",
