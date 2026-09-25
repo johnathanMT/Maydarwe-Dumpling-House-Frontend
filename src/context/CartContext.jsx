@@ -1,4 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { MENU_ITEMS } from '../data/menu';
+import { sanitizeId, sanitizeInteger } from '../lib/sanitize';
 
 const CartContext = createContext(null);
 
@@ -24,33 +26,46 @@ export function CartProvider({ children }) {
   );
 
   const addItem = useCallback((item) => {
-    if (!item?.inStock) return;
+    const id = sanitizeId(item?.id);
+    const catalogItem = MENU_ITEMS.find((row) => row.id === id);
+    if (!catalogItem?.inStock) return;
     setLines((prev) => {
-      const existing = prev.find((line) => line.id === item.id);
+      const existing = prev.find((line) => line.id === catalogItem.id);
       if (existing) {
         return prev.map((line) =>
-          line.id === item.id ? { ...line, quantity: line.quantity + 1 } : line
+          line.id === catalogItem.id
+            ? { ...line, quantity: sanitizeInteger(line.quantity + 1, { min: 1, max: 20 }) }
+            : line
         );
       }
       return [
         ...prev,
-        { id: item.id, name: item.name, price: item.price, image: item.image, quantity: 1 },
+        {
+          id: catalogItem.id,
+          name: catalogItem.name,
+          price: catalogItem.price,
+          image: catalogItem.image,
+          quantity: 1,
+        },
       ];
     });
-    setToast({ id: item.id, name: item.name, at: Date.now() });
+    setToast({ id: catalogItem.id, name: catalogItem.name, at: Date.now() });
     if (toastTimer.current) window.clearTimeout(toastTimer.current);
     toastTimer.current = window.setTimeout(() => setToast(null), 2800);
   }, []);
 
   const updateQuantity = useCallback((id, quantity) => {
+    const safeId = sanitizeId(id);
+    const nextQuantity = sanitizeInteger(quantity, { min: 0, max: 20 });
     setLines((prev) => {
-      if (quantity < 1) return prev.filter((line) => line.id !== id);
-      return prev.map((line) => (line.id === id ? { ...line, quantity } : line));
+      if (nextQuantity < 1) return prev.filter((line) => line.id !== safeId);
+      return prev.map((line) => (line.id === safeId ? { ...line, quantity: nextQuantity } : line));
     });
   }, []);
 
   const removeItem = useCallback((id) => {
-    setLines((prev) => prev.filter((line) => line.id !== id));
+    const safeId = sanitizeId(id);
+    setLines((prev) => prev.filter((line) => line.id !== safeId));
   }, []);
 
   const count = useMemo(() => lines.reduce((sum, line) => sum + line.quantity, 0), [lines]);

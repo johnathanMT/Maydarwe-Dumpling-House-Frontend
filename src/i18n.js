@@ -1,6 +1,7 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
+import { sanitizeLanguage } from './lib/sanitize';
 
 const resources = {
   en: {
@@ -266,7 +267,7 @@ const resources = {
 
 // Keep <html lang> in sync so Burmese typography and screen readers work.
 i18n.on('languageChanged', (lng) => {
-  document.documentElement.lang = lng?.startsWith('my') ? 'my' : 'en';
+  document.documentElement.lang = sanitizeLanguage(lng);
 });
 
 i18n
@@ -274,15 +275,18 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
-    fallbackLng: 'en',
+    fallbackLng: 'my',
     supportedLngs: ['en', 'my'],
     nonExplicitSupportedLngs: true,
     interpolation: { escapeValue: false },
     detection: {
-      order: ['localStorage', 'navigator'],
+      order: ['localStorage'],
       lookupLocalStorage: 'maydarwe-lang',
       caches: ['localStorage'],
+      convertDetectedLanguage: (lng) => sanitizeLanguage(lng),
     },
+  }, () => {
+    document.documentElement.lang = sanitizeLanguage(i18n.resolvedLanguage);
   });
 
 export default i18n;

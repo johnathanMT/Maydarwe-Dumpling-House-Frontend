@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { SUPPORTED_LANGUAGES } from '../../constants/site';
+import { sanitizeLanguage } from '../../lib/sanitize';
 
 export default function LanguageToggle({ className = '' }) {
   const { t, i18n } = useTranslation();
@@ -27,7 +28,7 @@ export default function LanguageToggle({ className = '' }) {
             role="radio"
             aria-checked={isActive}
             title={name}
-            onClick={() => i18n.changeLanguage(code)}
+            onClick={() => i18n.changeLanguage(sanitizeLanguage(code))}
             className={`relative z-10 w-11 rounded-full py-1 text-xs font-bold transition-colors ${
               isActive ? 'text-ink-950' : 'text-ink-500 hover:text-ink-900'
             }`}

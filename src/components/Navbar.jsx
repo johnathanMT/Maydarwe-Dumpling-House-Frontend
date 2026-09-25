@@ -55,7 +55,7 @@ function LanguageToggle({ className = '' }) {
             role="radio"
             aria-checked={isActive}
             title={name}
-            onClick={() => i18n.changeLanguage(code)}
+            onClick={() => i18n.changeLanguage(code === 'my' ? 'my' : 'en')}
             className={`relative z-10 w-11 rounded-full py-1 text-xs font-bold transition-colors ${
               isActive ? 'text-ink-950' : 'text-ink-500 hover:text-ink-900'
             }`}
