@@ -2,6 +2,7 @@ import { createBrowserRouter, Outlet, RouterProvider, ScrollRestoration } from '
 import { useTranslation } from 'react-i18next';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import BottomNav from './components/BottomNav';
 import CartDrawer from './components/CartDrawer';
 import { CartProvider } from './context/CartContext';
 import Home from './pages/Home';
@@ -13,7 +14,7 @@ function Layout() {
   const { t } = useTranslation();
 
   return (
-    <div className="flex min-h-dvh flex-col bg-white">
+    <div className="flex min-h-dvh flex-col bg-white pb-[5.75rem]">
       <a
         href="#main"
         className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-ink-900 focus:px-4 focus:py-2 focus:text-white"
@@ -28,6 +29,7 @@ function Layout() {
       </main>
 
       <Footer />
+      <BottomNav />
       <CartDrawer />
       <ScrollRestoration />
     </div>

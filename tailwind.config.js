@@ -9,6 +9,8 @@ export default {
         brand: {
           red: '#C8102E',
           gold: '#E8A006',
+          yellow: '#FFDE59',
+          pearl: '#FDFAF6',
           white: '#FFFFFF',
           black: '#141110',
         },

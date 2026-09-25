@@ -2,110 +2,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion, useReducedMotion } from 'framer-motion';
 import { CONTACT_PHONES } from '../../constants/site';
-
-function SteamWisp({ d, delay }) {
-  const reduce = useReducedMotion();
-
-  return (
-    <motion.path
-      d={d}
-      fill="none"
-      stroke="#E8A006"
-      strokeWidth="4"
-      strokeLinecap="round"
-      initial={{ opacity: 0.2, pathLength: 0.35 }}
-      animate={
-        reduce
-          ? { opacity: 0.4 }
-          : { opacity: [0.15, 0.85, 0.15], y: [6, -12, -20], pathLength: [0.3, 1, 0.35] }
-      }
-      transition={{ duration: 2.2, repeat: Infinity, delay, ease: 'easeInOut' }}
-    />
-  );
-}
-
-function ChefMascot() {
-  const reduce = useReducedMotion();
-
-  return (
-    <motion.div
-      className="relative mx-auto w-[min(100%,21rem)] sm:w-[25rem] lg:w-[27rem]"
-      initial={reduce ? false : { opacity: 0, scale: 0.68, y: 44 }}
-      animate={{ opacity: 1, scale: 1, y: 0 }}
-      transition={{ type: 'spring', stiffness: 220, damping: 14, mass: 0.8 }}
-    >
-      <motion.svg
-        viewBox="0 0 400 450"
-        className="relative mx-auto h-auto w-full"
-        role="img"
-        animate={reduce ? undefined : { y: [0, -12, 0] }}
-        transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
-      >
-        <title>Maydarwe chef holding a golden pan-fried dumpling</title>
-
-        <motion.ellipse
-          cx="176"
-          cy="426"
-          rx="92"
-          ry="13"
-          fill="#141110"
-          animate={reduce ? { opacity: 0.12 } : { opacity: [0.08, 0.2, 0.08], rx: [78, 98, 78] }}
-          transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
-        />
-
-        <g stroke="#141110" strokeWidth="6.5" strokeLinejoin="round" strokeLinecap="round">
-          <path d="M108 248 C 64 268, 46 304, 58 348 L 96 348 C 90 308, 104 272, 130 252 Z" fill="#fff" />
-          <ellipse cx="52" cy="352" rx="22" ry="16" fill="#141110" />
-          <ellipse cx="38" cy="348" rx="8" ry="11" fill="#141110" />
-          <ellipse cx="48" cy="338" rx="7" ry="10" fill="#141110" />
-          <ellipse cx="60" cy="336" rx="7" ry="10" fill="#141110" />
-          <ellipse cx="72" cy="340" rx="7" ry="10" fill="#141110" />
-          <path d="M52 336 C 48 312, 50 292, 56 276" fill="none" stroke="#141110" strokeWidth="12" />
-          <circle cx="56" cy="268" r="9" fill="#141110" stroke="none" />
-
-          <path d="M118 236 C 86 254, 78 300, 88 368 L 264 368 C 274 300, 266 254, 234 236 C 206 218, 146 218, 118 236 Z" fill="#fff" />
-          <path d="M176 232 L 158 276 L 176 304 L 194 276 Z" fill="#C8102E" />
-          <circle cx="176" cy="326" r="6" fill="#E8A006" strokeWidth="4.5" />
-          <circle cx="176" cy="346" r="6" fill="#E8A006" strokeWidth="4.5" />
-
-          <path d="M240 246 C 276 226, 298 184, 308 146 L 276 136 C 268 176, 252 214, 228 232 Z" fill="#fff" />
-          <ellipse cx="300" cy="128" rx="20" ry="16" fill="#141110" />
-          <ellipse cx="286" cy="122" rx="8" ry="11" fill="#141110" />
-          <ellipse cx="296" cy="114" rx="8" ry="11" fill="#141110" />
-          <ellipse cx="308" cy="114" rx="8" ry="11" fill="#141110" />
-          <path d="M304 118 l 42 -52" fill="none" stroke="#C8102E" strokeWidth="8" />
-          <path d="M316 126 l 42 -52" fill="none" stroke="#C8102E" strokeWidth="8" />
-
-          <path
-            d="M318 96 C 304 96, 292 80, 304 66 C 316 50, 356 50, 370 70 C 382 88, 368 112, 340 114 C 326 116, 318 108, 318 96 Z"
-            fill="#F5C14A"
-          />
-          <path d="M322 90 C 336 74, 358 76, 366 90" fill="none" stroke="#C77A02" strokeWidth="4.5" />
-          <ellipse cx="330" cy="80" rx="10" ry="4" fill="#FFE588" stroke="none" />
-
-          <ellipse cx="122" cy="176" rx="13" ry="16" fill="#FFD2A3" />
-          <ellipse cx="230" cy="176" rx="13" ry="16" fill="#FFD2A3" />
-          <circle cx="176" cy="176" r="58" fill="#FFD2A3" />
-          <path d="M122 160 C 126 122, 148 108, 176 106 C 204 108, 226 122, 230 160 C 212 146, 194 140, 176 140 C 158 140, 140 146, 122 160 Z" fill="#141110" />
-          <ellipse cx="154" cy="174" rx="7.5" ry="9" fill="#141110" stroke="none" />
-          <ellipse cx="198" cy="174" rx="7.5" ry="9" fill="#141110" stroke="none" />
-          <circle cx="156" cy="171" r="2.3" fill="#fff" stroke="none" />
-          <circle cx="200" cy="171" r="2.3" fill="#fff" stroke="none" />
-          <path d="M150 200 C 162 224, 190 224, 202 200 C 190 216, 162 216, 150 200 Z" fill="#141110" />
-          <path d="M164 204 C 172 216, 180 216, 188 204 C 180 212, 172 212, 164 204 Z" fill="#fff" stroke="none" />
-
-          <ellipse cx="176" cy="114" rx="70" ry="16" fill="#fff" />
-          <path d="M118 112 C 112 48, 136 16, 176 8 C 216 16, 240 48, 234 112 Z" fill="#fff" />
-          <ellipse cx="176" cy="10" rx="24" ry="18" fill="#fff" />
-        </g>
-
-        <SteamWisp delay={0} d="M328 52 C 318 36, 334 24, 324 6" />
-        <SteamWisp delay={0.35} d="M346 46 C 336 30, 352 18, 342 0" />
-        <SteamWisp delay={0.7} d="M364 52 C 354 36, 370 24, 360 6" />
-      </motion.svg>
-    </motion.div>
-  );
-}
+import DumplingScene from './DumplingScene';
 
 export default function Hero() {
   const { t } = useTranslation();
@@ -113,60 +10,72 @@ export default function Hero() {
   const orderPhone = CONTACT_PHONES[0];
 
   return (
-    <section className="relative overflow-hidden border-b border-secondary-400/25 bg-[linear-gradient(180deg,#fff8e6_0%,#ffffff_78%)]">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-70"
-        style={{
-          backgroundImage:
-            'radial-gradient(circle at 18% 12%, rgb(200 16 46 / 0.08), transparent 34%), radial-gradient(circle at 86% 18%, rgb(232 160 6 / 0.16), transparent 32%)',
-        }}
-      />
+    <section className="relative overflow-hidden border-b border-secondary-400/25">
+      <div className="bg-brand-yellow">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 top-0 h-[22rem] sm:h-[26rem]"
+          style={{
+            backgroundImage: 'radial-gradient(circle at 12% 8%, rgb(200 16 46 / 0.08), transparent 32%)',
+          }}
+        />
 
-      <div className="relative mx-auto flex max-w-5xl flex-col items-center px-4 py-10 text-center sm:px-6 sm:py-14 lg:px-8 lg:py-16">
-        <motion.p
-          initial={reduce ? false : { opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-sm font-semibold uppercase tracking-[0.18em] text-secondary-700"
-        >
-          {t('pages.home.kicker')}
-        </motion.p>
+        <div className="relative mx-auto flex max-w-6xl flex-col items-center px-4 pb-6 pt-10 text-center sm:px-6 sm:pb-8 sm:pt-12 lg:px-8 lg:pt-14">
+          <motion.p
+            initial={reduce ? false : { opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-sm font-semibold uppercase tracking-[0.18em] text-secondary-700"
+          >
+            {t('pages.home.kicker')}
+          </motion.p>
 
-        <div className="mt-4 w-full sm:mt-6">
-          <ChefMascot />
+          <motion.h1
+            initial={reduce ? false : { opacity: 0, y: 18, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ type: 'spring', stiffness: 200, damping: 18 }}
+            className="mt-4 flex flex-col items-center"
+          >
+            <span className="font-display text-[3.15rem] font-extrabold leading-none text-primary-600 antialiased [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale] [text-shadow:0_1px_0_#8B0A1A,0_0_4px_#C8102E,0_0_1px_#C8102E] sm:text-7xl md:text-8xl lg:text-[7.5rem]">
+              မေဓာဝီ
+            </span>
+            <span className="mt-2 font-display text-[1.85rem] font-extrabold leading-tight text-ink-950 antialiased [-webkit-font-smoothing:antialiased] sm:mt-3 sm:text-5xl md:text-6xl lg:text-7xl">
+              ဖက်ထုပ်အိုးကပ်
+            </span>
+          </motion.h1>
+
+          <motion.p
+            initial={reduce ? false : { opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.12 }}
+            className="mt-5 font-display text-lg font-semibold text-secondary-700 sm:text-2xl"
+          >
+            {t('brand.english')}
+          </motion.p>
+          <p className="mt-3 max-w-2xl text-base text-ink-600 sm:text-lg">{t('pages.home.sub')}</p>
         </div>
+      </div>
 
-        <motion.h1
-          initial={reduce ? false : { opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.12 }}
-          className="mt-4 max-w-4xl font-display text-[1.65rem] font-semibold leading-snug text-primary-600 sm:mt-6 sm:text-4xl md:text-5xl lg:text-6xl"
-        >
-          {t('brand.official')}
-        </motion.h1>
-        <motion.p
-          initial={reduce ? false : { opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="mt-3 font-display text-xl font-semibold text-secondary-700 sm:text-2xl"
-        >
-          {t('brand.english')}
-        </motion.p>
-        <p className="mt-4 max-w-2xl text-base text-ink-600 sm:text-lg">{t('pages.home.sub')}</p>
+      <div className="bg-brand-pearl">
+        <div className="relative mx-auto flex max-w-6xl flex-col items-center px-4 pb-10 pt-2 text-center sm:px-6 sm:pb-12 lg:px-8 lg:pb-14">
+          <div className="w-full">
+            <DumplingScene />
+          </div>
+          <p className="mt-1 text-xs font-medium text-ink-500 sm:text-sm">{t('pages.home.tapSpin')}</p>
 
-        <div className="mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:justify-center">
-          <Link
-            to="/menu"
-            className="inline-flex items-center justify-center rounded-full bg-primary-600 px-7 py-3.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-primary-700 sm:text-base"
-          >
-            {t('pages.home.viewMenu')}
-          </Link>
-          <a
-            href={orderPhone.href}
-            className="inline-flex items-center justify-center rounded-full border-2 border-secondary-500 bg-white px-7 py-3.5 text-sm font-semibold text-secondary-800 transition-colors hover:bg-secondary-50 sm:text-base"
-          >
-            {t('pages.home.orderNow')}
-          </a>
+          <div className="mt-6 flex w-full flex-col gap-3 sm:mt-8 sm:w-auto sm:flex-row sm:justify-center">
+            <Link
+              to="/menu"
+              className="inline-flex items-center justify-center rounded-full bg-primary-600 px-7 py-3.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-primary-700 sm:text-base"
+            >
+              {t('pages.home.viewMenu')}
+            </Link>
+            <a
+              href={orderPhone.href}
+              className="inline-flex items-center justify-center rounded-full border-2 border-secondary-500 bg-white px-7 py-3.5 text-sm font-semibold text-secondary-800 transition-colors hover:bg-secondary-50 sm:text-base"
+            >
+              {t('pages.home.orderNow')}
+            </a>
+          </div>
         </div>
       </div>
     </section>

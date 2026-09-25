@@ -18,7 +18,8 @@
     "closeMenu": "Close navigation",
     "cart": "Cart",
     "cartCount_one": "Cart, {{count}} item",
-    "cartCount_other": "Cart, {{count}} items"
+    "cartCount_other": "Cart, {{count}} items",
+    "bottom": "Bottom navigation"
   },
   "cart": {
     "kicker": "Order",
@@ -48,7 +49,7 @@
     "comingSoon": "This page is under construction.",
     "home": {
       "title": "Welcome to Maydarwe",
-      "kicker": "Yangon dumpling house",
+      "kicker": "Established in 2015",
       "headline": "Handmade dumplings, made fresh every day.",
       "sub": "Pan-fried dumplings, mala, and noodles — cooked to order from our kitchen.",
       "viewMenu": "View Menu",
@@ -61,7 +62,8 @@
       "pillarsTitle": "Three ways to eat",
       "visitKicker": "Visit",
       "visitTitle": "Come hungry",
-      "visitSub": "Order by phone or walk in. We cook each plate when you ask for it."
+      "visitSub": "Order by phone or walk in. We cook each plate when you ask for it.",
+      "tapSpin": "Tap the dumplings to spin"
     },
     "menu": {
       "title": "Our menu",
@@ -78,7 +80,31 @@
       "showing": "Showing {{count}} dishes",
       "empty": "No dishes in this category yet."
     },
-    "about": { "title": "About us" },
-    "contact": { "title": "Get in touch" }
+    "about": {
+      "kicker": "Our story",
+      "title": "About us",
+      "lead": "A Yangon dumpling house for handmade plates, cooked when you order them.",
+      "body": "မေဓာဝီဖက်ထုပ်အိုးကပ်ဆိုင် folds dumplings by hand and finishes them in the pan, in broth, or with mala heat. We keep the kitchen small and the menu focused: signatures you can taste, made fresh every day.",
+      "value1Title": "Handmade",
+      "value1Body": "Wrappers and fillings are prepared in our kitchen — not brought in ready-made.",
+      "value2Title": "Cooked to order",
+      "value2Body": "Each plate starts when you ask for it, so the bottoms stay crisp and the broth stays clear.",
+      "value3Title": "Three ways to eat",
+      "value3Body": "Pan-fried dumplings, Sichuan mala, and noodles — the house in three tastes."
+    },
+    "contact": {
+      "kicker": "Visit & order",
+      "title": "Get in touch",
+      "sub": "Call the kitchen or walk in. We cook each plate when you ask for it.",
+      "phonesTitle": "Call to order",
+      "hoursTitle": "Hours",
+      "cityTitle": "Find us",
+      "city": "Yangon",
+      "cityNote": "Walk in during opening hours, or call ahead so we can start your order.",
+      "orderTitle": "How to order",
+      "order1": "Browse the menu and add dishes to your cart.",
+      "order2": "Call either kitchen number and confirm what you want.",
+      "order3": "Pick up when it is ready, or eat in if we have space."
+    }
   }
 }

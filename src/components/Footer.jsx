@@ -2,18 +2,7 @@ import { NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Clock, Phone } from 'lucide-react';
 import BrandLogo from './ui/BrandLogo';
-
-const NAV_LINKS = [
-  { to: '/', labelKey: 'nav.home', end: true },
-  { to: '/menu', labelKey: 'nav.menu' },
-  { to: '/about', labelKey: 'nav.about' },
-  { to: '/contact', labelKey: 'nav.contact' },
-];
-
-const CONTACT_PHONES = [
-  { display: '09-788167047', href: 'tel:+959788167047' },
-  { display: '09-421119495', href: 'tel:+959421119495' },
-];
+import { CONTACT_PHONES, NAV_LINKS } from '../constants/site';
 
 function FooterHeading({ children }) {
   return <h2 className="font-display text-lg font-semibold text-white">{children}</h2>;

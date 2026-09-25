@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Plus } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import ChefMascot from '../components/hero/ChefMascot';
 import DishPhoto from '../components/menu/DishPhoto';
 import { CATEGORIES, MENU_ITEMS, formatPrice, pickLocale } from '../data/menu';
 
@@ -113,8 +114,9 @@ export default function Menu() {
   return (
     <section className="bg-white">
       <div className="border-b border-secondary-400/25 bg-[linear-gradient(180deg,#fff8e8_0%,#ffffff_72%)]">
-        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
-          <p className="text-sm font-semibold uppercase text-secondary-700">{t('pages.menu.kicker')}</p>
+        <div className="mx-auto flex max-w-7xl flex-col items-center px-4 py-10 text-center sm:px-6 sm:py-12 lg:px-8 lg:py-16">
+          <ChefMascot />
+          <p className="mt-4 text-sm font-semibold uppercase text-secondary-700">{t('pages.menu.kicker')}</p>
           <h1 className="mt-2 font-display text-4xl font-semibold text-ink-900 sm:text-5xl lg:text-6xl">
             {t('pages.menu.title')}
           </h1>

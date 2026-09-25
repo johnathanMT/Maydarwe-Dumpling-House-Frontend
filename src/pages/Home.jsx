@@ -10,10 +10,10 @@ function FeaturedCard({ item, language, onAdd }) {
   const { t } = useTranslation();
 
   return (
-    <article className="flex h-full flex-col overflow-hidden rounded-3xl border border-ink-100 bg-white shadow-[0_18px_40px_-28px_rgb(34_30_27_/_0.45)] transition duration-300 hover:-translate-y-1 hover:border-secondary-300/70">
+    <article className="flex h-full flex-col overflow-hidden rounded-3xl border border-secondary-400/25 bg-white shadow-[0_18px_40px_-28px_rgb(34_30_27_/_0.45)] transition duration-300 hover:-translate-y-1 hover:border-brand-yellow hover:shadow-[0_24px_50px_-24px_rgb(34_30_27_/_0.5)]">
       <div className="relative">
         <DishPhoto item={item} alt={pickLocale(item.name, language)} />
-        <span className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-primary-700 shadow-sm">
+        <span className="absolute left-4 top-4 rounded-full bg-brand-yellow px-3 py-1 text-xs font-bold text-ink-950 shadow-sm">
           {formatPrice(item.price)}
         </span>
       </div>
@@ -40,7 +40,7 @@ export default function Home() {
   const language = i18n.resolvedLanguage === 'my' ? 'my' : 'en';
 
   return (
-    <div className="bg-white">
+    <div className="bg-brand-pearl">
       <Hero />
 
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
@@ -64,7 +64,7 @@ export default function Home() {
         </ul>
       </section>
 
-      <section className="border-y border-ink-100 bg-ink-50/60">
+      <section className="border-y border-secondary-400/20 bg-white">
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
           <p className="text-sm font-semibold uppercase text-secondary-700">{t('pages.home.pillarsKicker')}</p>
           <h2 className="mt-2 font-display text-3xl font-semibold text-ink-900 sm:text-4xl">
@@ -72,8 +72,8 @@ export default function Home() {
           </h2>
           <ul className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3">
             {CATEGORIES.map(({ id, icon: Icon, title, caption }) => (
-              <li key={id} className="rounded-3xl border border-ink-100 bg-white p-6">
-                <span className="grid h-12 w-12 place-items-center rounded-full bg-primary-50 text-primary-700">
+              <li key={id} className="rounded-3xl border border-secondary-400/25 bg-brand-pearl p-6">
+                <span className="grid h-12 w-12 place-items-center rounded-full bg-brand-yellow text-ink-950">
                   <Icon className="h-5 w-5" strokeWidth={1.75} />
                 </span>
                 <h3 className="mt-5 font-display text-2xl font-semibold text-ink-900">

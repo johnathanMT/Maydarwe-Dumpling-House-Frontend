@@ -1,0 +1,225 @@
+import { Suspense, useLayoutEffect, useMemo, useRef } from 'react';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { Center, ContactShadows, useGLTF } from '@react-three/drei';
+import { Box3, Vector3 } from 'three';
+import { useReducedMotion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
+
+export const DUMPLING_MODEL_URL =
+  'https://res.cloudinary.com/dhlhzmmtt/image/upload/v1790346466/Big_dumplings_3d_model_fopwnk.glb';
+
+function easeOutBack(t) {
+  const c1 = 1.70158;
+  const c3 = c1 + 1;
+  return 1 + c3 * (t - 1) ** 3 + c1 * (t - 1) ** 2;
+}
+
+function easeOutCubic(t) {
+  return 1 - (1 - t) ** 3;
+}
+
+function useGarnishes(count = 24) {
+  return useMemo(
+    () =>
+      Array.from({ length: count }, (_, index) => {
+        const kinds = ['scallion', 'chili', 'sesame'];
+        const kind = kinds[index % 3];
+        const angle = (index / count) * Math.PI * 2 + (index % 5) * 0.19;
+        const radius = 0.72 + (index % 6) * 0.22;
+        const height = 1.05 + (index % 5) * 0.28;
+        return {
+          id: index,
+          kind,
+          target: [Math.cos(angle) * radius, height, Math.sin(angle) * radius],
+          delay: 0.28 + index * 0.038,
+          spin: (index % 2 === 0 ? 1 : -1) * (1.3 + (index % 4) * 0.35),
+          tilt: 0.35 + (index % 7) * 0.18,
+        };
+      }),
+    [count]
+  );
+}
+
+function ScallionSlice() {
+  return (
+    <group>
+      <mesh castShadow>
+        <torusGeometry args={[0.075, 0.02, 14, 28, Math.PI * 1.55]} />
+        <meshStandardMaterial color="#3F8F3A" roughness={0.34} metalness={0.08} />
+      </mesh>
+      <mesh>
+        <torusGeometry args={[0.075, 0.01, 12, 24, Math.PI * 1.55]} />
+        <meshStandardMaterial color="#F4F7E6" roughness={0.48} metalness={0.02} />
+      </mesh>
+    </group>
+  );
+}
+
+function ChiliFlake() {
+  return (
+    <group>
+      <mesh castShadow rotation={[0.2, 0.4, 0.15]}>
+        <boxGeometry args={[0.16, 0.01, 0.07]} />
+        <meshStandardMaterial color="#C8102E" roughness={0.62} metalness={0.04} />
+      </mesh>
+      <mesh rotation={[-0.25, -0.3, 0.4]} position={[0.02, 0.012, 0.01]}>
+        <boxGeometry args={[0.1, 0.008, 0.045]} />
+        <meshStandardMaterial color="#8B0A1A" roughness={0.7} metalness={0.03} />
+      </mesh>
+    </group>
+  );
+}
+
+function SesameSeed({ toasted }) {
+  return (
+    <mesh castShadow scale={[1, 0.52, 0.72]}>
+      <capsuleGeometry args={[0.022, 0.02, 6, 10]} />
+      <meshStandardMaterial
+        color={toasted ? '#C9A04A' : '#F3E2B8'}
+        roughness={0.46}
+        metalness={0.12}
+      />
+    </mesh>
+  );
+}
+
+function Garnish({ kind, target, delay, spin, tilt, reduce }) {
+  const mesh = useRef();
+  const elapsed = useRef(-delay);
+
+  useFrame((_, delta) => {
+    if (!mesh.current) return;
+    elapsed.current += delta;
+    const progress = reduce ? 1 : Math.max(0, Math.min(1, elapsed.current / 0.95));
+    const lift = easeOutBack(progress);
+    const bob = reduce || progress < 1 ? 0 : Math.sin(elapsed.current * 1.6 + spin) * 0.035;
+
+    mesh.current.position.set(target[0] * lift, target[1] * lift + bob, target[2] * lift);
+    mesh.current.scale.setScalar(0.14 + 0.86 * lift);
+    mesh.current.rotation.x = tilt + progress * spin + (progress >= 1 && !reduce ? elapsed.current * 0.55 : 0);
+    mesh.current.rotation.y = progress * spin * 0.7 + (progress >= 1 && !reduce ? elapsed.current * 0.4 : 0);
+    mesh.current.rotation.z = progress * spin * 0.45;
+  });
+
+  return (
+    <group ref={mesh}>
+      {kind === 'scallion' ? <ScallionSlice /> : null}
+      {kind === 'chili' ? <ChiliFlake /> : null}
+      {kind === 'sesame' ? <SesameSeed toasted={spin > 0} /> : null}
+    </group>
+  );
+}
+
+function DumplingModel({ reduce, spinApi }) {
+  const group = useRef();
+  const { scene } = useGLTF(DUMPLING_MODEL_URL);
+  const clone = useMemo(() => scene.clone(true), [scene]);
+  const yaw = useRef(reduce ? 0.35 : 0);
+  const spin = useRef({ from: reduce ? 0.35 : 0, progress: reduce ? 1 : 0 });
+  const scale = useMemo(() => {
+    const box = new Box3().setFromObject(clone);
+    const size = box.getSize(new Vector3());
+    const max = Math.max(size.x, size.y, size.z) || 1;
+    return 2.15 / max;
+  }, [clone]);
+
+  useLayoutEffect(() => {
+    clone.traverse((child) => {
+      if (child.isMesh) {
+        child.castShadow = true;
+        child.receiveShadow = true;
+      }
+    });
+  }, [clone]);
+
+  useLayoutEffect(() => {
+    spinApi.current = () => {
+      spin.current.from = yaw.current;
+      spin.current.progress = 0;
+    };
+    return () => {
+      spinApi.current = () => {};
+    };
+  }, [spinApi]);
+
+  useFrame((_, delta) => {
+    if (!group.current) return;
+    if (spin.current.progress < 1) {
+      spin.current.progress = Math.min(1, spin.current.progress + delta / 2.15);
+      yaw.current = spin.current.from + easeOutCubic(spin.current.progress) * Math.PI * 2;
+      group.current.rotation.y = yaw.current;
+    }
+  });
+
+  return (
+    <group ref={group} scale={scale} position={[0, -0.05, 0]}>
+      <Center>
+        <primitive object={clone} />
+      </Center>
+    </group>
+  );
+}
+
+function SceneContent({ reduce, spinApi }) {
+  const garnishes = useGarnishes(24);
+
+  return (
+    <>
+      <ambientLight intensity={0.7} color="#fff7ea" />
+      <directionalLight
+        position={[4.2, 7.5, 3.4]}
+        intensity={1.6}
+        color="#fff6ea"
+        castShadow
+        shadow-mapSize-width={1024}
+        shadow-mapSize-height={1024}
+      />
+      <directionalLight position={[-3.4, 2.8, -2.2]} intensity={0.58} color="#E8A006" />
+      <spotLight position={[0, 8, 2.4]} angle={0.42} penumbra={0.55} intensity={0.9} color="#FFE588" />
+
+      <Suspense fallback={null}>
+        <DumplingModel reduce={reduce} spinApi={spinApi} />
+      </Suspense>
+
+      {garnishes.map((item) => (
+        <Garnish key={item.id} {...item} reduce={reduce} />
+      ))}
+
+      <ContactShadows position={[0, -1.55, 0]} opacity={0.28} scale={10} blur={2.6} far={2.8} />
+    </>
+  );
+}
+
+export default function DumplingScene() {
+  const { t } = useTranslation();
+  const reduce = useReducedMotion();
+  const spinApi = useRef(() => {});
+
+  return (
+    <div
+      className="relative mx-auto h-[26rem] w-full max-w-5xl cursor-pointer sm:h-[32rem] lg:h-[36rem]"
+      onPointerDown={() => spinApi.current()}
+      onClick={() => spinApi.current()}
+      onKeyDown={(event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          spinApi.current();
+        }
+      }}
+      role="button"
+      tabIndex={0}
+      aria-label={t('pages.home.tapSpin')}
+    >
+      <Canvas
+        shadows
+        dpr={[1, 1.75]}
+        camera={{ position: [0, 1.45, 5], fov: 34 }}
+        gl={{ antialias: true, alpha: true }}
+      >
+        <SceneContent reduce={Boolean(reduce)} spinApi={spinApi} />
+      </Canvas>
+    </div>
+  );
+}
+
+useGLTF.preload(DUMPLING_MODEL_URL);
