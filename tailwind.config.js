@@ -6,6 +6,12 @@ export default {
   theme: {
     extend: {
       colors: {
+        brand: {
+          red: '#C8102E',
+          gold: '#E8A006',
+          white: '#FFFFFF',
+          black: '#141110',
+        },
         // Primary Red — CTAs, active states, brand seal
         primary: {
           50: '#FEF2F2',
@@ -14,7 +20,7 @@ export default {
           300: '#F6A3A4',
           400: '#EE6B6E',
           500: '#E03E43',
-          600: '#C8102E', // brand red
+          600: '#C8102E',
           700: '#A50D26',
           800: '#880F24',
           900: '#721123',
@@ -28,9 +34,9 @@ export default {
           200: '#FFE588',
           300: '#FFD24A',
           400: '#FDBE1F',
-          500: '#E8A006', // brand gold
+          500: '#E8A006',
           600: '#C77A02',
-          700: '#9E5506', // use this shade for gold TEXT on white (contrast)
+          700: '#9E5506',
           800: '#82420C',
           900: '#6E370F',
           950: '#401C03',
@@ -53,7 +59,6 @@ export default {
         },
       },
       fontFamily: {
-        // Myanmar fonts sit in each stack so Burmese glyphs always render correctly
         display: ['Fraunces', '"Noto Serif Myanmar"', ...defaultTheme.fontFamily.serif],
         sans: ['Figtree', '"Noto Sans Myanmar"', ...defaultTheme.fontFamily.sans],
       },

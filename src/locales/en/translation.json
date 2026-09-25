@@ -14,6 +14,7 @@
     "language": "Choose language",
     "openMenu": "Open navigation",
     "closeMenu": "Close navigation",
+    "cart": "Cart",
     "cartCount_one": "Cart, {{count}} item",
     "cartCount_other": "Cart, {{count}} items"
   },
@@ -22,6 +23,8 @@
     "follow": "Follow us",
     "explore": "Explore",
     "contact": "Call us",
+    "hours": "Hours",
+    "hoursValue": "Daily, 10:00 AM – 9:00 PM",
     "location": "Find us",
     "mapPlaceholder": "Google Map goes here",
     "rights": "All rights reserved."
