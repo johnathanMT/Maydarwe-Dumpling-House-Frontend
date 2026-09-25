@@ -9,7 +9,7 @@ export default function BrandLogo({ variant = 'light', className = '' }) {
   return (
     <Link
       to="/"
-      aria-label={`${t('brand.name')} ${t('brand.tagline')}`}
+      aria-label={`${t('brand.official')} ${t('brand.english')}`}
       className={`group inline-flex shrink-0 items-center gap-3 rounded-full ${className}`}
     >
       <span

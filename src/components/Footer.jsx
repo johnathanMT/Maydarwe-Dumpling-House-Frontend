@@ -80,7 +80,7 @@ export default function Footer() {
 
       <div className="border-t border-ink-800">
         <p className="mx-auto max-w-7xl px-4 py-6 text-sm text-ink-500 sm:px-6 lg:px-8">
-          © {year} Maydarwe Dumpling House. {t('footer.rights')}
+          © {year} {t('brand.official')}. {t('footer.rights')}
         </p>
       </div>
     </footer>

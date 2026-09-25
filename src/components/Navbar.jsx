@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Menu as MenuIcon, ShoppingBag, X } from 'lucide-react';
+import { useCart } from '../context/CartContext';
 
 const NAV_LINKS = [
   { to: '/', labelKey: 'nav.home', end: true },
@@ -31,20 +32,20 @@ function BrandMark() {
   return (
     <Link
       to="/"
-      aria-label={`${t('brand.name')} ${t('brand.tagline')}`}
-      className="group inline-flex shrink-0 items-center gap-3 rounded-full"
+      aria-label={`${t('brand.official')} ${t('brand.english')}`}
+      className="group inline-flex min-w-0 max-w-[13.5rem] shrink items-center gap-2.5 rounded-full sm:max-w-md sm:gap-3"
     >
       <span
         aria-hidden="true"
-        className="grid h-10 w-10 place-items-center rounded-full bg-primary-600 ring-2 ring-secondary-400 ring-offset-2 ring-offset-white transition-transform duration-500 group-hover:rotate-12 sm:h-11 sm:w-11"
+        className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-primary-600 ring-2 ring-secondary-400 ring-offset-2 ring-offset-white transition-transform duration-500 group-hover:rotate-12 sm:h-11 sm:w-11"
       >
         <span className="font-display text-xl font-semibold leading-none text-secondary-300">M</span>
       </span>
-      <span className="flex flex-col">
-        <span className="font-display text-xl font-semibold leading-none text-ink-900 sm:text-2xl">
+      <span className="flex min-w-0 flex-col text-left">
+        <span className="font-display text-[0.95rem] font-semibold leading-tight text-ink-900 sm:text-lg">
           {t('brand.name')}
         </span>
-        <span className="mt-1 text-sm font-medium leading-none text-secondary-700">
+        <span className="mt-0.5 text-[0.7rem] font-medium leading-tight text-secondary-700 sm:text-sm">
           {t('brand.tagline')}
         </span>
       </span>
@@ -113,9 +114,10 @@ function CartButton({ count, onClick }) {
   );
 }
 
-export default function Navbar({ cartCount = 0, onCartClick }) {
+export default function Navbar() {
   const { t } = useTranslation();
   const { pathname } = useLocation();
+  const { count: cartCount, openCart } = useCart();
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -181,7 +183,7 @@ export default function Navbar({ cartCount = 0, onCartClick }) {
 
           <div className="flex items-center gap-1.5 sm:gap-3">
             <LanguageToggle className="hidden sm:inline-flex" />
-            <CartButton count={cartCount} onClick={onCartClick} />
+            <CartButton count={cartCount} onClick={openCart} />
             <Link
               to="/menu"
               className="hidden items-center rounded-full bg-primary-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-primary-700 lg:inline-flex"

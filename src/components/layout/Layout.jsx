@@ -2,6 +2,7 @@ import { Outlet, ScrollRestoration } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Navbar from '../Navbar';
 import Footer from '../Footer';
+import CartDrawer from '../CartDrawer';
 
 export default function Layout() {
   const { t } = useTranslation();
@@ -15,13 +16,14 @@ export default function Layout() {
         {t('nav.skip')}
       </a>
 
-      <Navbar cartCount={0} onCartClick={() => {}} />
+      <Navbar />
 
       <main id="main" className="flex-1">
         <Outlet />
       </main>
 
       <Footer />
+      <CartDrawer />
       <ScrollRestoration />
     </div>
   );

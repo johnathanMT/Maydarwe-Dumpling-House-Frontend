@@ -2,6 +2,8 @@ import { createBrowserRouter, Outlet, RouterProvider, ScrollRestoration } from '
 import { useTranslation } from 'react-i18next';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import CartDrawer from './components/CartDrawer';
+import { CartProvider } from './context/CartContext';
 import Home from './pages/Home';
 import Menu from './pages/Menu';
 import About from './pages/About';
@@ -19,13 +21,14 @@ function Layout() {
         {t('nav.skip')}
       </a>
 
-      <Navbar cartCount={0} onCartClick={() => {}} />
+      <Navbar />
 
       <main id="main" className="flex-1">
         <Outlet />
       </main>
 
       <Footer />
+      <CartDrawer />
       <ScrollRestoration />
     </div>
   );
@@ -45,5 +48,9 @@ const router = createBrowserRouter([
 ]);
 
 export default function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <CartProvider>
+      <RouterProvider router={router} />
+    </CartProvider>
+  );
 }

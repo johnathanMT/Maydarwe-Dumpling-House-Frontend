@@ -1,7 +1,9 @@
 {
   "brand": {
-    "name": "Maydarwe",
-    "tagline": "Dumpling House"
+    "official": "မေဓာဝီဖက်ထုပ်အိုးကပ်ဆိုင်",
+    "english": "Maydarwe Dumpling House",
+    "name": "Maydarwe Dumpling House",
+    "tagline": "မေဓာဝီဖက်ထုပ်အိုးကပ်ဆိုင်"
   },
   "nav": {
     "main": "Main navigation",
@@ -18,6 +20,19 @@
     "cartCount_one": "Cart, {{count}} item",
     "cartCount_other": "Cart, {{count}} items"
   },
+  "cart": {
+    "kicker": "Order",
+    "title": "Your cart",
+    "empty": "Your cart is empty.",
+    "browse": "Browse the menu",
+    "subtotal": "Subtotal",
+    "note": "Call the kitchen to confirm your order.",
+    "call": "Call to order",
+    "close": "Close cart",
+    "remove": "Remove",
+    "increase": "Increase quantity",
+    "decrease": "Decrease quantity"
+  },
   "footer": {
     "about": "Handmade dumplings, made fresh every day.",
     "follow": "Follow us",
@@ -31,8 +46,38 @@
   },
   "pages": {
     "comingSoon": "This page is under construction.",
-    "home": { "title": "Welcome to Maydarwe" },
-    "menu": { "title": "Our menu" },
+    "home": {
+      "title": "Welcome to Maydarwe",
+      "kicker": "Yangon dumpling house",
+      "headline": "Handmade dumplings, made fresh every day.",
+      "sub": "Pan-fried dumplings, mala, and noodles — cooked to order from our kitchen.",
+      "viewMenu": "View Menu",
+      "orderNow": "Order Now",
+      "call": "Call to order",
+      "featuredKicker": "House favorites",
+      "featuredTitle": "Start with the signatures",
+      "featuredCta": "See the full menu",
+      "pillarsKicker": "The kitchen",
+      "pillarsTitle": "Three ways to eat",
+      "visitKicker": "Visit",
+      "visitTitle": "Come hungry",
+      "visitSub": "Order by phone or walk in. We cook each plate when you ask for it."
+    },
+    "menu": {
+      "title": "Our menu",
+      "kicker": "Kitchen",
+      "subtitle": "Handmade dumplings, mala, and noodles — cooked to order.",
+      "filter": "Filter menu",
+      "all": "All",
+      "dumplings": "Dumplings",
+      "mala": "Mala",
+      "noodles": "Noodles",
+      "addToCart": "Add to cart",
+      "added": "Added",
+      "outOfStock": "Out of stock",
+      "showing": "Showing {{count}} dishes",
+      "empty": "No dishes in this category yet."
+    },
     "about": { "title": "About us" },
     "contact": { "title": "Get in touch" }
   }
