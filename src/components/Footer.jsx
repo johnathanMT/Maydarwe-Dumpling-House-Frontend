@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Clock, Phone } from 'lucide-react';
+import BrandLogo from './ui/BrandLogo';
 
 const NAV_LINKS = [
   { to: '/', labelKey: 'nav.home', end: true },
@@ -28,8 +29,7 @@ export default function Footer() {
 
       <div className="mx-auto grid max-w-7xl gap-12 px-4 py-14 sm:grid-cols-2 sm:px-6 lg:grid-cols-12 lg:gap-8 lg:px-8 lg:py-20">
         <div className="sm:col-span-2 lg:col-span-5">
-          <p className="font-display text-2xl font-semibold text-white">{t('brand.name')}</p>
-          <p className="mt-1 text-sm font-medium text-secondary-400">{t('brand.tagline')}</p>
+          <BrandLogo size="footer" />
           <p className="mt-5 max-w-xs">{t('footer.about')}</p>
         </div>
 

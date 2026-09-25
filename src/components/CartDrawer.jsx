@@ -85,11 +85,22 @@ export default function CartDrawer() {
               {lines.map((line) => (
                 <li key={line.id} className="rounded-2xl border border-ink-100 p-4">
                   <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <p className="font-display text-lg font-semibold text-ink-900">
-                        {pickLocale(line.name, language)}
-                      </p>
-                      <p className="mt-1 text-sm text-primary-700">{formatPrice(line.price)}</p>
+                    <div className="flex min-w-0 items-start gap-3">
+                      {line.image ? (
+                        <img
+                          src={line.image}
+                          alt=""
+                          width={56}
+                          height={56}
+                          className="h-14 w-14 shrink-0 rounded-xl object-cover"
+                        />
+                      ) : null}
+                      <div className="min-w-0">
+                        <p className="font-display text-lg font-semibold text-ink-900">
+                          {pickLocale(line.name, language)}
+                        </p>
+                        <p className="mt-1 text-sm text-primary-700">{formatPrice(line.price)}</p>
+                      </div>
                     </div>
                     <button
                       type="button"

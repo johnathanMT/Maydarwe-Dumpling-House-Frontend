@@ -1,42 +1,29 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { BRAND_LOGO_SRC } from '../../constants/site';
 
-// The red "M" seal is a stand-in — swap it for <img src="/logo.png" /> once you have the real logo.
-export default function BrandLogo({ variant = 'light', className = '' }) {
+const SIZE_CLASS = {
+  nav: 'h-12 w-12 sm:h-16 sm:w-16',
+  footer: 'h-24 w-24 sm:h-28 sm:w-28',
+  mark: 'h-10 w-10',
+};
+
+export default function BrandLogo({ size = 'nav', className = '' }) {
   const { t } = useTranslation();
-  const isDark = variant === 'dark';
 
   return (
     <Link
       to="/"
       aria-label={`${t('brand.official')} ${t('brand.english')}`}
-      className={`group inline-flex shrink-0 items-center gap-3 rounded-full ${className}`}
+      className={`group inline-flex shrink-0 items-center rounded-2xl ${className}`}
     >
-      <span
-        aria-hidden="true"
-        className={`grid h-10 w-10 place-items-center rounded-full bg-primary-600 ring-2 ring-secondary-400 ring-offset-2 transition-transform duration-500 group-hover:rotate-12 sm:h-11 sm:w-11 ${
-          isDark ? 'ring-offset-ink-950' : 'ring-offset-white'
-        }`}
-      >
-        <span className="font-display text-xl font-semibold leading-none text-secondary-300">M</span>
-      </span>
-
-      <span className="flex flex-col">
-        <span
-          className={`font-display text-xl font-semibold leading-none sm:text-2xl ${
-            isDark ? 'text-white' : 'text-ink-900'
-          }`}
-        >
-          {t('brand.name')}
-        </span>
-        <span
-          className={`mt-1 text-sm font-medium leading-none ${
-            isDark ? 'text-secondary-400' : 'text-secondary-700'
-          }`}
-        >
-          {t('brand.tagline')}
-        </span>
-      </span>
+      <img
+        src={BRAND_LOGO_SRC}
+        alt=""
+        width={256}
+        height={256}
+        className={`${SIZE_CLASS[size] ?? SIZE_CLASS.nav} rounded-2xl object-cover shadow-[0_8px_20px_-12px_rgb(34_30_27_/_0.45)] ring-1 ring-ink-900/5 transition-transform duration-300 group-hover:scale-[1.03]`}
+      />
     </Link>
   );
 }

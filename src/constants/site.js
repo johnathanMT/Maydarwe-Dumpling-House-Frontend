@@ -1,3 +1,5 @@
+export const BRAND_LOGO_SRC = '/maydawe_dumpling_logo.JPG';
+
 export const NAV_LINKS = [
   { to: '/', labelKey: 'nav.home', end: true },
   { to: '/menu', labelKey: 'nav.menu' },

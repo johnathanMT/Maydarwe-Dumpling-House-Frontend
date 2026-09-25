@@ -18,7 +18,10 @@ export function CartProvider({ children }) {
           line.id === item.id ? { ...line, quantity: line.quantity + 1 } : line
         );
       }
-      return [...prev, { id: item.id, name: item.name, price: item.price, quantity: 1 }];
+      return [
+        ...prev,
+        { id: item.id, name: item.name, price: item.price, image: item.image, quantity: 1 },
+      ];
     });
   }, []);
 

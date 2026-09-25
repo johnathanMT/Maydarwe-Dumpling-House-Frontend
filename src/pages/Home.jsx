@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Plus } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import Hero from '../components/hero/Hero';
+import DishPhoto from '../components/menu/DishPhoto';
 import { CATEGORIES, FEATURED_ITEMS, formatPrice, pickLocale } from '../data/menu';
 
 function FeaturedCard({ item, language, onAdd }) {
@@ -10,9 +11,9 @@ function FeaturedCard({ item, language, onAdd }) {
 
   return (
     <article className="flex h-full flex-col overflow-hidden rounded-3xl border border-ink-100 bg-white shadow-[0_18px_40px_-28px_rgb(34_30_27_/_0.45)] transition duration-300 hover:-translate-y-1 hover:border-secondary-300/70">
-      <div className="relative aspect-[4/3] bg-gradient-to-br from-primary-700 via-primary-900 to-ink-950">
-        <div className="absolute inset-4 rounded-[1.25rem] border border-secondary-400/30" />
-        <span className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-primary-700">
+      <div className="relative">
+        <DishPhoto item={item} alt={pickLocale(item.name, language)} />
+        <span className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-primary-700 shadow-sm">
           {formatPrice(item.price)}
         </span>
       </div>

@@ -3,6 +3,7 @@ import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Menu as MenuIcon, ShoppingBag, X } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import BrandLogo from './ui/BrandLogo';
 
 const NAV_LINKS = [
   { to: '/', labelKey: 'nav.home', end: true },
@@ -25,33 +26,6 @@ const mobileLinkClass = ({ isActive }) =>
     'flex items-center justify-between py-4 font-display text-2xl transition-colors',
     isActive ? 'text-primary-700' : 'text-ink-900 hover:text-primary-700',
   ].join(' ');
-
-function BrandMark() {
-  const { t } = useTranslation();
-
-  return (
-    <Link
-      to="/"
-      aria-label={`${t('brand.official')} ${t('brand.english')}`}
-      className="group inline-flex min-w-0 max-w-[13.5rem] shrink items-center gap-2.5 rounded-full sm:max-w-md sm:gap-3"
-    >
-      <span
-        aria-hidden="true"
-        className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-primary-600 ring-2 ring-secondary-400 ring-offset-2 ring-offset-white transition-transform duration-500 group-hover:rotate-12 sm:h-11 sm:w-11"
-      >
-        <span className="font-display text-xl font-semibold leading-none text-secondary-300">M</span>
-      </span>
-      <span className="flex min-w-0 flex-col text-left">
-        <span className="font-display text-[0.95rem] font-semibold leading-tight text-ink-900 sm:text-lg">
-          {t('brand.name')}
-        </span>
-        <span className="mt-0.5 text-[0.7rem] font-medium leading-tight text-secondary-700 sm:text-sm">
-          {t('brand.tagline')}
-        </span>
-      </span>
-    </Link>
-  );
-}
 
 function LanguageToggle({ className = '' }) {
   const { t, i18n } = useTranslation();
@@ -169,7 +143,7 @@ export default function Navbar() {
           aria-label={t('nav.main')}
           className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:h-20 sm:px-6 lg:px-8"
         >
-          <BrandMark />
+          <BrandLogo size="nav" />
 
           <ul className="hidden items-center gap-9 lg:flex">
             {NAV_LINKS.map(({ to, labelKey, end }) => (
