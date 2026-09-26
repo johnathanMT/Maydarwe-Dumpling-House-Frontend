@@ -32,12 +32,10 @@ export const BUSINESS = {
     { display: '09-421119495', e164: '+959421119495' },
   ],
 
-  // TODO(owner): fill in the full street address in both languages.
-  // While `en` is empty, the site shows only the city and hides the map
-  // and "Get directions" link, so nothing half-finished goes live.
+  // Street line shown beside the map. The pin itself is MAPS_PIN.
   address: {
-    en: '',
-    my: '',
+    en: 'G/528 (A), in front of B.E.M.S. No. 4, Maydarwe Road, Ward (G), North Okkalapa Township, Yangon',
+    my: 'ဂ/၅၂၈ (A) ၊ အ.လ.က - ၄ ကျောင်းရှေ့ မေဓါဝီလမ်း ၊ (ဂ)ရပ်ကွက် မြောက်ဥက္ကလာပမြို့နယ် ၊ ရန်ကုန်မြို့',
     city: { en: 'Yangon', my: 'ရန်ကုန်' },
     // Optional: what to search for on Google Maps. Defaults to the name + address.
     mapsQuery: '',
@@ -69,11 +67,17 @@ export function mapsQuery() {
   return address.mapsQuery || [BUSINESS.name.en, address.en, address.city.en].filter(Boolean).join(', ');
 }
 
+/** The shop pin. Used by the address link in the footer and on the contact page. */
+export const MAPS_URL = 'https://maps.app.goo.gl/W3EpjYz76sKvwDNj9?g_st=ic';
+
+/** Coordinates of that same pin, so the embedded map drops the marker on the shop. */
+export const MAPS_PIN = { lat: 16.8988787, lng: 96.1529404 };
+
 export const mapsDirectionsUrl = () =>
   `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapsQuery())}`;
 
 export const mapsEmbedUrl = () =>
-  `https://www.google.com/maps?q=${encodeURIComponent(mapsQuery())}&output=embed`;
+  `https://www.google.com/maps?q=${MAPS_PIN.lat},${MAPS_PIN.lng}&z=16&output=embed`;
 
 /** "09:00" → "9:00 AM", used for English copy and build-time meta tags. */
 export function formatTimeEn(hhmm) {

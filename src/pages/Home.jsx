@@ -97,7 +97,6 @@ export default function Home() {
       {/* Visit / order */}
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 md:py-28 lg:px-8 lg:py-32">
         <CtaBanner
-          eyebrow={t('pages.home.visitKicker')}
           title={t('pages.home.visitTitle')}
           body={t('pages.home.visitSub')}
         >

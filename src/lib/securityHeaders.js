@@ -34,7 +34,7 @@ const PRODUCTION_DIRECTIVES = {
   'frame-ancestors': ["'none'"],
   'object-src': ["'none'"],
   'manifest-src': ["'self'"],
-  // Google Maps embed on the contact page (click-to-load).
+  // Google Maps embed on the contact page.
   'frame-src': ['https://www.google.com'],
   'script-src': ["'self'"],
   // No inline event-handler attributes anywhere (React never needs them).

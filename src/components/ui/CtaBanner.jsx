@@ -13,7 +13,7 @@ export default function CtaBanner({ eyebrow, title, body, children, className = 
       <div aria-hidden="true" className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-secondary-400/20 blur-3xl" />
       <div className="relative">
         {eyebrow ? <Eyebrow className="!text-butter-200">{eyebrow}</Eyebrow> : null}
-        <h2 className="mt-3 font-display text-3xl font-semibold sm:text-4xl">{title}</h2>
+        <h2 className={`${eyebrow ? 'mt-3 ' : ''}font-display text-3xl font-semibold leading-relaxed sm:text-4xl`}>{title}</h2>
         {body ? <p className="mt-3 max-w-xl leading-relaxed text-primary-50/90">{body}</p> : null}
       </div>
       <div className="relative mt-6 flex flex-wrap gap-3 md:mt-0 md:shrink-0">{children}</div>

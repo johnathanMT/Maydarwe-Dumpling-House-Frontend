@@ -9,6 +9,7 @@ import { useAddedFlash } from '../hooks/useAddedFlash';
 import PageHeader from '../components/ui/PageHeader';
 import { Reveal } from '../components/ui/Reveal';
 import DishCard from '../components/menu/DishCard';
+import SpecialOrders from '../components/menu/SpecialOrders';
 import MenuAccordion from '../components/menu/MenuAccordion';
 import { CATEGORIES, MENU_ITEMS, pickLocale } from '../data/menu';
 import { CATEGORY_ICONS } from '../components/menu/categoryIcons';
@@ -139,6 +140,8 @@ export default function Menu() {
           </m.div>
         </AnimatePresence>
       </div>
+
+      <SpecialOrders />
     </section>
   );
 }
