@@ -1,89 +1,58 @@
-import { useEffect } from 'react';
+import { useId } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Minus, Plus, ShoppingBag, X } from 'lucide-react';
-import { useCart } from '../context/CartContext';
-import { CONTACT_PHONES } from '../constants/site';
+import { Minus, Phone, Plus, ShoppingBag } from 'lucide-react';
+import { useCart, useCartActions } from '../context/CartContext';
+import { useUiActions, useUiState } from '../context/UiContext';
+import { PRIMARY_PHONE, telHref } from '../constants/site';
+import { useLang } from '../lib/businessHours';
+import Sheet, { SheetCloseButton } from './ui/Sheet';
 import OptimizedImage from './ui/OptimizedImage';
 import { formatPrice, pickLocale } from '../data/menu';
 
 export default function CartDrawer() {
-  const { t, i18n } = useTranslation();
-  const { lines, subtotal, isOpen, closeCart, updateQuantity, removeItem } = useCart();
-  const language = i18n.resolvedLanguage === 'my' ? 'my' : 'en';
-  const orderPhone = CONTACT_PHONES[0];
-
-  useEffect(() => {
-    if (!isOpen) return undefined;
-    const onKeyDown = (e) => {
-      if (e.key === 'Escape') closeCart();
-    };
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    window.addEventListener('keydown', onKeyDown);
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener('keydown', onKeyDown);
-    };
-  }, [isOpen, closeCart]);
+  const { t } = useTranslation();
+  const language = useLang();
+  const { lines, subtotal } = useCart();
+  const { updateQuantity, removeItem } = useCartActions();
+  const { isCartOpen } = useUiState();
+  const { closePanel, openOrder } = useUiActions();
+  const titleId = useId();
 
   return (
-    <div className={`fixed inset-0 z-[70] ${isOpen ? '' : 'pointer-events-none'}`} aria-hidden={!isOpen}>
-      <button
-        type="button"
-        tabIndex={isOpen ? 0 : -1}
-        aria-label={t('cart.close')}
-        onClick={closeCart}
-        className={`absolute inset-0 bg-ink-950/45 transition-opacity duration-300 ${
-          isOpen ? 'opacity-100' : 'opacity-0'
-        }`}
-      />
-
-      <aside
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="cart-title"
-        className={`absolute inset-y-0 right-0 flex w-full max-w-md flex-col bg-white shadow-2xl transition-transform duration-300 ease-out ${
-          isOpen ? 'translate-x-0' : 'translate-x-full'
-        }`}
-      >
-        <div className="flex items-center justify-between border-b border-ink-100 px-5 py-4">
-          <div>
-            <p className="text-xs font-semibold uppercase text-secondary-700">{t('cart.kicker')}</p>
-            <h2 id="cart-title" className="font-display text-2xl font-semibold text-ink-900">
-              {t('cart.title')}
-            </h2>
-          </div>
-          <button
-            type="button"
-            onClick={closeCart}
-            aria-label={t('cart.close')}
-            className="inline-flex h-12 w-12 items-center justify-center rounded-full text-ink-900 hover:bg-ink-50"
-          >
-            <X className="h-5 w-5" />
-          </button>
+    <Sheet open={isCartOpen} onClose={closePanel} labelledBy={titleId} variant="drawer">
+      <div className="flex items-center justify-between border-b border-ink-100 px-5 py-4">
+        <div>
+          <p className="text-xs font-semibold uppercase text-secondary-700">{t('cart.kicker')}</p>
+          <h2 id={titleId} className="font-display text-2xl font-semibold text-ink-900">
+            {t('cart.title')}
+          </h2>
         </div>
+        <SheetCloseButton onClick={closePanel} label={t('cart.close')} />
+      </div>
 
-        {lines.length === 0 ? (
-          <div className="grid flex-1 place-items-center px-8 text-center">
-            <div>
-              <span className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-primary-50 text-primary-700">
-                <ShoppingBag className="h-6 w-6" strokeWidth={1.75} />
-              </span>
-              <p className="mt-4 text-ink-600">{t('cart.empty')}</p>
-              <Link
-                to="/menu"
-                onClick={closeCart}
-                className="mt-6 inline-flex min-h-12 items-center rounded-full bg-primary-600 px-5 text-sm font-semibold text-white hover:bg-primary-700"
-              >
-                {t('cart.browse')}
-              </Link>
-            </div>
+      {lines.length === 0 ? (
+        <div className="grid flex-1 place-items-center px-8 text-center">
+          <div>
+            <span className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-primary-50 text-primary-700">
+              <ShoppingBag className="h-6 w-6" strokeWidth={1.75} />
+            </span>
+            <p className="mt-4 text-ink-600">{t('cart.empty')}</p>
+            <Link
+              to="/menu"
+              onClick={closePanel}
+              className="mt-6 inline-flex min-h-12 items-center rounded-full bg-primary-600 px-5 text-sm font-semibold text-white hover:bg-primary-700"
+            >
+              {t('cart.browse')}
+            </Link>
           </div>
-        ) : (
-          <>
-            <ul className="flex-1 space-y-4 overflow-y-auto px-5 py-5">
-              {lines.map((line) => (
+        </div>
+      ) : (
+        <>
+          <ul className="flex-1 space-y-4 overflow-y-auto px-5 py-5">
+            {lines.map((line) => {
+              const name = pickLocale(line.name, language);
+              return (
                 <li key={line.id} className="rounded-2xl border border-ink-100 p-4">
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex min-w-0 items-start gap-3">
@@ -97,9 +66,7 @@ export default function CartDrawer() {
                         />
                       ) : null}
                       <div className="min-w-0">
-                        <p className="font-display text-lg font-semibold text-ink-900">
-                          {pickLocale(line.name, language)}
-                        </p>
+                        <p className="font-display text-lg font-semibold text-ink-900">{name}</p>
                         <p className="mt-1 text-sm text-primary-700">{formatPrice(line.price)}</p>
                       </div>
                     </div>
@@ -109,54 +76,61 @@ export default function CartDrawer() {
                       className="inline-flex min-h-12 min-w-12 items-center text-sm font-medium text-ink-500 hover:text-primary-700"
                     >
                       {t('cart.remove')}
+                      <span className="sr-only">: {name}</span>
                     </button>
                   </div>
                   <div className="mt-4 flex items-center justify-between">
                     <div className="inline-flex items-center rounded-full border border-ink-200">
                       <button
                         type="button"
-                        aria-label={t('cart.decrease')}
+                        aria-label={`${t('cart.decrease')}: ${name}`}
                         onClick={() => updateQuantity(line.id, line.quantity - 1)}
                         className="grid h-12 w-12 place-items-center text-ink-800 hover:text-primary-700"
                       >
                         <Minus className="h-4 w-4" />
                       </button>
-                      <span className="min-w-8 text-center text-sm font-semibold tabular-nums">
+                      <span className="min-w-8 text-center text-sm font-semibold tabular-nums" aria-live="polite">
                         {line.quantity}
                       </span>
                       <button
                         type="button"
-                        aria-label={t('cart.increase')}
+                        aria-label={`${t('cart.increase')}: ${name}`}
                         onClick={() => updateQuantity(line.id, line.quantity + 1)}
                         className="grid h-12 w-12 place-items-center text-ink-800 hover:text-primary-700"
                       >
                         <Plus className="h-4 w-4" />
                       </button>
                     </div>
-                    <p className="font-semibold text-ink-900">
-                      {formatPrice(line.price * line.quantity)}
-                    </p>
+                    <p className="font-semibold tabular-nums text-ink-900">{formatPrice(line.price * line.quantity)}</p>
                   </div>
                 </li>
-              ))}
-            </ul>
+              );
+            })}
+          </ul>
 
-            <div className="border-t border-ink-100 px-5 py-5">
-              <div className="flex items-center justify-between text-ink-900">
-                <span className="font-medium">{t('cart.subtotal')}</span>
-                <span className="font-display text-2xl font-semibold">{formatPrice(subtotal)}</span>
-              </div>
-              <p className="mt-2 text-sm text-ink-500">{t('cart.note')}</p>
-              <a
-                href={orderPhone.href}
-                className="mt-4 flex w-full items-center justify-center rounded-full bg-primary-600 px-5 py-3 font-semibold text-white hover:bg-primary-700"
-              >
-                {t('cart.call')} · {orderPhone.display}
-              </a>
+          <div className="border-t border-ink-100 px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-5">
+            <div className="flex items-center justify-between text-ink-900">
+              <span className="font-medium">{t('cart.subtotal')}</span>
+              <span className="font-display text-2xl font-semibold tabular-nums">{formatPrice(subtotal)}</span>
             </div>
-          </>
-        )}
-      </aside>
-    </div>
+            <p className="mt-2 text-sm text-ink-500">{t('cart.note')}</p>
+            <a
+              href={telHref(PRIMARY_PHONE)}
+              className="mt-4 flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-primary-600 px-5 py-3 font-semibold text-white hover:bg-primary-700"
+            >
+              <Phone className="h-4 w-4" strokeWidth={2.25} />
+              {t('cart.call')} · <span className="tabular-nums">{PRIMARY_PHONE.display}</span>
+            </a>
+            <button
+              type="button"
+              onClick={openOrder}
+              className="mt-2 flex min-h-12 w-full items-center justify-center rounded-full border-2 border-secondary-500 bg-white px-5 font-semibold text-secondary-800 hover:bg-secondary-50"
+            >
+              {t('cart.moreWays')}
+            </button>
+          </div>
+        </>
+      )}
+    </Sheet>
   );
 }

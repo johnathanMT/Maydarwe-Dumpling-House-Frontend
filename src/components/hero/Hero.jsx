@@ -1,121 +1,125 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { motion, useReducedMotion } from 'framer-motion';
-import { Phone } from 'lucide-react';
+import { ArrowRight, Phone } from 'lucide-react';
 import {
-  CALL_ORDER_HREF,
-  CONTACT_PHONES,
+  BUSINESS,
   FOODPANDA_LOGO_SRC,
-  FOODPANDA_ORDER_URL,
   GRAB_LOGO_SRC,
-  GRAB_ORDER_URL,
+  PRIMARY_PHONE,
+  telHref,
 } from '../../constants/site';
-import DumplingScene from './DumplingScene';
+import { useBusinessCopy } from '../../lib/businessHours';
+import Eyebrow from '../ui/Eyebrow';
+import OpenStatusBadge from '../ui/OpenStatusBadge';
+import HeroShowcase from './HeroShowcase';
 
+/** "Order on [logo]" in English, "[logo] မှ မှာယူရန်" in Burmese. The link carries the full aria-label. */
+function PartnerLabel({ logoSrc }) {
+  const { t } = useTranslation();
+  const before = t('pages.home.orderOnBefore');
+  const after = t('pages.home.orderOnAfter');
+  return (
+    <span aria-hidden="true" className="inline-flex items-center gap-2 text-sm font-semibold text-ink-800">
+      {before ? <span>{before}</span> : null}
+      <img src={logoSrc} alt="" className="h-[18px] w-auto" loading="lazy" decoding="async" />
+      {after ? <span>{after}</span> : null}
+    </span>
+  );
+}
+
+function PartnerLink({ href, label, logoSrc, ring }) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={label}
+      className={`inline-flex min-h-12 flex-1 items-center justify-center rounded-full bg-brand-pearl px-5 ring-2 ring-inset transition-[transform,box-shadow] duration-200 ease-out-soft hover:-translate-y-0.5 hover:shadow-lift sm:flex-none ${ring}`}
+    >
+      <PartnerLabel logoSrc={logoSrc} />
+    </a>
+  );
+}
+
+/**
+ * Home hero on dark lacquer: the brand in gold foil, the story in one
+ * paragraph, one primary action (call), the delivery apps, and a real
+ * food photo that can turn into the interactive 3D dumpling.
+ *
+ * The entrance is pure CSS (animate-rise) so it starts with the first
+ * paint and never waits for JavaScript. The title only moves, it never
+ * fades, so it counts as painted immediately (good for LCP).
+ */
 export default function Hero() {
   const { t } = useTranslation();
-  const reduce = useReducedMotion();
-  const orderPhone = CONTACT_PHONES[0];
+  const copy = useBusinessCopy();
 
   return (
-    <section className="relative overflow-hidden border-b border-secondary-400/25">
-      <div className="bg-brand-yellow">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 top-0 h-[22rem] sm:h-[26rem]"
-          style={{
-            backgroundImage: 'radial-gradient(circle at 12% 8%, rgb(200 16 46 / 0.08), transparent 32%)',
-          }}
-        />
+    <section className="relative overflow-hidden bg-lacquer text-brand-pearl">
+      <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 pb-14 pt-10 sm:px-6 sm:pt-14 md:grid-cols-[1.1fr_0.9fr] md:gap-10 md:pb-20 lg:gap-16 lg:px-8 lg:pb-24 lg:pt-20">
+        <div className="text-center md:text-left">
+          <div className="animate-rise">
+            <Eyebrow tone="dark" rule>
+              {t('pages.home.kicker', copy)}
+            </Eyebrow>
+          </div>
 
-        <div className="relative mx-auto flex max-w-6xl flex-col items-center px-4 pb-8 pt-10 text-center sm:px-6 sm:pb-10 sm:pt-12 lg:px-8 lg:pt-14">
-          <motion.p
-            initial={reduce ? false : { opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-sm font-semibold uppercase tracking-[0.18em] text-secondary-700"
-          >
-            {t('pages.home.kicker')}
-          </motion.p>
-
-          <motion.h1
-            initial={reduce ? false : { opacity: 0, y: 18, scale: 0.96 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ type: 'spring', stiffness: 200, damping: 18 }}
-            className="mt-4 flex flex-col items-center"
-          >
-            <span className="max-w-full font-display text-[clamp(2.4rem,14vw,3.15rem)] font-extrabold text-primary-600 antialiased [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale] [text-shadow:0_1px_0_#8B0A1A,0_0_4px_#C8102E,0_0_1px_#C8102E] sm:text-7xl md:text-8xl lg:text-[7.5rem]">
+          <h1 className="mt-5 animate-rise-still font-display [animation-delay:60ms]">
+            <span className="text-gold-foil block pb-1 text-[clamp(3.25rem,13vw,6.75rem)] font-extrabold leading-[1.05]">
               မေဓာဝီ
             </span>
-            <span className="mt-2 max-w-full font-display text-[clamp(1.35rem,8vw,1.85rem)] font-extrabold text-ink-950 antialiased [-webkit-font-smoothing:antialiased] sm:mt-3 sm:text-5xl md:text-6xl lg:text-7xl">
+            <span className="mt-1 block text-[clamp(1.6rem,6.2vw,3.1rem)] font-bold leading-tight text-brand-pearl">
               ဖက်ထုပ်အိုးကပ်
             </span>
-          </motion.h1>
+          </h1>
 
-          <motion.p
-            initial={reduce ? false : { opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.12 }}
-            className="mt-5 font-display text-lg font-semibold text-secondary-700 sm:text-2xl"
-          >
+          <p className="mt-4 animate-rise font-display text-lg font-medium italic text-secondary-200/90 [animation-delay:120ms] sm:text-xl">
             {t('brand.english')}
-          </motion.p>
-          <p className="mt-5 max-w-3xl text-pretty text-base leading-relaxed text-ink-700 sm:text-lg">
+          </p>
+
+          <div aria-hidden="true" className="gold-rule mx-auto mt-6 w-40 animate-rise [animation-delay:160ms] md:mx-0" />
+
+          <p className="mx-auto mt-6 max-w-xl animate-rise text-pretty text-base leading-relaxed text-brand-pearl/80 [animation-delay:200ms] sm:text-lg md:mx-0">
             {t('pages.home.sub')}
           </p>
 
-          <div className="mt-6 flex w-full max-w-xl flex-col flex-wrap gap-4 sm:max-w-3xl sm:flex-row sm:justify-center">
+          <div className="mt-8 flex animate-rise flex-col gap-3 [animation-delay:260ms] sm:flex-row sm:flex-wrap sm:justify-center md:justify-start">
             <a
-              href={CALL_ORDER_HREF}
-              className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-xl bg-primary-600 px-5 text-sm font-bold text-white shadow-md transition-colors hover:bg-primary-700 sm:w-auto sm:min-w-[12.5rem]"
+              href={telHref(PRIMARY_PHONE)}
+              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-primary-600 px-6 font-semibold text-white shadow-cta transition-[transform,background-color] duration-200 ease-out-soft hover:-translate-y-0.5 hover:bg-primary-700"
             >
               <Phone className="h-4 w-4" strokeWidth={2.25} />
               {t('pages.home.orderByPhone')}
+              <span className="tabular-nums text-primary-100">· {PRIMARY_PHONE.display}</span>
             </a>
-            <a
-              href={GRAB_ORDER_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex min-h-[48px] w-full items-center justify-center rounded-xl border-2 border-[#00B14F] bg-white px-6 py-2 shadow-sm transition-colors hover:bg-green-50 sm:w-auto sm:min-w-[12.5rem]"
-            >
-              <span className="mr-2 font-bold text-[#00B14F]">Order on</span>
-              <img src={GRAB_LOGO_SRC} alt="Grab" className="h-5 w-auto" loading="lazy" />
-            </a>
-            <a
-              href={FOODPANDA_ORDER_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex min-h-[48px] w-full items-center justify-center rounded-xl border-2 border-[#D70F64] bg-white px-6 py-2 shadow-sm transition-colors hover:bg-pink-50 sm:w-auto sm:min-w-[12.5rem]"
-            >
-              <span className="mr-2 font-bold text-[#D70F64]">Order on</span>
-              <img src={FOODPANDA_LOGO_SRC} alt="foodpanda" className="h-5 w-auto" loading="lazy" />
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <div className="bg-brand-pearl">
-        <div className="relative mx-auto flex max-w-6xl flex-col items-center px-4 pb-10 pt-2 text-center sm:px-6 sm:pb-12 lg:px-8 lg:pb-14">
-          <div className="w-full">
-            <DumplingScene />
-          </div>
-          <p className="mt-1 text-xs font-medium text-ink-500 sm:text-sm">{t('pages.home.tapSpin')}</p>
-
-          <div className="mt-6 flex w-full flex-col gap-3 sm:mt-8 sm:w-auto sm:flex-row sm:justify-center">
             <Link
               to="/menu"
-              className="inline-flex min-h-12 items-center justify-center rounded-full bg-primary-600 px-7 py-3.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-primary-700 sm:text-base"
+              className="group inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 font-semibold text-secondary-200 ring-1 ring-inset ring-secondary-400/50 transition-colors hover:bg-secondary-400/10 hover:text-secondary-100"
             >
               {t('pages.home.viewMenu')}
+              <ArrowRight className="h-4 w-4 transition-transform duration-200 ease-out-soft group-hover:translate-x-0.5" />
             </Link>
-            <a
-              href={orderPhone.href}
-              className="inline-flex min-h-12 items-center justify-center rounded-full border-2 border-secondary-500 bg-white px-7 py-3.5 text-sm font-semibold text-secondary-800 transition-colors hover:bg-secondary-50 sm:text-base"
-            >
-              {t('pages.home.orderNow')}
-            </a>
           </div>
+
+          <div className="mt-3 flex animate-rise gap-3 [animation-delay:320ms] sm:justify-center md:justify-start">
+            <PartnerLink href={BUSINESS.links.grab} label={t('order.grab')} logoSrc={GRAB_LOGO_SRC} ring="ring-partner-grab/60" />
+            <PartnerLink
+              href={BUSINESS.links.foodpanda}
+              label={t('order.foodpanda')}
+              logoSrc={FOODPANDA_LOGO_SRC}
+              ring="ring-partner-foodpanda/50"
+            />
+          </div>
+
+          <OpenStatusBadge tone="dark" className="mt-6 animate-rise [animation-delay:380ms]" />
+        </div>
+
+        {/* Moves but never fades: the photo is likely the largest paint on wide screens. */}
+        <div className="animate-rise-still [animation-delay:120ms]">
+          <HeroShowcase />
         </div>
       </div>
+      <div aria-hidden="true" className="gold-rule" />
     </section>
   );
 }

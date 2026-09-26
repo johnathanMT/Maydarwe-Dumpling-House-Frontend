@@ -1,99 +1,171 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Clock, MapPin, Phone } from 'lucide-react';
-import { CONTACT_PHONES } from '../constants/site';
+import { Clock, MapPin, Navigation, Phone } from 'lucide-react';
+import OpenStatusBadge from '../components/ui/OpenStatusBadge';
+import PageHeader from '../components/ui/PageHeader';
+import { Reveal, RevealGroup, RevealItem } from '../components/ui/Reveal';
+import { useUiActions } from '../context/UiContext';
+import {
+  BUSINESS,
+  hasAddress,
+  mapsDirectionsUrl,
+  mapsEmbedUrl,
+  telHref,
+} from '../constants/site';
+import { useBusinessCopy, useLang } from '../lib/businessHours';
+import { usePageMeta } from '../lib/seo';
+
+/**
+ * Click-to-load map. The Google Maps iframe (~500 KB and third-party
+ * cookies) is only requested when the visitor asks for it.
+ */
+function MapEmbed({ title }) {
+  const { t } = useTranslation();
+  const [loaded, setLoaded] = useState(false);
+
+  return (
+    <div className="relative mt-6 aspect-[4/3] overflow-hidden rounded-3xl border border-ink-100 bg-ink-50 sm:aspect-[16/7]">
+      {loaded ? (
+        <iframe
+          title={title}
+          src={mapsEmbedUrl()}
+          className="h-full w-full border-0"
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          allowFullScreen
+        />
+      ) : (
+        <div className="grid h-full place-items-center bg-[radial-gradient(circle_at_30%_30%,rgb(232_160_6_/_0.14),transparent_45%),radial-gradient(circle_at_75%_70%,rgb(200_16_46_/_0.1),transparent_45%)] p-6 text-center">
+          <div>
+            <span className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-white text-primary-700 shadow-sm ring-1 ring-ink-100">
+              <MapPin className="h-6 w-6" strokeWidth={1.75} />
+            </span>
+            <button
+              type="button"
+              onClick={() => setLoaded(true)}
+              className="mt-4 inline-flex min-h-12 items-center rounded-full bg-ink-950 px-6 font-semibold text-white hover:bg-ink-800"
+            >
+              {t('pages.contact.mapShow')}
+            </button>
+            <p className="mt-2 text-xs text-ink-500">{t('pages.contact.mapNote')}</p>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function Contact() {
   const { t } = useTranslation();
-  const primaryPhone = CONTACT_PHONES[0];
+  const lang = useLang();
+  const copy = useBusinessCopy();
+  const { openOrder } = useUiActions();
+  const addressKnown = hasAddress();
+  const address = BUSINESS.address[lang] || BUSINESS.address.en;
+  usePageMeta('contact', { path: '/contact' });
 
   return (
-    <div className="bg-white">
-      <section className="border-b border-secondary-400/25 bg-[linear-gradient(180deg,#fff8e8_0%,#ffffff_72%)]">
-        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
-          <p className="text-sm font-semibold uppercase text-secondary-700">{t('pages.contact.kicker')}</p>
-          <h1 className="mt-2 font-display text-4xl font-semibold text-ink-900 sm:text-5xl lg:text-6xl">
-            {t('pages.contact.title')}
-          </h1>
-          <p className="mt-4 max-w-2xl text-lg text-ink-600">{t('pages.contact.sub')}</p>
-        </div>
-      </section>
+    <div className="bg-brand-pearl">
+      <PageHeader kicker={t('pages.contact.kicker')} title={t('pages.contact.title')} subtitle={t('pages.contact.sub')} />
 
       <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-          <article className="rounded-3xl border border-ink-100 bg-white p-6 shadow-[0_18px_40px_-28px_rgb(34_30_27_/_0.45)] lg:col-span-2">
+        <RevealGroup as="div" className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <RevealItem as="article" className="rounded-[1.75rem] bg-white p-6 shadow-card ring-1 ring-ink-900/5 md:col-span-2 lg:col-span-1">
             <h2 className="font-display text-2xl font-semibold text-ink-900">{t('pages.contact.phonesTitle')}</h2>
             <ul className="mt-6 space-y-3">
-              {CONTACT_PHONES.map(({ display, href }) => (
-                <li key={href}>
+              {BUSINESS.phones.map((phone) => (
+                <li key={phone.e164}>
                   <a
-                    href={href}
-                    className="flex items-center justify-between gap-4 rounded-2xl border border-ink-100 px-5 py-4 text-ink-900 transition-colors hover:border-secondary-400 hover:bg-secondary-50"
+                    href={telHref(phone)}
+                    className="flex items-center justify-between gap-4 rounded-2xl px-5 py-4 text-ink-900 ring-1 ring-inset ring-ink-100 transition-colors hover:bg-secondary-50 hover:ring-secondary-400"
                   >
                     <span className="inline-flex items-center gap-3">
                       <span className="grid h-10 w-10 place-items-center rounded-full bg-primary-50 text-primary-700">
                         <Phone className="h-4 w-4" strokeWidth={2} />
                       </span>
-                      <span className="font-display text-xl font-semibold tabular-nums">{display}</span>
+                      <span className="font-display text-xl font-semibold tabular-nums">{phone.display}</span>
                     </span>
-                    <span className="text-sm font-semibold text-primary-700">{t('pages.home.call')}</span>
                   </a>
                 </li>
               ))}
             </ul>
-          </article>
+          </RevealItem>
 
-          <article className="rounded-3xl border border-ink-100 bg-white p-6">
+          <RevealItem as="article" className="rounded-[1.75rem] bg-white p-6 shadow-card ring-1 ring-ink-900/5">
             <h2 className="font-display text-2xl font-semibold text-ink-900">{t('pages.contact.hoursTitle')}</h2>
             <p className="mt-4 inline-flex items-start gap-3 text-ink-700">
               <Clock className="mt-0.5 h-5 w-5 shrink-0 text-secondary-700" strokeWidth={1.75} />
-              <span>{t('footer.hoursValue')}</span>
+              <span>{t('hours.daily', copy)}</span>
             </p>
-            <h3 className="mt-8 font-display text-xl font-semibold text-ink-900">{t('pages.contact.cityTitle')}</h3>
-            <p className="mt-3 inline-flex items-start gap-3 text-ink-700">
+            <OpenStatusBadge className="mt-4" />
+          </RevealItem>
+
+          <RevealItem as="article" className="rounded-[1.75rem] bg-white p-6 shadow-card ring-1 ring-ink-900/5">
+            <h2 className="font-display text-2xl font-semibold text-ink-900">
+              {addressKnown ? t('pages.contact.addressTitle') : t('pages.contact.cityTitle')}
+            </h2>
+            <p className="mt-4 inline-flex items-start gap-3 text-ink-700">
               <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-secondary-700" strokeWidth={1.75} />
               <span>
-                <span className="block font-semibold text-ink-900">{t('pages.contact.city')}</span>
+                <span className="block font-semibold text-ink-900">
+                  {addressKnown ? address : copy.city}
+                </span>
                 <span className="mt-1 block text-sm text-ink-600">{t('pages.contact.cityNote')}</span>
               </span>
             </p>
-          </article>
-        </div>
+            {addressKnown ? (
+              <a
+                href={mapsDirectionsUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-5 inline-flex min-h-12 items-center gap-2 rounded-full border-2 border-secondary-500 bg-white px-5 text-sm font-semibold text-secondary-800 hover:bg-secondary-50"
+              >
+                <Navigation className="h-4 w-4" strokeWidth={2} />
+                {t('pages.contact.directions')}
+                <span className="sr-only">({t('order.newTab')})</span>
+              </a>
+            ) : null}
+          </RevealItem>
+        </RevealGroup>
 
-        <article className="mt-6 rounded-3xl border border-ink-100 bg-ink-50/70 p-6 sm:p-8">
+        {addressKnown ? <MapEmbed title={t('pages.contact.mapTitle', { name: BUSINESS.name[lang] })} /> : null}
+
+        <Reveal as="article" className="mt-6 rounded-[1.75rem] bg-white p-6 ring-1 ring-inset ring-secondary-400/20 sm:p-8">
           <h2 className="font-display text-2xl font-semibold text-ink-900">{t('pages.contact.orderTitle')}</h2>
           <ol className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-3">
             {['pages.contact.order1', 'pages.contact.order2', 'pages.contact.order3'].map((key, index) => (
-              <li key={key} className="rounded-2xl bg-white p-5">
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-primary-600 text-sm font-bold text-white">
+              <li key={key} className="rounded-2xl bg-brand-pearl p-5">
+                <span className="grid h-9 w-9 place-items-center rounded-full bg-lacquer font-display text-sm font-semibold text-secondary-300 ring-1 ring-secondary-400/40">
                   {index + 1}
                 </span>
                 <p className="mt-3 text-ink-700">{t(key)}</p>
               </li>
             ))}
           </ol>
-        </article>
+        </Reveal>
 
-        <div className="mt-10 overflow-hidden rounded-[2rem] bg-primary-600 px-6 py-10 text-white sm:px-10 lg:flex lg:items-center lg:justify-between">
+        <Reveal className="mt-10 overflow-hidden rounded-[2rem] bg-gradient-to-br from-primary-600 via-primary-700 to-primary-900 px-6 py-10 text-white shadow-lift sm:px-10 md:flex md:items-center md:justify-between md:gap-8">
           <div>
             <p className="font-display text-3xl font-semibold">{t('brand.official')}</p>
             <p className="mt-2 text-primary-50">{t('pages.contact.sub')}</p>
           </div>
-          <div className="mt-6 flex flex-wrap gap-3 lg:mt-0">
+          <div className="mt-6 flex flex-wrap gap-3 md:mt-0 md:shrink-0">
             <Link
               to="/menu"
               className="inline-flex min-h-12 items-center rounded-full bg-white px-6 py-3 font-semibold text-primary-700 hover:bg-secondary-50"
             >
               {t('pages.home.viewMenu')}
             </Link>
-            <a
-              href={primaryPhone.href}
+            <button
+              type="button"
+              onClick={openOrder}
               className="inline-flex min-h-12 items-center rounded-full border border-white/40 px-6 py-3 font-semibold text-white hover:bg-white/10"
             >
-              {t('pages.home.orderNow')}
-            </a>
+              {t('nav.order')}
+            </button>
           </div>
-        </div>
+        </Reveal>
       </section>
     </div>
   );

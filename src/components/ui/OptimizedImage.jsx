@@ -8,6 +8,7 @@ export default function OptimizedImage({
   width,
   height,
   className = '',
+  pictureClassName = '',
   priority = false,
 }) {
   const usePicture = /\.(jpe?g|png)$/i.test(src);
@@ -27,7 +28,7 @@ export default function OptimizedImage({
   if (!usePicture) return image;
 
   return (
-    <picture>
+    <picture className={pictureClassName || undefined}>
       <source type="image/avif" srcSet={alternateSrc(src, 'avif')} />
       <source type="image/webp" srcSet={alternateSrc(src, 'webp')} />
       {image}

@@ -1,11 +1,13 @@
-import { Component, Suspense, useLayoutEffect, useMemo, useRef } from 'react';
+import { Suspense, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Center, ContactShadows, useGLTF } from '@react-three/drei';
 import { Box3, Color, Vector3 } from 'three';
 import { useReducedMotion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import OptimizedImage from '../ui/OptimizedImage';
 
+// useGLTF(url, useDraco = true, useMeshopt = false): the meshopt decoder compiles
+// WebAssembly on load, which the production CSP (script-src 'self') blocks, and the
+// model does not need it.
 export const DUMPLING_MODEL_URL =
   'https://res.cloudinary.com/dhlhzmmtt/image/upload/v1790346466/Big_dumplings_3d_model_fopwnk.glb';
 
@@ -111,9 +113,9 @@ function Garnish({ kind, target, delay, spin, tilt, reduce }) {
   );
 }
 
-function DumplingModel({ reduce, spinApi }) {
+function DumplingModel({ reduce, spinApi, onReady }) {
   const group = useRef();
-  const { scene } = useGLTF(DUMPLING_MODEL_URL);
+  const { scene } = useGLTF(DUMPLING_MODEL_URL, true, false);
   const clone = useMemo(() => scene.clone(true), [scene]);
   const yaw = useRef(reduce ? 0.35 : 0);
   const spin = useRef({ from: reduce ? 0.35 : 0, progress: reduce ? 1 : 0 });
@@ -144,6 +146,10 @@ function DumplingModel({ reduce, spinApi }) {
     });
   }, [clone]);
 
+  useEffect(() => {
+    onReady?.();
+  }, [onReady]);
+
   useLayoutEffect(() => {
     spinApi.current = () => {
       spin.current.from = yaw.current;
@@ -172,26 +178,27 @@ function DumplingModel({ reduce, spinApi }) {
   );
 }
 
-function SilverBackdrop() {
+/** Dark lacquer stage with a warm gold halo behind the dumpling (matches the hero). */
+function LacquerBackdrop() {
   return (
     <group>
       <mesh position={[0, 0.45, -3.6]}>
         <planeGeometry args={[16, 10]} />
-        <meshStandardMaterial color="#D6DCE4" roughness={0.34} metalness={0.52} />
+        <meshStandardMaterial color="#0E0A08" roughness={0.7} metalness={0.2} />
       </mesh>
       <mesh position={[0, 0.32, -2.75]}>
         <circleGeometry args={[3.7, 64]} />
-        <meshBasicMaterial color="#C5D0DC" transparent opacity={0.3} />
+        <meshBasicMaterial color="#E8A006" transparent opacity={0.05} />
       </mesh>
       <mesh position={[0, 0.3, -2.4]}>
         <circleGeometry args={[2.7, 64]} />
-        <meshBasicMaterial color="#F5F8FC" transparent opacity={0.58} />
+        <meshBasicMaterial color="#FFE9B0" transparent opacity={0.12} />
       </mesh>
     </group>
   );
 }
 
-function SceneContent({ reduce, spinApi }) {
+function SceneContent({ reduce, spinApi, onReady }) {
   const garnishes = useGarnishes(24);
 
   return (
@@ -208,60 +215,60 @@ function SceneContent({ reduce, spinApi }) {
       <spotLight position={[0, 4.2, -6.2]} angle={0.42} penumbra={0.78} intensity={2.8} color="#FFFFFF" />
       <pointLight position={[0, 1.2, -3.2]} intensity={1.55} color="#E4EAF2" distance={9} decay={2} />
 
-      <SilverBackdrop />
+      <LacquerBackdrop />
 
       <Suspense fallback={null}>
-        <DumplingModel reduce={reduce} spinApi={spinApi} />
+        <DumplingModel reduce={reduce} spinApi={spinApi} onReady={onReady} />
+        {/* Baked once after the model loads instead of re-rendering a depth pass every frame. */}
+        <ContactShadows position={[0, -1.55, 0]} opacity={0.2} scale={10} blur={3.2} far={2.8} frames={1} />
       </Suspense>
 
       {garnishes.map((item) => (
         <Garnish key={item.id} {...item} reduce={reduce} />
       ))}
 
-      <ContactShadows position={[0, -1.55, 0]} opacity={0.2} scale={10} blur={3.2} far={2.8} />
     </>
   );
 }
 
-class SceneErrorBoundary extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { failed: false };
-  }
+/** Render only while the scene is on screen and the tab is visible. */
+function useFrameloop(ref) {
+  const [inView, setInView] = useState(true);
+  const [visible, setVisible] = useState(() => document.visibilityState !== 'hidden');
 
-  static getDerivedStateFromError() {
-    return { failed: true };
-  }
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || typeof IntersectionObserver === 'undefined') return undefined;
+    const observer = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting), { threshold: 0.05 });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [ref]);
 
-  render() {
-    if (this.state.failed) return this.props.fallback;
-    return this.props.children;
-  }
+  useEffect(() => {
+    const onChange = () => setVisible(document.visibilityState !== 'hidden');
+    document.addEventListener('visibilitychange', onChange);
+    return () => document.removeEventListener('visibilitychange', onChange);
+  }, []);
+
+  return inView && visible ? 'always' : 'never';
 }
 
-function SceneFallback() {
-  const { t } = useTranslation();
-
-  return (
-    <OptimizedImage
-      src="/IMG_7922.JPG"
-      alt={t('pages.menu.dumplings')}
-      width={1200}
-      height={800}
-      className="h-full w-full object-contain"
-    />
-  );
-}
-
-export default function DumplingScene() {
+/**
+ * Interactive 3D dumpling. Loaded lazily by <HeroShowcase> (its own chunk
+ * with three.js), never on first paint. Errors propagate to the caller's
+ * error boundary so the photo simply stays in place.
+ */
+export default function DumplingScene({ onReady }) {
   const { t } = useTranslation();
   const reduce = useReducedMotion();
   const spinApi = useRef(() => {});
+  const wrapperRef = useRef(null);
+  const frameloop = useFrameloop(wrapperRef);
 
   return (
     <div
-      className="relative mx-auto h-[26rem] w-full max-w-5xl cursor-pointer sm:h-[32rem] lg:h-[36rem]"
-      onPointerDown={() => spinApi.current()}
+      ref={wrapperRef}
+      className="relative h-full w-full cursor-pointer"
       onClick={() => spinApi.current()}
       onKeyDown={(event) => {
         if (event.key === 'Enter' || event.key === ' ') {
@@ -278,20 +285,20 @@ export default function DumplingScene() {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            'radial-gradient(ellipse 44% 40% at 50% 56%, rgba(255,255,255,0.92) 0%, rgba(214,222,232,0.5) 40%, transparent 64%), radial-gradient(ellipse 72% 64% at 50% 58%, #e8edf3 0%, #cfd6df 56%, #fdfaf6 100%)',
+            'radial-gradient(ellipse 60% 45% at 50% 55%, rgb(255 222 150 / 0.22) 0%, rgb(232 160 6 / 0.08) 45%, transparent 70%), #120E0C',
         }}
       />
-      <SceneErrorBoundary fallback={<SceneFallback />}>
-        <Canvas
-          dpr={[1, 2]}
-          camera={{ position: [0, 1.45, 5], fov: 34 }}
-          gl={{ antialias: true, alpha: true, toneMappingExposure: 1.35 }}
-        >
-          <SceneContent reduce={Boolean(reduce)} spinApi={spinApi} />
-        </Canvas>
-      </SceneErrorBoundary>
+      <Canvas
+        frameloop={frameloop}
+        dpr={[1, 1.5]}
+        camera={{ position: [0, 1.5, 6.2], fov: 36 }}
+        gl={{ antialias: true, alpha: true, toneMappingExposure: 1.35, powerPreference: 'low-power' }}
+      >
+        <SceneContent reduce={Boolean(reduce)} spinApi={spinApi} onReady={onReady} />
+      </Canvas>
     </div>
   );
 }
 
-useGLTF.preload(DUMPLING_MODEL_URL);
+// Safe here: this module only loads when the visitor asks for 3D (or on an idle desktop).
+useGLTF.preload(DUMPLING_MODEL_URL, true, false);

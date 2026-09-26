@@ -2,7 +2,8 @@ import { NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Clock, Phone } from 'lucide-react';
 import BrandLogo from './ui/BrandLogo';
-import { CONTACT_PHONES, NAV_LINKS } from '../constants/site';
+import { BUSINESS, NAV_LINKS, telHref } from '../constants/site';
+import { useBusinessCopy } from '../lib/businessHours';
 
 function FooterHeading({ children }) {
   return <h2 className="font-display text-lg font-semibold text-white">{children}</h2>;
@@ -11,6 +12,7 @@ function FooterHeading({ children }) {
 export default function Footer() {
   const { t } = useTranslation();
   const year = new Date().getFullYear();
+  const copy = useBusinessCopy();
 
   return (
     <footer className="bg-ink-950 text-ink-300">
@@ -44,14 +46,14 @@ export default function Footer() {
         <div className="lg:col-span-2">
           <FooterHeading>{t('footer.contact')}</FooterHeading>
           <ul className="mt-4 space-y-3">
-            {CONTACT_PHONES.map(({ display, href }) => (
-              <li key={href}>
+            {BUSINESS.phones.map((phone) => (
+              <li key={phone.e164}>
                 <a
-                  href={href}
+                  href={telHref(phone)}
                   className="inline-flex min-h-12 items-center gap-2 text-ink-100 transition-colors hover:text-secondary-300"
                 >
                   <Phone className="h-4 w-4 text-secondary-400" strokeWidth={2} />
-                  <span className="tabular-nums">{display}</span>
+                  <span className="tabular-nums">{phone.display}</span>
                 </a>
               </li>
             ))}
@@ -62,7 +64,7 @@ export default function Footer() {
           <FooterHeading>{t('footer.hours')}</FooterHeading>
           <p className="mt-4 inline-flex items-start gap-2 text-ink-100">
             <Clock className="mt-0.5 h-4 w-4 shrink-0 text-secondary-400" strokeWidth={2} />
-            <span>{t('footer.hoursValue')}</span>
+            <span>{t('hours.daily', copy)}</span>
           </p>
         </div>
       </div>

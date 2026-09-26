@@ -1,8 +1,12 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Flame, Hand, Soup } from 'lucide-react';
-import BrandLogo from '../components/ui/BrandLogo';
+import { ArrowRight, Flame, Hand, Soup } from 'lucide-react';
 import OptimizedImage from '../components/ui/OptimizedImage';
+import PageHeader from '../components/ui/PageHeader';
+import Eyebrow from '../components/ui/Eyebrow';
+import { Reveal, RevealGroup, RevealItem } from '../components/ui/Reveal';
+import { BRAND_LOGO_SRC } from '../constants/site';
+import { usePageMeta } from '../lib/seo';
 
 const VALUES = [
   { icon: Hand, titleKey: 'pages.about.value1Title', bodyKey: 'pages.about.value1Body' },
@@ -12,68 +16,72 @@ const VALUES = [
 
 export default function About() {
   const { t } = useTranslation();
+  usePageMeta('about', { path: '/about' });
 
   return (
-    <div className="bg-white">
-      <section className="border-b border-secondary-400/25 bg-[linear-gradient(180deg,#fff8e8_0%,#ffffff_72%)]">
-        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
-          <p className="text-sm font-semibold uppercase text-secondary-700">{t('pages.about.kicker')}</p>
-          <h1 className="mt-2 font-display text-4xl font-semibold text-ink-900 sm:text-5xl lg:text-6xl">
-            {t('pages.about.title')}
-          </h1>
-          <p className="mt-3 font-display text-xl font-semibold text-primary-600 sm:text-2xl">
-            {t('brand.official')}
-          </p>
-          <p className="mt-1 text-lg text-secondary-700">{t('brand.english')}</p>
-          <p className="mt-4 max-w-2xl text-lg text-ink-600">{t('pages.about.lead')}</p>
-        </div>
-      </section>
+    <div className="bg-brand-pearl">
+      <PageHeader kicker={t('pages.about.kicker')} title={t('pages.about.title')} subtitle={t('pages.about.lead')}>
+        <p className="mt-6 font-display text-xl font-semibold text-secondary-200 sm:text-2xl">{t('brand.official')}</p>
+        <p className="mt-1 font-display text-lg italic text-brand-pearl/70">{t('brand.english')}</p>
+      </PageHeader>
 
-      <section className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-12 lg:items-center lg:gap-16 lg:px-8 lg:py-20">
-        <div className="lg:col-span-5">
-          <div className="overflow-hidden rounded-[2rem] border border-ink-100 bg-ink-50 p-8 sm:p-10">
-            <BrandLogo size="footer" />
+      <section className="mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 md:grid-cols-2 md:gap-10 md:py-20 lg:gap-20 lg:px-8 lg:py-24">
+        <Reveal className="relative mx-auto w-full max-w-md">
+          <div className="rounded-[2.5rem] bg-gradient-to-br from-secondary-200 via-secondary-600 to-secondary-900 p-[2px] shadow-gold">
             <OptimizedImage
               src="/IMG_7928.JPG"
-              alt={t('pages.menu.dumplings')}
-              width={800}
-              height={600}
-              className="mt-8 h-64 w-full rounded-3xl object-cover sm:h-80"
+              alt={t('pages.home.heroPhotoAlt')}
+              width={1080}
+              height={1145}
+              pictureClassName="block"
+              className="aspect-[4/5] w-full rounded-[calc(2.5rem-2px)] object-cover"
             />
           </div>
-        </div>
-        <div className="lg:col-span-7">
-          <p className="text-lg leading-relaxed text-ink-700">{t('pages.about.body')}</p>
+          <img
+            src={BRAND_LOGO_SRC}
+            alt=""
+            width={112}
+            height={112}
+            loading="lazy"
+            decoding="async"
+            className="absolute -bottom-6 -left-4 h-24 w-24 rounded-3xl object-cover shadow-lift ring-4 ring-brand-pearl sm:h-28 sm:w-28"
+          />
+        </Reveal>
+
+        <Reveal>
+          <Eyebrow rule>{t('pages.about.kicker')}</Eyebrow>
+          <p className="mt-5 font-display text-2xl leading-relaxed text-ink-900 sm:text-[1.7rem]">{t('pages.about.body')}</p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
               to="/menu"
-              className="inline-flex min-h-12 items-center rounded-full bg-primary-600 px-6 py-3 text-sm font-semibold text-white hover:bg-primary-700 sm:text-base"
+              className="group inline-flex min-h-12 items-center gap-2 rounded-full bg-primary-600 px-6 font-semibold text-white shadow-cta transition-colors hover:bg-primary-700"
             >
               {t('pages.home.viewMenu')}
+              <ArrowRight className="h-4 w-4 transition-transform duration-200 ease-out-soft group-hover:translate-x-0.5" />
             </Link>
             <Link
               to="/contact"
-              className="inline-flex min-h-12 items-center rounded-full border-2 border-secondary-500 bg-white px-6 py-3 text-sm font-semibold text-secondary-800 hover:bg-secondary-50 sm:text-base"
+              className="inline-flex min-h-12 items-center rounded-full px-6 font-semibold text-ink-900 ring-1 ring-inset ring-ink-200 transition-colors hover:ring-secondary-400"
             >
               {t('nav.contact')}
             </Link>
           </div>
-        </div>
+        </Reveal>
       </section>
 
-      <section className="border-t border-ink-100 bg-ink-50/60">
-        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
-          <ul className="grid grid-cols-1 gap-6 md:grid-cols-3">
+      <section className="border-t border-secondary-400/20 bg-white">
+        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20 lg:px-8">
+          <RevealGroup className="grid grid-cols-1 gap-6 md:grid-cols-3 lg:gap-8">
             {VALUES.map(({ icon: Icon, titleKey, bodyKey }) => (
-              <li key={titleKey} className="rounded-3xl border border-ink-100 bg-white p-6">
-                <span className="grid h-12 w-12 place-items-center rounded-full bg-primary-50 text-primary-700">
-                  <Icon className="h-5 w-5" strokeWidth={1.75} />
+              <RevealItem key={titleKey} className="rounded-[1.75rem] bg-brand-pearl p-6 ring-1 ring-inset ring-secondary-400/20 lg:p-8">
+                <span className="grid h-12 w-12 place-items-center rounded-full bg-lacquer text-secondary-300 ring-1 ring-secondary-400/40">
+                  <Icon className="h-5 w-5" strokeWidth={1.5} />
                 </span>
-                <h2 className="mt-5 font-display text-2xl font-semibold text-ink-900">{t(titleKey)}</h2>
-                <p className="mt-2 text-ink-600">{t(bodyKey)}</p>
-              </li>
+                <h2 className="mt-6 font-display text-2xl font-semibold text-ink-900">{t(titleKey)}</h2>
+                <p className="mt-2 leading-relaxed text-ink-600">{t(bodyKey)}</p>
+              </RevealItem>
             ))}
-          </ul>
+          </RevealGroup>
         </div>
       </section>
     </div>

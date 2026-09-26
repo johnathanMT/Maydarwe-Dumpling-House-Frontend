@@ -1,10 +1,14 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Plus } from 'lucide-react';
-import { useCart } from '../context/CartContext';
-import ChefMascot from '../components/hero/ChefMascot';
-import DishPhoto from '../components/menu/DishPhoto';
-import { CATEGORIES, MENU_ITEMS, formatPrice, pickLocale } from '../data/menu';
+import { AnimatePresence, m } from 'framer-motion';
+import { useCartActions } from '../context/CartContext';
+import { useLang } from '../lib/businessHours';
+import { usePageMeta } from '../lib/seo';
+import { DURATION, EASE_OUT, fadeUp, stagger } from '../lib/motion';
+import { useAddedFlash } from '../hooks/useAddedFlash';
+import PageHeader from '../components/ui/PageHeader';
+import DishCard from '../components/menu/DishCard';
+import { CATEGORIES, MENU_ITEMS, pickLocale } from '../data/menu';
 
 const FILTERS = [
   { id: 'all', labelKey: 'pages.menu.all' },
@@ -13,123 +17,49 @@ const FILTERS = [
   { id: 'noodles', labelKey: 'pages.menu.noodles' },
 ];
 
-function MenuCard({ item, language, added, onAdd }) {
-  const { t } = useTranslation();
-  const available = item.inStock;
+const ITEMS_BY_CATEGORY = Object.fromEntries(
+  CATEGORIES.map(({ id }) => [id, MENU_ITEMS.filter((item) => item.category === id)])
+);
 
-  return (
-    <article
-      className={`group flex h-full flex-col overflow-hidden rounded-3xl border bg-white shadow-[0_18px_40px_-28px_rgb(34_30_27_/_0.45)] transition duration-300 ${
-        available
-          ? 'border-ink-100 hover:-translate-y-1 hover:border-secondary-300/70 hover:shadow-[0_24px_50px_-24px_rgb(34_30_27_/_0.5)]'
-          : 'border-ink-100 opacity-80'
-      }`}
-    >
-      <div className="relative">
-        <DishPhoto item={item} alt={pickLocale(item.name, language)} />
-        {!available ? (
-          <span className="absolute left-4 top-4 rounded-full bg-ink-950/90 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-secondary-300 ring-1 ring-secondary-400/40">
-            {t('pages.menu.outOfStock')}
-          </span>
-        ) : (
-          <span className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-primary-700 shadow-sm">
-            {formatPrice(item.price)}
-          </span>
-        )}
-      </div>
-
-      <div className="flex flex-1 flex-col px-5 pb-5 pt-5">
-        <h3 className="font-display text-xl font-semibold text-ink-900">{pickLocale(item.name, language)}</h3>
-        <p className="mt-1 text-sm text-ink-500">
-          {language === 'my' ? item.name.en : item.name.my}
-        </p>
-        <p className="mt-3 flex-1 text-sm text-ink-600">{pickLocale(item.blurb, language)}</p>
-
-        <div className="mt-6 flex items-end justify-between gap-3">
-          <p className="font-display text-lg font-semibold text-primary-700">{formatPrice(item.price)}</p>
-          <button
-            type="button"
-            disabled={!available}
-            onClick={() => onAdd(item)}
-            className={`inline-flex min-h-12 items-center gap-2 rounded-full px-4 text-sm font-semibold transition-colors ${
-              available
-                ? 'bg-primary-600 text-white hover:bg-primary-700'
-                : 'cursor-not-allowed bg-ink-100 text-ink-400'
-            }`}
-          >
-            {available ? <Plus className="h-4 w-4" strokeWidth={2.25} /> : null}
-            {!available
-              ? t('pages.menu.outOfStock')
-              : added
-                ? t('pages.menu.added')
-                : t('pages.menu.addToCart')}
-          </button>
-        </div>
-      </div>
-    </article>
-  );
-}
-
+/** Grid whose cards stagger in each time it mounts (i.e. on every filter change). */
 function MenuGrid({ items, language, addedId, onAdd }) {
   return (
-    <ul className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+    <m.ul
+      className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8"
+      variants={stagger(0.06)}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, amount: 0.1 }}
+    >
       {items.map((item) => (
-        <li key={item.id}>
-          <MenuCard item={item} language={language} added={addedId === item.id} onAdd={onAdd} />
-        </li>
+        <m.li key={item.id} variants={fadeUp(14)}>
+          <DishCard item={item} language={language} added={addedId === item.id} onAdd={onAdd} />
+        </m.li>
       ))}
-    </ul>
+    </m.ul>
   );
 }
 
 export default function Menu() {
-  const { t, i18n } = useTranslation();
-  const { addItem } = useCart();
+  const { t } = useTranslation();
+  const { addItem } = useCartActions();
+  const language = useLang();
   const [filter, setFilter] = useState('all');
-  const [addedId, setAddedId] = useState(null);
-  const addedTimer = useRef(null);
-  const language = i18n.resolvedLanguage === 'my' ? 'my' : 'en';
+  const [addedId, onAdd] = useAddedFlash(addItem);
+  usePageMeta('menu', { path: '/menu' });
 
-  const visibleItems = useMemo(
-    () => (filter === 'all' ? MENU_ITEMS : MENU_ITEMS.filter((item) => item.category === filter)),
-    [filter]
-  );
-
-  useEffect(
-    () => () => {
-      if (addedTimer.current) window.clearTimeout(addedTimer.current);
-    },
-    []
-  );
-
-  const handleAdd = (item) => {
-    addItem(item);
-    setAddedId(item.id);
-    if (addedTimer.current) window.clearTimeout(addedTimer.current);
-    addedTimer.current = window.setTimeout(() => {
-      setAddedId((current) => (current === item.id ? null : current));
-    }, 1400);
-  };
+  const visibleCount = filter === 'all' ? MENU_ITEMS.length : ITEMS_BY_CATEGORY[filter].length;
 
   return (
-    <section className="bg-white">
-      <div className="border-b border-secondary-400/25 bg-[linear-gradient(180deg,#fff8e8_0%,#ffffff_72%)]">
-        <div className="mx-auto flex max-w-7xl flex-col items-center px-4 py-10 text-center sm:px-6 sm:py-12 lg:px-8 lg:py-16">
-          <ChefMascot />
-          <p className="mt-4 text-sm font-semibold uppercase text-secondary-700">{t('pages.menu.kicker')}</p>
-          <h1 className="mt-2 font-display text-4xl font-semibold text-ink-900 sm:text-5xl lg:text-6xl">
-            {t('pages.menu.title')}
-          </h1>
-          <p className="mt-4 max-w-2xl text-lg text-ink-600">{t('pages.menu.subtitle')}</p>
-        </div>
-      </div>
+    <section className="bg-brand-pearl">
+      <PageHeader kicker={t('pages.menu.kicker')} title={t('pages.menu.title')} subtitle={t('pages.menu.subtitle')} />
 
-      <div className="sticky top-16 z-30 border-b border-ink-100 bg-white/90 backdrop-blur-md sm:top-20">
-        <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
+      <div className="sticky top-header z-30 border-b border-secondary-400/20 bg-brand-pearl/90 backdrop-blur-md">
+        <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
           <div
-            role="radiogroup"
+            role="group"
             aria-label={t('pages.menu.filter')}
-            className="flex gap-2 overflow-x-auto pb-1"
+            className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:px-0 [scrollbar-width:none]"
           >
             {FILTERS.map(({ id, labelKey }) => {
               const active = filter === id;
@@ -137,57 +67,67 @@ export default function Menu() {
                 <button
                   key={id}
                   type="button"
-                  role="radio"
-                  aria-checked={active}
+                  aria-pressed={active}
                   onClick={() => setFilter(id)}
-                  className={`inline-flex min-h-12 items-center whitespace-nowrap rounded-full px-4 text-sm font-semibold transition-colors ${
-                    active
-                      ? 'bg-primary-600 text-white shadow-sm'
-                      : 'border border-ink-200 bg-white text-ink-700 hover:border-secondary-400 hover:text-ink-950'
+                  className={`relative inline-flex min-h-12 shrink-0 items-center whitespace-nowrap rounded-full px-5 text-sm font-semibold transition-colors duration-200 ${
+                    active ? 'text-secondary-200' : 'text-ink-700 ring-1 ring-inset ring-ink-200 hover:ring-secondary-400 hover:text-ink-950'
                   }`}
                 >
-                  {t(labelKey)}
+                  {active ? (
+                    <m.span
+                      layoutId="menu-filter-pill"
+                      aria-hidden="true"
+                      className="absolute inset-0 rounded-full bg-lacquer"
+                      transition={{ duration: 0.35, ease: EASE_OUT }}
+                    />
+                  ) : null}
+                  <span className="relative">{t(labelKey)}</span>
                 </button>
               );
             })}
           </div>
           <p className="text-sm text-ink-500" aria-live="polite">
-            {t('pages.menu.showing', { count: visibleItems.length })}
+            {t('pages.menu.showing', { count: visibleCount })}
           </p>
         </div>
       </div>
 
-      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
-        {visibleItems.length === 0 ? (
-          <p className="py-20 text-center text-ink-500">{t('pages.menu.empty')}</p>
-        ) : filter === 'all' ? (
-          <div className="space-y-16">
-            {CATEGORIES.map(({ id, icon: Icon, title, caption }) => {
-              const items = MENU_ITEMS.filter((item) => item.category === id);
-              return (
-                <section key={id} aria-labelledby={`menu-${id}`}>
-                  <div className="mb-7 flex items-end justify-between gap-4">
-                    <div>
-                      <div className="flex items-center gap-3">
-                        <span className="grid h-10 w-10 place-items-center rounded-full bg-primary-50 text-primary-700">
-                          <Icon className="h-5 w-5" strokeWidth={1.75} />
-                        </span>
-                        <h2 id={`menu-${id}`} className="font-display text-3xl font-semibold text-ink-900">
-                          {pickLocale(title, language)}
-                        </h2>
+      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 md:py-14 lg:px-8">
+        <AnimatePresence mode="wait" initial={false}>
+          <m.div
+            key={filter}
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0, transition: { duration: DURATION.ui } }}
+          >
+            {filter === 'all' ? (
+              <div className="space-y-16 md:space-y-20">
+                {CATEGORIES.map(({ id, icon: Icon, title, caption }) => (
+                  <section key={id} aria-labelledby={`menu-${id}`}>
+                    <div className="mb-8 flex items-end gap-4">
+                      <div>
+                        <div className="flex items-center gap-3">
+                          <span className="grid h-11 w-11 place-items-center rounded-full bg-lacquer text-secondary-300 ring-1 ring-secondary-400/40">
+                            <Icon className="h-5 w-5" strokeWidth={1.5} />
+                          </span>
+                          <h2 id={`menu-${id}`} className="font-display text-3xl font-semibold text-ink-900 sm:text-4xl">
+                            {pickLocale(title, language)}
+                          </h2>
+                        </div>
+                        <p className="mt-2 text-ink-500">{pickLocale(caption, language)}</p>
                       </div>
-                      <p className="mt-2 text-ink-500">{pickLocale(caption, language)}</p>
+                      <span aria-hidden="true" className="mb-3 hidden h-px flex-1 bg-gradient-to-r from-secondary-400/70 to-transparent md:block" />
                     </div>
-                    <span aria-hidden="true" className="hidden h-px flex-1 bg-gradient-to-r from-secondary-400/70 to-transparent md:block" />
-                  </div>
-                  <MenuGrid items={items} language={language} addedId={addedId} onAdd={handleAdd} />
-                </section>
-              );
-            })}
-          </div>
-        ) : (
-          <MenuGrid items={visibleItems} language={language} addedId={addedId} onAdd={handleAdd} />
-        )}
+                    <MenuGrid items={ITEMS_BY_CATEGORY[id]} language={language} addedId={addedId} onAdd={onAdd} />
+                  </section>
+                ))}
+              </div>
+            ) : ITEMS_BY_CATEGORY[filter].length === 0 ? (
+              <p className="py-20 text-center text-ink-500">{t('pages.menu.empty')}</p>
+            ) : (
+              <MenuGrid items={ITEMS_BY_CATEGORY[filter]} language={language} addedId={addedId} onAdd={onAdd} />
+            )}
+          </m.div>
+        </AnimatePresence>
       </div>
     </section>
   );

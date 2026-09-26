@@ -12,36 +12,29 @@
     "menu": "Menu",
     "about": "About",
     "contact": "Contact",
-    "order": "Order now",
+    "order": "Order",
     "language": "Choose language",
-    "openMenu": "Open navigation",
-    "closeMenu": "Close navigation",
     "cart": "Cart",
     "cartCount_one": "Cart, {{count}} item",
     "cartCount_other": "Cart, {{count}} items",
     "bottom": "Bottom navigation"
   },
   "ui": {
-    "announcement": "Open daily, 10:00 AM – 9:00 PM · Cooked to order · Yangon",
+    "announcement": "Open daily · {{open}} – {{close}}",
     "backToTop": "Back to top",
     "toastAdded": "Added to cart",
     "toastView": "View cart",
     "scrollProgress": "Page scroll",
-    "construction": {
-      "kicker": "Kitchen notice",
-      "titleEn": "We are cooking up something special!",
-      "titleMy": "ဝက်ဘ်ဆိုက် ပြင်ဆင်နေဆဲဖြစ်ပါသည်",
-      "bodyEn": "Our website online ordering is still under construction. Please place your order through our official Facebook page or by calling us directly.",
-      "bodyMy": "ဝက်ဘ်ဆိုက်မှ အွန်လိုင်းမှာယူခြင်းကို ပြင်ဆင်နေဆဲဖြစ်ပါသည်။ တရားဝင် Facebook စာမျက်နှာမှဖြစ်စေ၊ ဖုန်းဆက်၍ဖြစ်စေ မှာယူပေးပါ။",
-      "facebook": "Order via Facebook",
-      "call": "Call to Order",
-      "browse": "Browse Menu Anyway",
-      "close": "Close notice"
-    },
     "routeError": {
       "title": "This page could not be shown",
       "body": "Please try again, or browse the menu.",
       "retry": "Try again"
+    },
+    "notFound": {
+      "kicker": "Error 404",
+      "title": "We couldn't find that page",
+      "body": "The link may be old or mistyped. The dumplings are still hot, though.",
+      "home": "Back to home"
     }
   },
   "cart": {
@@ -50,12 +43,13 @@
     "empty": "Your cart is empty.",
     "browse": "Browse the menu",
     "subtotal": "Subtotal",
-    "note": "Call the kitchen to confirm your order.",
+    "note": "Online checkout is coming soon. For now, please order by phone, Grab, foodpanda or Facebook.",
     "call": "Call to order",
     "close": "Close cart",
     "remove": "Remove",
     "increase": "Increase quantity",
-    "decrease": "Decrease quantity"
+    "decrease": "Decrease quantity",
+    "moreWays": "Other ways to order"
   },
   "footer": {
     "about": "Handmade dumplings, made fresh every day.",
@@ -63,24 +57,16 @@
     "explore": "Explore",
     "contact": "Call us",
     "hours": "Hours",
-    "hoursValue": "Daily, 10:00 AM – 9:00 PM",
-    "location": "Find us",
-    "mapPlaceholder": "Google Map goes here",
     "rights": "All rights reserved."
   },
   "pages": {
-    "comingSoon": "This page is under construction.",
     "home": {
       "title": "Welcome to Maydarwe",
-      "kicker": "Established in 2015",
+      "kicker": "Established in {{year}}",
       "headline": "Handmade dumplings, made fresh every day.",
       "sub": "Enjoy our popular pot-stuck dumplings, Shan dishes, and mala xiangguo in the shop — or order easily by phone, Foodpanda, or Grab.",
       "viewMenu": "View Menu",
-      "orderNow": "Order Now",
-      "call": "Call to order",
-      "orderByPhone": "ဖုန်းဖြင့်မှာယူရန်",
-      "orderGrab": "Order on Grab",
-      "orderFoodpanda": "Order on foodpanda",
+      "orderByPhone": "Order by phone",
       "featuredKicker": "House favorites",
       "featuredTitle": "Start with the signatures",
       "featuredCta": "See the full menu",
@@ -89,7 +75,12 @@
       "visitKicker": "Visit",
       "visitTitle": "Come hungry",
       "visitSub": "Order by phone or walk in. We cook each plate when you ask for it.",
-      "tapSpin": "Tap the dumplings to spin"
+      "tapSpin": "Tap the dumplings to spin",
+      "orderOnBefore": "Order on",
+      "orderOnAfter": "",
+      "view3d": "View in 3D",
+      "loading3d": "Loading 3D…",
+      "heroPhotoAlt": "Golden pan-fried dumplings in a cast-iron pan"
     },
     "menu": {
       "title": "Our menu",
@@ -125,12 +116,56 @@
       "phonesTitle": "Call to order",
       "hoursTitle": "Hours",
       "cityTitle": "Find us",
-      "city": "Yangon",
       "cityNote": "Walk in during opening hours, or call ahead so we can start your order.",
       "orderTitle": "How to order",
       "order1": "Browse the menu and add dishes to your cart.",
       "order2": "Call either kitchen number and confirm what you want.",
-      "order3": "Pick up when it is ready, or eat in if we have space."
+      "order3": "Pick up when it is ready, or eat in if we have space.",
+      "addressTitle": "Address",
+      "directions": "Get directions",
+      "mapShow": "Show map",
+      "mapNote": "Loads Google Maps",
+      "mapTitle": "Map to {{name}}"
+    }
+  },
+  "hours": {
+    "daily": "Daily, {{open}} – {{close}}",
+    "openUntil": "Open now · until {{close}}",
+    "closedOpensAt": "Closed now · opens {{open}}"
+  },
+  "order": {
+    "kicker": "Order",
+    "title": "How would you like to order?",
+    "callTitle": "Call the kitchen",
+    "callSub": "Fastest for pickup and eat-in",
+    "altPhone": "Or call {{phone}}",
+    "deliveryTitle": "Delivery",
+    "grab": "Order on Grab",
+    "foodpanda": "Order on foodpanda",
+    "facebook": "Message us on Facebook",
+    "newTab": "opens in a new tab",
+    "close": "Close"
+  },
+  "meta": {
+    "home": {
+      "title": "Maydarwe Dumpling House | Handmade dumplings in {{city}}",
+      "description": "Handmade pan-fried dumplings, mala xiang guo and noodles in {{city}}. Open daily {{open}} – {{close}}. Order by phone, Grab or foodpanda."
+    },
+    "menu": {
+      "title": "Menu | Maydarwe Dumpling House",
+      "description": "Pan-fried dumplings, mala dishes and noodles, cooked to order. See prices and build your order list."
+    },
+    "about": {
+      "title": "About us | Maydarwe Dumpling House",
+      "description": "A {{city}} dumpling house since {{year}}: handmade wrappers and fillings, cooked when you order."
+    },
+    "contact": {
+      "title": "Contact & hours | Maydarwe Dumpling House",
+      "description": "Call {{phone}}, order on Grab or foodpanda, or visit us in {{city}}. Open daily {{open}} – {{close}}."
+    },
+    "notFound": {
+      "title": "Page not found | Maydarwe Dumpling House",
+      "description": "This page does not exist."
     }
   }
 }

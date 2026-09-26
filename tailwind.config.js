@@ -14,6 +14,12 @@ export default {
           white: '#FFFFFF',
           black: '#141110',
         },
+        // Lacquer — the dark, warm base of the premium sections (hero, page headers, footer)
+        lacquer: {
+          DEFAULT: '#120E0C',
+          800: '#1C1613',
+          700: '#2A211C',
+        },
         // Primary Red — CTAs, active states, brand seal
         primary: {
           50: '#FEF2F2',
@@ -59,13 +65,61 @@ export default {
           950: '#141110',
           DEFAULT: '#221E1B',
         },
+        // Delivery partners (their own brand colours, used only on their buttons)
+        partner: {
+          grab: '#00B14F',
+          foodpanda: '#D70F64',
+          facebook: '#1877F2',
+        },
       },
       fontFamily: {
-        display: ['Fraunces', '"Noto Serif Myanmar"', ...defaultTheme.fontFamily.serif],
-        sans: ['Figtree', '"Noto Sans Myanmar"', ...defaultTheme.fontFamily.sans],
+        // Self-hosted variable fonts (see src/styles/fonts.js). Burmese falls through to Noto.
+        display: ['"Fraunces Variable"', '"Noto Serif Myanmar"', ...defaultTheme.fontFamily.serif],
+        sans: ['"Figtree Variable"', '"Noto Sans Myanmar Variable"', ...defaultTheme.fontFamily.sans],
       },
       boxShadow: {
         nav: '0 1px 0 0 rgb(232 160 6 / 0.25), 0 10px 30px -15px rgb(34 30 27 / 0.25)',
+        card: '0 18px 40px -28px rgb(34 30 27 / 0.45)',
+        lift: '0 28px 56px -26px rgb(34 30 27 / 0.55)',
+        gold: '0 0 0 1px rgb(232 160 6 / 0.35), 0 24px 60px -28px rgb(232 160 6 / 0.45)',
+        cta: '0 14px 30px -18px rgb(200 16 46 / 0.9)',
+      },
+      spacing: {
+        header: 'var(--header-h)',
+      },
+      transitionTimingFunction: {
+        // The one easing curve used across the site (mirrors EASE_OUT in src/lib/motion.js)
+        'out-soft': 'cubic-bezier(0.22, 1, 0.36, 1)',
+      },
+      keyframes: {
+        rise: {
+          from: { opacity: '0', transform: 'translateY(14px)' },
+          to: { opacity: '1', transform: 'translateY(0)' },
+        },
+        'rise-still': {
+          from: { transform: 'translateY(14px)' },
+          to: { transform: 'translateY(0)' },
+        },
+        settle: {
+          from: { transform: 'scale(1.035)' },
+          to: { transform: 'scale(1)' },
+        },
+        'fade-down': {
+          from: { opacity: '0', transform: 'translateY(-6px)' },
+          to: { opacity: '1', transform: 'translateY(0)' },
+        },
+        steam: {
+          '0%': { opacity: '0', transform: 'translateY(8px) scaleY(0.9)' },
+          '35%': { opacity: '0.75' },
+          '100%': { opacity: '0', transform: 'translateY(-26px) scaleY(1.1)' },
+        },
+      },
+      animation: {
+        rise: 'rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both',
+        'rise-still': 'rise-still 0.7s cubic-bezier(0.22, 1, 0.36, 1) both',
+        settle: 'settle 1.4s cubic-bezier(0.22, 1, 0.36, 1) both',
+        'fade-down': 'fade-down 0.6s cubic-bezier(0.22, 1, 0.36, 1) both',
+        steam: 'steam 3.2s ease-in-out infinite',
       },
     },
   },

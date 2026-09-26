@@ -1,119 +1,119 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Plus } from 'lucide-react';
-import { useCart } from '../context/CartContext';
+import { ArrowRight } from 'lucide-react';
+import { useCartActions } from '../context/CartContext';
+import { useUiActions } from '../context/UiContext';
+import { useLang } from '../lib/businessHours';
+import { usePageMeta } from '../lib/seo';
+import { useAddedFlash } from '../hooks/useAddedFlash';
 import Hero from '../components/hero/Hero';
-import DishPhoto from '../components/menu/DishPhoto';
-import { CATEGORIES, FEATURED_ITEMS, formatPrice, pickLocale } from '../data/menu';
-
-function FeaturedCard({ item, language, onAdd }) {
-  const { t } = useTranslation();
-
-  return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-3xl border border-secondary-400/25 bg-white shadow-[0_18px_40px_-28px_rgb(34_30_27_/_0.45)] transition duration-300 hover:-translate-y-1 hover:border-brand-yellow hover:shadow-[0_24px_50px_-24px_rgb(34_30_27_/_0.5)]">
-      <div className="relative">
-        <DishPhoto item={item} alt={pickLocale(item.name, language)} />
-        <span className="absolute left-4 top-4 rounded-full bg-brand-yellow px-3 py-1 text-xs font-bold text-ink-950 shadow-sm">
-          {formatPrice(item.price)}
-        </span>
-      </div>
-      <div className="flex flex-1 flex-col px-5 pb-5 pt-5">
-        <h3 className="font-display text-xl font-semibold text-ink-900">{pickLocale(item.name, language)}</h3>
-        <p className="mt-1 text-sm text-ink-500">{language === 'my' ? item.name.en : item.name.my}</p>
-        <p className="mt-3 flex-1 text-sm text-ink-600">{pickLocale(item.blurb, language)}</p>
-        <button
-          type="button"
-          onClick={() => onAdd(item)}
-          className="mt-5 inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-primary-600 px-4 text-sm font-semibold text-white hover:bg-primary-700"
-        >
-          <Plus className="h-4 w-4" strokeWidth={2.25} />
-          {t('pages.menu.addToCart')}
-        </button>
-      </div>
-    </article>
-  );
-}
+import DishCard from '../components/menu/DishCard';
+import Eyebrow from '../components/ui/Eyebrow';
+import { Reveal, RevealGroup, RevealItem } from '../components/ui/Reveal';
+import { CATEGORIES, FEATURED_ITEMS, pickLocale } from '../data/menu';
 
 export default function Home() {
-  const { t, i18n } = useTranslation();
-  const { addItem } = useCart();
-  const language = i18n.resolvedLanguage === 'my' ? 'my' : 'en';
+  const { t } = useTranslation();
+  const { addItem } = useCartActions();
+  const { openOrder } = useUiActions();
+  const language = useLang();
+  const [addedId, onAdd] = useAddedFlash(addItem);
+  usePageMeta('home', { path: '/' });
 
   return (
     <div className="bg-brand-pearl">
       <Hero />
 
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
-        <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+      {/* House favourites */}
+      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20 lg:px-8 lg:py-24">
+        <Reveal className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
           <div>
-            <p className="text-sm font-semibold uppercase text-secondary-700">{t('pages.home.featuredKicker')}</p>
-            <h2 className="mt-2 font-display text-3xl font-semibold text-ink-900 sm:text-4xl">
+            <Eyebrow rule>{t('pages.home.featuredKicker')}</Eyebrow>
+            <h2 className="mt-3 font-display text-3xl font-semibold text-ink-900 sm:text-4xl lg:text-5xl">
               {t('pages.home.featuredTitle')}
             </h2>
           </div>
-          <Link to="/menu" className="inline-flex min-h-12 items-center text-sm font-semibold text-primary-700 hover:text-primary-800">
+          <Link
+            to="/menu"
+            className="group inline-flex min-h-12 items-center gap-2 text-sm font-semibold text-primary-700 hover:text-primary-800"
+          >
             {t('pages.home.featuredCta')}
+            <ArrowRight className="h-4 w-4 transition-transform duration-200 ease-out-soft group-hover:translate-x-0.5" />
           </Link>
-        </div>
-        <ul className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        </Reveal>
+
+        <RevealGroup className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
           {FEATURED_ITEMS.map((item) => (
-            <li key={item.id}>
-              <FeaturedCard item={item} language={language} onAdd={addItem} />
-            </li>
+            <RevealItem key={item.id}>
+              <DishCard item={item} language={language} added={addedId === item.id} onAdd={onAdd} />
+            </RevealItem>
           ))}
-        </ul>
+        </RevealGroup>
       </section>
 
-      <section className="border-y border-secondary-400/20 bg-white">
-        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
-          <p className="text-sm font-semibold uppercase text-secondary-700">{t('pages.home.pillarsKicker')}</p>
-          <h2 className="mt-2 font-display text-3xl font-semibold text-ink-900 sm:text-4xl">
-            {t('pages.home.pillarsTitle')}
-          </h2>
-          <ul className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3">
+      {/* Three ways to eat — dark lacquer band */}
+      <section className="bg-lacquer text-brand-pearl">
+        <div aria-hidden="true" className="gold-rule" />
+        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20 lg:px-8 lg:py-24">
+          <Reveal>
+            <Eyebrow tone="dark" rule>
+              {t('pages.home.pillarsKicker')}
+            </Eyebrow>
+            <h2 className="mt-3 font-display text-3xl font-semibold sm:text-4xl lg:text-5xl">{t('pages.home.pillarsTitle')}</h2>
+          </Reveal>
+          <RevealGroup className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-3 lg:gap-8">
             {CATEGORIES.map(({ id, icon: Icon, title, caption }) => (
-              <li key={id} className="rounded-3xl border border-secondary-400/25 bg-brand-pearl p-6">
-                <span className="grid h-12 w-12 place-items-center rounded-full bg-brand-yellow text-ink-950">
-                  <Icon className="h-5 w-5" strokeWidth={1.75} />
+              <RevealItem
+                key={id}
+                className="group rounded-[1.75rem] bg-white/[0.03] p-6 ring-1 ring-inset ring-secondary-400/20 transition-colors duration-300 hover:bg-white/[0.06] hover:ring-secondary-400/40 lg:p-8"
+              >
+                <span className="grid h-12 w-12 place-items-center rounded-full bg-secondary-400/10 text-secondary-300 ring-1 ring-secondary-400/40">
+                  <Icon className="h-5 w-5" strokeWidth={1.5} />
                 </span>
-                <h3 className="mt-5 font-display text-2xl font-semibold text-ink-900">
-                  {pickLocale(title, language)}
-                </h3>
-                <p className="mt-2 text-ink-600">{pickLocale(caption, language)}</p>
+                <h3 className="mt-6 font-display text-2xl font-semibold">{pickLocale(title, language)}</h3>
+                <p className="mt-2 text-brand-pearl/70">{pickLocale(caption, language)}</p>
                 <Link
                   to="/menu"
-                  className="mt-5 inline-flex min-h-12 items-center text-sm font-semibold text-primary-700 hover:text-primary-800"
+                  className="mt-5 inline-flex min-h-12 items-center gap-2 text-sm font-semibold text-secondary-300 hover:text-secondary-200"
                 >
                   {t('pages.home.featuredCta')}
+                  <ArrowRight className="h-4 w-4 transition-transform duration-200 ease-out-soft group-hover:translate-x-0.5" />
                 </Link>
-              </li>
+              </RevealItem>
             ))}
-          </ul>
+          </RevealGroup>
         </div>
+        <div aria-hidden="true" className="gold-rule" />
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
-        <div className="overflow-hidden rounded-[2rem] bg-primary-600 px-6 py-10 text-white sm:px-10 lg:flex lg:items-center lg:justify-between">
-          <div>
-            <p className="text-sm font-semibold uppercase text-secondary-200">{t('pages.home.visitKicker')}</p>
-            <h2 className="mt-2 font-display text-3xl font-semibold sm:text-4xl">{t('pages.home.visitTitle')}</h2>
-            <p className="mt-3 max-w-xl text-primary-50">{t('pages.home.visitSub')}</p>
+      {/* Visit / order */}
+      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20 lg:px-8 lg:py-24">
+        <Reveal className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-primary-600 via-primary-700 to-primary-900 px-6 py-10 text-white shadow-lift sm:px-10 md:flex md:items-center md:justify-between md:gap-8 lg:px-14 lg:py-14">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-secondary-400/20 blur-3xl"
+          />
+          <div className="relative">
+            <Eyebrow className="!text-secondary-200">{t('pages.home.visitKicker')}</Eyebrow>
+            <h2 className="mt-3 font-display text-3xl font-semibold sm:text-4xl">{t('pages.home.visitTitle')}</h2>
+            <p className="mt-3 max-w-xl text-primary-50/90">{t('pages.home.visitSub')}</p>
           </div>
-          <div className="mt-6 flex flex-wrap gap-3 lg:mt-0">
+          <div className="relative mt-6 flex flex-wrap gap-3 md:mt-0 md:shrink-0">
+            <button
+              type="button"
+              onClick={openOrder}
+              className="inline-flex min-h-12 items-center rounded-full bg-white px-6 font-semibold text-primary-700 transition-colors hover:bg-secondary-50"
+            >
+              {t('nav.order')}
+            </button>
             <Link
               to="/menu"
-              className="inline-flex min-h-12 items-center rounded-full bg-white px-6 py-3 font-semibold text-primary-700 hover:bg-secondary-50"
+              className="inline-flex min-h-12 items-center rounded-full px-6 font-semibold text-white ring-1 ring-inset ring-white/40 transition-colors hover:bg-white/10"
             >
               {t('pages.home.viewMenu')}
             </Link>
-            <Link
-              to="/contact"
-              className="inline-flex min-h-12 items-center rounded-full border border-white/40 px-6 py-3 font-semibold text-white hover:bg-white/10"
-            >
-              {t('nav.contact')}
-            </Link>
           </div>
-        </div>
+        </Reveal>
       </section>
     </div>
   );

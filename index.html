@@ -5,10 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Maydarwe Dumpling House | မေဓာဝီဖက်ထုပ်အိုးကပ်ဆိုင်</title>
-    <meta
-      name="description"
-      content="Maydarwe Dumpling House | မေဓာဝီဖက်ထုပ်အိုးကပ်ဆိုင် — handmade pan-fried dumplings, mala xiang guo, and noodles in Yangon, Myanmar. Cooked to order daily, 10:00 AM – 9:00 PM."
-    />
+    <meta name="description" content="{{SITE_DESCRIPTION}}" />
     <meta
       name="keywords"
       content="Maydarwe Dumpling House, မေဓာဝီဖက်ထုပ်အိုးကပ်ဆိုင်, dumplings, pan-fried dumplings, mala xiang guo, noodles, yangon, myanmar, dumpling house, ဖက်ထုပ်"
@@ -18,42 +15,31 @@
     <meta name="google-site-verification" content="YOUR_GOOGLE_VERIFICATION_CODE_HERE" />
     <meta name="theme-color" content="#C8102E" />
 
-    <link rel="canonical" href="https://maydarwedumpling.com/" />
-    <link rel="alternate" hrefLang="en" href="https://maydarwedumpling.com/" />
-    <link rel="alternate" hrefLang="my" href="https://maydarwedumpling.com/" />
-    <link rel="alternate" hrefLang="x-default" href="https://maydarwedumpling.com/" />
+    <!--
+      No static canonical: each route sets its own <link rel="canonical">
+      at runtime (src/lib/seo.js). A hard-coded "/" here would tell Google
+      that /menu, /about and /contact are duplicates of the home page.
+    -->
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Maydarwe Dumpling House" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:locale:alternate" content="my_MM" />
-    <meta property="og:url" content="https://maydarwedumpling.com/" />
     <meta property="og:title" content="Maydarwe Dumpling House | မေဓာဝီဖက်ထုပ်အိုးကပ်ဆိုင်" />
-    <meta
-      property="og:description"
-      content="Handmade pan-fried dumplings, mala xiang guo, and noodles in Yangon, Myanmar. မေဓာဝီဖက်ထုပ်အိုးကပ်ဆိုင် — cooked to order from our kitchen."
-    />
+    <meta property="og:description" content="{{SITE_DESCRIPTION}}" />
     <meta property="og:image" content="https://maydarwedumpling.com/maydawe_dumpling_logo.JPG" />
     <meta property="og:image:alt" content="Maydarwe Dumpling House | မေဓာဝီဖက်ထုပ်အိုးကပ်ဆိုင်" />
     <meta property="og:image:type" content="image/jpeg" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Maydarwe Dumpling House | မေဓာဝီဖက်ထုပ်အိုးကပ်ဆိုင်" />
-    <meta
-      name="twitter:description"
-      content="Handmade pan-fried dumplings, mala xiang guo, and noodles in Yangon, Myanmar."
-    />
+    <meta name="twitter:description" content="{{SITE_DESCRIPTION}}" />
     <meta name="twitter:image" content="https://maydarwedumpling.com/maydawe_dumpling_logo.JPG" />
 
     <link rel="icon" type="image/jpeg" href="/maydawe_dumpling_logo.JPG" />
     <link rel="apple-touch-icon" href="/maydawe_dumpling_logo.JPG" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Noto+Sans+Myanmar:wght@400;500;600;700&family=Noto+Serif+Myanmar:wght@500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <!-- Fonts are self-hosted and bundled by Vite: see src/styles/fonts.js -->
   </head>
   <body>
     <div id="root"></div>

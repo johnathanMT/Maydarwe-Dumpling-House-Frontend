@@ -1,10 +1,10 @@
-import { motion, useReducedMotion } from 'framer-motion';
+import { m, useReducedMotion } from 'framer-motion';
 
 function SteamWisp({ d, delay }) {
   const reduce = useReducedMotion();
 
   return (
-    <motion.path
+    <m.path
       d={d}
       fill="none"
       stroke="#E8A006"
@@ -25,13 +25,13 @@ export default function ChefMascot({ className = '' }) {
   const reduce = useReducedMotion();
 
   return (
-    <motion.div
+    <m.div
       className={`relative mx-auto w-[min(100%,18rem)] sm:w-[22rem] lg:w-[24rem] ${className}`}
       initial={reduce ? false : { opacity: 0, scale: 0.68, y: 44 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       transition={{ type: 'spring', stiffness: 220, damping: 14, mass: 0.8 }}
     >
-      <motion.svg
+      <m.svg
         viewBox="0 0 400 450"
         className="relative mx-auto h-auto w-full"
         role="img"
@@ -40,7 +40,7 @@ export default function ChefMascot({ className = '' }) {
       >
         <title>Maydarwe chef holding a golden pan-fried dumpling</title>
 
-        <motion.ellipse
+        <m.ellipse
           cx="176"
           cy="426"
           rx="92"
@@ -99,7 +99,7 @@ export default function ChefMascot({ className = '' }) {
         <SteamWisp delay={0} d="M328 52 C 318 36, 334 24, 324 6" />
         <SteamWisp delay={0.35} d="M346 46 C 336 30, 352 18, 342 0" />
         <SteamWisp delay={0.7} d="M364 52 C 354 36, 370 24, 360 6" />
-      </motion.svg>
-    </motion.div>
+      </m.svg>
+    </m.div>
   );
 }
