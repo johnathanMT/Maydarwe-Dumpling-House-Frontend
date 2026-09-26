@@ -17,6 +17,54 @@ function cloudinaryPicture({ version, publicId, width, height, widths }) {
   };
 }
 
+const CARD_WIDTHS = [360, 720, 960];
+
+/** Official dish plates. Keys match `photo` on MENU_ITEMS. */
+export const DISH_PHOTOS = {
+  chickenPotStuck: cloudinaryPicture({
+    version: 'v1790345037',
+    publicId: 'IMG_7925_txkyjj.jpg',
+    width: 2064,
+    height: 2192,
+    widths: CARD_WIDTHS,
+  }),
+  blackChickenMala: cloudinaryPicture({
+    version: 'v1790345036',
+    publicId: 'IMG_7923_vhenho.jpg',
+    width: 896,
+    height: 1195,
+    widths: [360, 720, 896],
+  }),
+  porkPotStuck: cloudinaryPicture({
+    version: 'v1790345036',
+    publicId: 'IMG_7926_s3clwe.jpg',
+    width: 1008,
+    height: 1068,
+    widths: [360, 720, 1008],
+  }),
+  spicyNoodleSalad: cloudinaryPicture({
+    version: 'v1790345037',
+    publicId: 'IMG_7924_pgfjwo.jpg',
+    width: 896,
+    height: 1195,
+    widths: [360, 720, 896],
+  }),
+  malaChickenFeet: cloudinaryPicture({
+    version: 'v1790345035',
+    publicId: 'IMG_7927_s52kgg.jpg',
+    width: 1024,
+    height: 1024,
+    widths: [360, 720, 1024],
+  }),
+  spicyNoodleDumpling: cloudinaryPicture({
+    version: 'v1790345036',
+    publicId: 'IMG_7922_cpg939.jpg',
+    width: 896,
+    height: 1195,
+    widths: [360, 720, 896],
+  }),
+};
+
 /** Menu accordion: six house dishes, shown in this order. */
 export const MENU_GALLERY = [
   {
