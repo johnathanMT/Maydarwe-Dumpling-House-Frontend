@@ -21,6 +21,8 @@ const IMG_ORIGINS = [
   "'self'",
   'data:',
   'blob:',
+  // Home hero photo, resized and converted on the fly by Cloudinary (src/assets/photos/remote.js).
+  'https://res.cloudinary.com',
   // Grab / foodpanda logos, only until they are self-hosted (see src/constants/partnerLogos.js).
   ...(PARTNER_LOGOS_SELF_HOSTED ? [] : ['https://upload.wikimedia.org']),
 ];

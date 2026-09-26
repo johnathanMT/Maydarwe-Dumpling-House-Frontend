@@ -6,7 +6,7 @@ import OptimizedImage from '../components/ui/OptimizedImage';
 import PageHeader from '../components/ui/PageHeader';
 import Eyebrow from '../components/ui/Eyebrow';
 import { Reveal, RevealGroup, RevealItem } from '../components/ui/Reveal';
-import { HERO_PHOTO } from '../assets/photos';
+import { ABOUT_PHOTO } from '../assets/photos';
 import { LOGO } from '../assets/brand';
 import { usePageMeta } from '../lib/seo';
 
@@ -31,7 +31,7 @@ export default function About() {
         <Reveal className="relative mx-auto w-full max-w-md">
           <div className="rounded-[2.5rem] bg-white p-2 shadow-warm ring-1 ring-butter-400/60">
             <OptimizedImage
-              image={HERO_PHOTO}
+              image={ABOUT_PHOTO}
               alt={t('pages.home.heroPhotoAlt')}
               sizes="(min-width: 768px) 448px, 92vw"
               pictureClassName="block"

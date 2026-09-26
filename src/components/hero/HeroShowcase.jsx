@@ -1,14 +1,14 @@
-import { Component, lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
+import { Component, Fragment, lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useReducedMotion } from 'framer-motion';
+import { m, useReducedMotion } from 'framer-motion';
 import { Box, Loader2 } from 'lucide-react';
 import OptimizedImage from '../ui/OptimizedImage';
 import { DumplingHomeIcon } from '../layout/NavIcons';
+import { HERO_PHOTO_REMOTE } from '../../assets/photos/remote';
 
 // three.js + React Three Fiber live in this chunk. It is never part of the first load.
 const DumplingScene = lazy(() => import('./DumplingScene'));
 
-import { HERO_PHOTO } from '../../assets/photos';
 
 /** Any failure (chunk, model download, WebGL) → quietly keep the photo. */
 class SceneBoundary extends Component {
@@ -28,6 +28,38 @@ class SceneBoundary extends Component {
   render() {
     return this.state.failed ? null : this.props.children;
   }
+}
+
+/**
+ * The dumpling mascot says hello: a speech bubble that springs in one second
+ * after the page loads. Its sharp top-left corner points back at the mascot.
+ * Visitors who prefer reduced motion get a plain fade (MotionConfig in App.jsx).
+ */
+/**
+ * Burmese has no reliable word breaks, so the browser may split a word in two.
+ * Break only at the spaces in the copy, and keep punctuation (၊ ? !) on the
+ * same line as the word before it.
+ */
+const toPhrases = (text) => text.replace(/ ([?!၊။])/g, '\u00A0$1').split(' ');
+
+function MascotGreeting() {
+  const { t } = useTranslation();
+  return (
+    <m.p
+      initial={{ opacity: 0, scale: 0.6 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ type: 'spring', stiffness: 200, damping: 20, delay: 1 }}
+      style={{ transformOrigin: 'top left' }}
+      className="absolute left-12 top-3 z-20 max-w-[15rem] rounded-2xl rounded-tl-sm bg-ivory px-4 py-3 text-sm font-semibold leading-[1.9] text-ink-900 text-balance shadow-lg ring-1 ring-butter-200 sm:left-16 sm:top-4 sm:max-w-[16.5rem] sm:text-[0.95rem]"
+    >
+      {toPhrases(t('pages.home.mascotGreeting')).map((phrase, i) => (
+        <Fragment key={i}>
+          {i > 0 ? ' ' : null}
+          <span className="whitespace-nowrap">{phrase}</span>
+        </Fragment>
+      ))}
+    </m.p>
+  );
 }
 
 /** Three soft wisps of steam rising off the pan (CSS only; frozen for reduced-motion users). */
@@ -128,6 +160,8 @@ export default function HeroShowcase() {
             <DumplingHomeIcon className="h-11 w-11 sm:h-14 sm:w-14" />
           </div>
         </div>
+
+        <MascotGreeting />
         <div
           ref={containerRef}
           className="relative aspect-[4/5] w-full overflow-hidden rounded-[2rem] bg-butter-100"
@@ -138,7 +172,7 @@ export default function HeroShowcase() {
             }`}
           >
             <OptimizedImage
-              image={HERO_PHOTO}
+              image={HERO_PHOTO_REMOTE}
               alt={t('pages.home.heroPhotoAlt')}
               sizes="(min-width: 640px) 448px, 92vw"
               priority

@@ -26,5 +26,5 @@ export const PHOTOS = {
   claypotNoodle,
 };
 
-/** The hero / About photo: golden prawn dumplings in the pan. */
-export const HERO_PHOTO = prawnPanFried;
+/** About page photo: golden prawn dumplings in the pan. (The home hero photo is on Cloudinary: see ./remote.js) */
+export const ABOUT_PHOTO = prawnPanFried;
