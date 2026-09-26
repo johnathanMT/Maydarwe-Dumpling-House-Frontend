@@ -77,6 +77,16 @@
     @apply h-px bg-gradient-to-r from-transparent via-secondary-500/70 to-transparent;
   }
 
+  /*
+   * Desktop parallax for section photos. background-attachment: fixed is
+   * broken on iOS, so phones and tablets keep a normal scrolling image.
+   */
+  @media (min-width: 768px) and (hover: hover) and (pointer: fine) {
+    .bg-parallax {
+      background-attachment: fixed;
+    }
+  }
+
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -89,6 +89,13 @@ export const MENU_GALLERY = [
   },
 ];
 
+/**
+ * Panorama behind the home "special pan-fried dumplings" band.
+ * Same Cloudinary photo, delivered smaller than the original upload.
+ */
+export const FEATURED_SECTION_PHOTO =
+  'https://res.cloudinary.com/dhlhzmmtt/image/upload/f_auto,q_auto/v1790427358/IMG_8023_fmuckg.jpg';
+
 /** Home cinematic reel, played edge-to-edge above the signature dishes. */
 export const HOME_REEL_SRC =
   'https://res.cloudinary.com/dhlhzmmtt/video/upload/v1790345459/image-to-video/i2v_0a18f0607e7841f1987cf6bb2d5cb31f.mp4';
