@@ -18,8 +18,10 @@ export const CALL_ORDER_HREF = 'tel:09788167047';
 export const FACEBOOK_ORDER_URL = 'https://www.facebook.com/share/19MK2TSnJb/?mibextid=wwXIfr';
 
 export const GRAB_ORDER_URL = 'https://app.grab.com/s/Tgdxro4N';
+export const GRAB_LOGO_SRC = 'https://upload.wikimedia.org/wikipedia/commons/f/f6/Grab_Logo.svg';
 
 export const FOODPANDA_ORDER_URL = 'https://foodpanda.go.link/lINRB';
+export const FOODPANDA_LOGO_SRC = 'https://upload.wikimedia.org/wikipedia/commons/7/74/Foodpanda_wordmark.svg';
 
 export const SOCIAL_LINKS = [
   { name: 'Facebook', href: FACEBOOK_ORDER_URL },
