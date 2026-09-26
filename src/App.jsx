@@ -10,6 +10,7 @@ import ScrollProgress from './components/ui/ScrollProgress';
 import BackToTop from './components/ui/BackToTop';
 import CartToast from './components/ui/CartToast';
 import ConstructionPopup from './components/ui/ConstructionPopup';
+import RouteError from './components/ui/RouteError';
 import { CartProvider } from './context/CartContext';
 
 const Home = lazy(() => import('./pages/Home'));
@@ -59,10 +60,15 @@ const router = createBrowserRouter([
     path: '/',
     element: <Layout />,
     children: [
-      { index: true, element: <Home /> },
-      { path: 'menu', element: <Menu /> },
-      { path: 'about', element: <About /> },
-      { path: 'contact', element: <Contact /> },
+      {
+        errorElement: <RouteError />,
+        children: [
+          { index: true, element: <Home /> },
+          { path: 'menu', element: <Menu /> },
+          { path: 'about', element: <About /> },
+          { path: 'contact', element: <Contact /> },
+        ],
+      },
     ],
   },
 ]);

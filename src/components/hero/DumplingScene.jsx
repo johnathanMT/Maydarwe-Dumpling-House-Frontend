@@ -1,9 +1,10 @@
-import { Suspense, useLayoutEffect, useMemo, useRef } from 'react';
+import { Component, Suspense, useLayoutEffect, useMemo, useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Center, ContactShadows, Environment, useGLTF } from '@react-three/drei';
+import { Center, ContactShadows, useGLTF } from '@react-three/drei';
 import { Box3, Color, Vector3 } from 'three';
 import { useReducedMotion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import OptimizedImage from '../ui/OptimizedImage';
 
 export const DUMPLING_MODEL_URL =
   'https://res.cloudinary.com/dhlhzmmtt/image/upload/v1790346466/Big_dumplings_3d_model_fopwnk.glb';
@@ -207,7 +208,6 @@ function SceneContent({ reduce, spinApi }) {
       <spotLight position={[0, 4.2, -6.2]} angle={0.42} penumbra={0.78} intensity={2.8} color="#FFFFFF" />
       <pointLight position={[0, 1.2, -3.2]} intensity={1.55} color="#E4EAF2" distance={9} decay={2} />
 
-      <Environment preset="studio" environmentIntensity={0.68} />
       <SilverBackdrop />
 
       <Suspense fallback={null}>
@@ -220,6 +220,36 @@ function SceneContent({ reduce, spinApi }) {
 
       <ContactShadows position={[0, -1.55, 0]} opacity={0.2} scale={10} blur={3.2} far={2.8} />
     </>
+  );
+}
+
+class SceneErrorBoundary extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { failed: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+
+  render() {
+    if (this.state.failed) return this.props.fallback;
+    return this.props.children;
+  }
+}
+
+function SceneFallback() {
+  const { t } = useTranslation();
+
+  return (
+    <OptimizedImage
+      src="/IMG_7922.JPG"
+      alt={t('pages.menu.dumplings')}
+      width={1200}
+      height={800}
+      className="h-full w-full object-contain"
+    />
   );
 }
 
@@ -251,13 +281,15 @@ export default function DumplingScene() {
             'radial-gradient(ellipse 44% 40% at 50% 56%, rgba(255,255,255,0.92) 0%, rgba(214,222,232,0.5) 40%, transparent 64%), radial-gradient(ellipse 72% 64% at 50% 58%, #e8edf3 0%, #cfd6df 56%, #fdfaf6 100%)',
         }}
       />
-      <Canvas
-        dpr={[1, 2]}
-        camera={{ position: [0, 1.45, 5], fov: 34 }}
-        gl={{ antialias: true, alpha: true, toneMappingExposure: 1.35 }}
-      >
-        <SceneContent reduce={Boolean(reduce)} spinApi={spinApi} />
-      </Canvas>
+      <SceneErrorBoundary fallback={<SceneFallback />}>
+        <Canvas
+          dpr={[1, 2]}
+          camera={{ position: [0, 1.45, 5], fov: 34 }}
+          gl={{ antialias: true, alpha: true, toneMappingExposure: 1.35 }}
+        >
+          <SceneContent reduce={Boolean(reduce)} spinApi={spinApi} />
+        </Canvas>
+      </SceneErrorBoundary>
     </div>
   );
 }

@@ -37,6 +37,11 @@
       "call": "Call to Order",
       "browse": "Browse Menu Anyway",
       "close": "Close notice"
+    },
+    "routeError": {
+      "title": "This page could not be shown",
+      "body": "Please try again, or browse the menu.",
+      "retry": "Try again"
     }
   },
   "cart": {
