@@ -69,6 +69,11 @@ function DishCard({ item, language, added = false, onAdd }) {
       <div className="flex flex-1 flex-col px-5 pb-5 pt-5">
         <h3 className="font-display text-xl font-semibold leading-snug text-ink-900">{name}</h3>
         <p className="mt-1 text-sm text-primary-600">{otherName}</p>
+        {item.note ? (
+          <p className="mt-3 self-start rounded-2xl bg-secondary-50 px-3 py-1.5 text-xs font-medium leading-relaxed text-secondary-900 ring-1 ring-secondary-200">
+            {pickLocale(item.note, language)}
+          </p>
+        ) : null}
         <p className="mt-3 flex-1 text-sm leading-relaxed text-ink-600">{pickLocale(item.blurb, language)}</p>
         <span className="mt-3 inline-flex items-center gap-1 self-start rounded-full border border-gray-200 bg-gray-50 px-2 py-1 text-xs text-gray-600">
           <Utensils className="h-3 w-3" strokeWidth={1.75} aria-hidden="true" />

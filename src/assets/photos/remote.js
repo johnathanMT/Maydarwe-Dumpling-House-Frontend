@@ -84,11 +84,25 @@ export const DISH_PHOTOS = {
     height: 1122,
     widths: CARD_WIDTHS,
   }),
+  kwayTeow: cloudinaryPicture({
+    version: 'v1790426398',
+    publicId: 'IMG_7996_lwwps6.jpg',
+    width: 1179,
+    height: 1104,
+    widths: CARD_WIDTHS,
+  }),
   shanNoodles: cloudinaryPicture({
     version: 'v1790428671',
     publicId: 'IMG_8030_a03wfp.jpg',
     width: 1024,
     height: 1024,
+    widths: CARD_WIDTHS,
+  }),
+  meeShaySalad: cloudinaryPicture({
+    version: 'v1790426399',
+    publicId: 'IMG_7998_hfhnon.jpg',
+    width: 1125,
+    height: 1122,
     widths: CARD_WIDTHS,
   }),
   garlicOilNoodles: cloudinaryPicture({
