@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Menu as MenuIcon, ShoppingBag, X } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import BrandLogo from './ui/BrandLogo';
+import LanguageToggle from './ui/LanguageToggle';
 
 const NAV_LINKS = [
   { to: '/', labelKey: 'nav.home', end: true },
@@ -27,47 +28,6 @@ const mobileLinkClass = ({ isActive }) =>
     isActive ? 'text-primary-700' : 'text-ink-900 hover:text-primary-700',
   ].join(' ');
 
-function LanguageToggle({ className = '' }) {
-  const { t, i18n } = useTranslation();
-  const current = i18n.resolvedLanguage === 'my' ? 'my' : 'en';
-
-  return (
-    <div
-      role="radiogroup"
-      aria-label={t('nav.language')}
-      className={`relative inline-flex items-center rounded-full border border-secondary-400/50 bg-ink-50 p-1 ${className}`}
-    >
-      <span
-        aria-hidden="true"
-        className={`absolute bottom-1 left-1 top-1 w-11 rounded-full bg-gradient-to-b from-secondary-300 to-secondary-500 shadow-sm transition-transform duration-300 ease-out ${
-          current === 'my' ? 'translate-x-11' : 'translate-x-0'
-        }`}
-      />
-      {[
-        { code: 'en', label: 'EN', name: 'English' },
-        { code: 'my', label: 'MM', name: 'မြန်မာ' },
-      ].map(({ code, label, name }) => {
-        const isActive = current === code;
-        return (
-          <button
-            key={code}
-            type="button"
-            role="radio"
-            aria-checked={isActive}
-            title={name}
-            onClick={() => i18n.changeLanguage(code === 'my' ? 'my' : 'en')}
-            className={`relative z-10 w-11 rounded-full py-1 text-xs font-bold transition-colors ${
-              isActive ? 'text-ink-950' : 'text-ink-500 hover:text-ink-900'
-            }`}
-          >
-            {label}
-          </button>
-        );
-      })}
-    </div>
-  );
-}
-
 function CartButton({ count, onClick }) {
   const { t } = useTranslation();
 
@@ -76,7 +36,7 @@ function CartButton({ count, onClick }) {
       type="button"
       onClick={onClick}
       aria-label={t('nav.cartCount', { count })}
-      className="relative inline-flex h-10 w-10 items-center justify-center rounded-full text-ink-900 transition-colors hover:bg-primary-50 hover:text-primary-700"
+      className="relative inline-flex h-12 w-12 items-center justify-center rounded-full text-ink-900 transition-colors hover:bg-primary-50 hover:text-primary-700 lg:h-10 lg:w-10"
     >
       <ShoppingBag className="h-[22px] w-[22px]" strokeWidth={1.75} />
       {count > 0 ? (
@@ -170,7 +130,7 @@ export default function Navbar() {
               aria-expanded={isOpen}
               aria-controls="mobile-nav"
               aria-label={isOpen ? t('nav.closeMenu') : t('nav.openMenu')}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full text-ink-900 transition-colors hover:bg-ink-50 lg:hidden"
+              className="inline-flex h-12 w-12 items-center justify-center rounded-full text-ink-900 transition-colors hover:bg-ink-50 lg:hidden"
             >
               {isOpen ? <X className="h-6 w-6" /> : <MenuIcon className="h-6 w-6" />}
             </button>

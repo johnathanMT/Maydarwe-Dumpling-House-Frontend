@@ -46,12 +46,12 @@ export default function Contact() {
           <article className="rounded-3xl border border-ink-100 bg-white p-6">
             <h2 className="font-display text-2xl font-semibold text-ink-900">{t('pages.contact.hoursTitle')}</h2>
             <p className="mt-4 inline-flex items-start gap-3 text-ink-700">
-              <Clock className="mt-0.5 h-5 w-5 shrink-0 text-secondary-600" strokeWidth={1.75} />
+              <Clock className="mt-0.5 h-5 w-5 shrink-0 text-secondary-700" strokeWidth={1.75} />
               <span>{t('footer.hoursValue')}</span>
             </p>
             <h3 className="mt-8 font-display text-xl font-semibold text-ink-900">{t('pages.contact.cityTitle')}</h3>
             <p className="mt-3 inline-flex items-start gap-3 text-ink-700">
-              <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-secondary-600" strokeWidth={1.75} />
+              <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-secondary-700" strokeWidth={1.75} />
               <span>
                 <span className="block font-semibold text-ink-900">{t('pages.contact.city')}</span>
                 <span className="mt-1 block text-sm text-ink-600">{t('pages.contact.cityNote')}</span>
@@ -82,13 +82,13 @@ export default function Contact() {
           <div className="mt-6 flex flex-wrap gap-3 lg:mt-0">
             <Link
               to="/menu"
-              className="inline-flex rounded-full bg-white px-6 py-3 font-semibold text-primary-700 hover:bg-secondary-50"
+              className="inline-flex min-h-12 items-center rounded-full bg-white px-6 py-3 font-semibold text-primary-700 hover:bg-secondary-50"
             >
               {t('pages.home.viewMenu')}
             </Link>
             <a
               href={primaryPhone.href}
-              className="inline-flex rounded-full border border-white/40 px-6 py-3 font-semibold text-white hover:bg-white/10"
+              className="inline-flex min-h-12 items-center rounded-full border border-white/40 px-6 py-3 font-semibold text-white hover:bg-white/10"
             >
               {t('pages.home.orderNow')}
             </a>

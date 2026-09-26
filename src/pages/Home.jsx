@@ -24,7 +24,7 @@ function FeaturedCard({ item, language, onAdd }) {
         <button
           type="button"
           onClick={() => onAdd(item)}
-          className="mt-5 inline-flex items-center justify-center gap-2 rounded-full bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-primary-700"
+          className="mt-5 inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-primary-600 px-4 text-sm font-semibold text-white hover:bg-primary-700"
         >
           <Plus className="h-4 w-4" strokeWidth={2.25} />
           {t('pages.menu.addToCart')}
@@ -51,7 +51,7 @@ export default function Home() {
               {t('pages.home.featuredTitle')}
             </h2>
           </div>
-          <Link to="/menu" className="text-sm font-semibold text-primary-700 hover:text-primary-800">
+          <Link to="/menu" className="inline-flex min-h-12 items-center text-sm font-semibold text-primary-700 hover:text-primary-800">
             {t('pages.home.featuredCta')}
           </Link>
         </div>
@@ -82,7 +82,7 @@ export default function Home() {
                 <p className="mt-2 text-ink-600">{pickLocale(caption, language)}</p>
                 <Link
                   to="/menu"
-                  className="mt-5 inline-block text-sm font-semibold text-primary-700 hover:text-primary-800"
+                  className="mt-5 inline-flex min-h-12 items-center text-sm font-semibold text-primary-700 hover:text-primary-800"
                 >
                   {t('pages.home.featuredCta')}
                 </Link>
@@ -102,13 +102,13 @@ export default function Home() {
           <div className="mt-6 flex flex-wrap gap-3 lg:mt-0">
             <Link
               to="/menu"
-              className="inline-flex rounded-full bg-white px-6 py-3 font-semibold text-primary-700 hover:bg-secondary-50"
+              className="inline-flex min-h-12 items-center rounded-full bg-white px-6 py-3 font-semibold text-primary-700 hover:bg-secondary-50"
             >
               {t('pages.home.viewMenu')}
             </Link>
             <Link
               to="/contact"
-              className="inline-flex rounded-full border border-white/40 px-6 py-3 font-semibold text-white hover:bg-white/10"
+              className="inline-flex min-h-12 items-center rounded-full border border-white/40 px-6 py-3 font-semibold text-white hover:bg-white/10"
             >
               {t('nav.contact')}
             </Link>

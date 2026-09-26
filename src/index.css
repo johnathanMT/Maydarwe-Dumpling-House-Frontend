@@ -19,6 +19,9 @@
   html[lang='my'] :is(h1, h2, h3, h4) {
     line-height: 1.6;
   }
+  html[lang='my'] :is(h1, h2, h3, h4) [class*='leading-'] {
+    line-height: 1.6;
+  }
   html[lang='my'] [class*='tracking-'] {
     letter-spacing: normal;
   }

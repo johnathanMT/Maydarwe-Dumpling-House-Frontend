@@ -90,7 +90,7 @@ export default function BottomNav() {
                 end={end}
                 className={({ isActive }) =>
                   [
-                    'flex flex-col items-center gap-0.5 rounded-2xl px-1 py-1.5 text-[11px] font-semibold transition-all',
+                    'flex min-h-12 w-full min-w-12 flex-col items-center justify-center gap-0.5 rounded-2xl px-1 py-2 text-[11px] font-semibold transition-all',
                     isActive ? 'bg-brand-yellow text-ink-950 shadow-[0_3px_0_#E8A006]' : 'text-ink-500 hover:bg-brand-pearl hover:text-ink-900',
                   ].join(' ')
                 }

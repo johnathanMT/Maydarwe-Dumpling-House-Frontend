@@ -5,7 +5,7 @@ export default function AnnouncementBar() {
 
   return (
     <div className="relative overflow-hidden bg-ink-950 text-secondary-200">
-      <p className="px-4 py-2 text-center text-[11px] font-semibold uppercase tracking-[0.16em] sm:text-xs">
+      <p className="break-words px-3 py-2 text-center text-[11px] font-semibold uppercase tracking-[0.16em] sm:px-4 sm:text-xs">
         {t('ui.announcement')}
       </p>
     </div>

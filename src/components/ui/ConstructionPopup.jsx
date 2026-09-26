@@ -76,7 +76,7 @@ export default function ConstructionPopup() {
             <button
               type="button"
               onClick={dismiss}
-              className="absolute right-3 top-4 grid h-9 w-9 place-items-center rounded-full text-ink-500 transition-colors hover:bg-ink-100 hover:text-ink-900"
+              className="absolute right-3 top-4 grid h-12 w-12 place-items-center rounded-full text-ink-500 transition-colors hover:bg-ink-100 hover:text-ink-900"
               aria-label={t('ui.construction.close')}
             >
               <X className="h-4 w-4" strokeWidth={2.25} />
@@ -109,14 +109,14 @@ export default function ConstructionPopup() {
                   href={FACEBOOK_ORDER_URL}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-[#1877F2] px-5 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#166FE5]"
+                  className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#1877F2] px-5 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#166FE5]"
                 >
                   <FacebookMark className="h-4 w-4" />
                   {t('ui.construction.facebook')}
                 </a>
                 <a
                   href={CALL_HREF}
-                  className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-secondary-500 bg-white px-5 py-3 text-sm font-semibold text-secondary-800 transition-colors hover:bg-secondary-50"
+                  className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border-2 border-secondary-500 bg-white px-5 py-3 text-sm font-semibold text-secondary-800 transition-colors hover:bg-secondary-50"
                 >
                   <Phone className="h-4 w-4" strokeWidth={2} />
                   {t('ui.construction.call')}
@@ -124,7 +124,7 @@ export default function ConstructionPopup() {
                 <button
                   type="button"
                   onClick={dismiss}
-                  className="py-1 text-sm font-medium text-ink-500 underline-offset-4 transition-colors hover:text-ink-900 hover:underline"
+                  className="min-h-12 text-sm font-medium text-ink-500 underline-offset-4 transition-colors hover:text-ink-900 hover:underline"
                 >
                   {t('ui.construction.browse')}
                 </button>

@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Minus, Plus, ShoppingBag, X } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { CONTACT_PHONES } from '../constants/site';
+import OptimizedImage from './ui/OptimizedImage';
 import { formatPrice, pickLocale } from '../data/menu';
 
 export default function CartDrawer() {
@@ -57,7 +58,7 @@ export default function CartDrawer() {
             type="button"
             onClick={closeCart}
             aria-label={t('cart.close')}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full text-ink-900 hover:bg-ink-50"
+            className="inline-flex h-12 w-12 items-center justify-center rounded-full text-ink-900 hover:bg-ink-50"
           >
             <X className="h-5 w-5" />
           </button>
@@ -73,7 +74,7 @@ export default function CartDrawer() {
               <Link
                 to="/menu"
                 onClick={closeCart}
-                className="mt-6 inline-flex rounded-full bg-primary-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary-700"
+                className="mt-6 inline-flex min-h-12 items-center rounded-full bg-primary-600 px-5 text-sm font-semibold text-white hover:bg-primary-700"
               >
                 {t('cart.browse')}
               </Link>
@@ -87,7 +88,7 @@ export default function CartDrawer() {
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex min-w-0 items-start gap-3">
                       {line.image ? (
-                        <img
+                        <OptimizedImage
                           src={line.image}
                           alt=""
                           width={56}
@@ -105,7 +106,7 @@ export default function CartDrawer() {
                     <button
                       type="button"
                       onClick={() => removeItem(line.id)}
-                      className="text-sm font-medium text-ink-500 hover:text-primary-700"
+                      className="inline-flex min-h-12 min-w-12 items-center text-sm font-medium text-ink-500 hover:text-primary-700"
                     >
                       {t('cart.remove')}
                     </button>
@@ -116,7 +117,7 @@ export default function CartDrawer() {
                         type="button"
                         aria-label={t('cart.decrease')}
                         onClick={() => updateQuantity(line.id, line.quantity - 1)}
-                        className="grid h-9 w-9 place-items-center text-ink-800 hover:text-primary-700"
+                        className="grid h-12 w-12 place-items-center text-ink-800 hover:text-primary-700"
                       >
                         <Minus className="h-4 w-4" />
                       </button>
@@ -127,7 +128,7 @@ export default function CartDrawer() {
                         type="button"
                         aria-label={t('cart.increase')}
                         onClick={() => updateQuantity(line.id, line.quantity + 1)}
-                        className="grid h-9 w-9 place-items-center text-ink-800 hover:text-primary-700"
+                        className="grid h-12 w-12 place-items-center text-ink-800 hover:text-primary-700"
                       >
                         <Plus className="h-4 w-4" />
                       </button>

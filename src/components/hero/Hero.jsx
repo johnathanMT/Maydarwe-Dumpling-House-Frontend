@@ -35,10 +35,10 @@ export default function Hero() {
             transition={{ type: 'spring', stiffness: 200, damping: 18 }}
             className="mt-4 flex flex-col items-center"
           >
-            <span className="font-display text-[3.15rem] font-extrabold leading-none text-primary-600 antialiased [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale] [text-shadow:0_1px_0_#8B0A1A,0_0_4px_#C8102E,0_0_1px_#C8102E] sm:text-7xl md:text-8xl lg:text-[7.5rem]">
+            <span className="max-w-full font-display text-[clamp(2.4rem,14vw,3.15rem)] font-extrabold text-primary-600 antialiased [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale] [text-shadow:0_1px_0_#8B0A1A,0_0_4px_#C8102E,0_0_1px_#C8102E] sm:text-7xl md:text-8xl lg:text-[7.5rem]">
               မေဓာဝီ
             </span>
-            <span className="mt-2 font-display text-[1.85rem] font-extrabold leading-tight text-ink-950 antialiased [-webkit-font-smoothing:antialiased] sm:mt-3 sm:text-5xl md:text-6xl lg:text-7xl">
+            <span className="mt-2 max-w-full font-display text-[clamp(1.35rem,8vw,1.85rem)] font-extrabold text-ink-950 antialiased [-webkit-font-smoothing:antialiased] sm:mt-3 sm:text-5xl md:text-6xl lg:text-7xl">
               ဖက်ထုပ်အိုးကပ်
             </span>
           </motion.h1>
@@ -65,13 +65,13 @@ export default function Hero() {
           <div className="mt-6 flex w-full flex-col gap-3 sm:mt-8 sm:w-auto sm:flex-row sm:justify-center">
             <Link
               to="/menu"
-              className="inline-flex items-center justify-center rounded-full bg-primary-600 px-7 py-3.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-primary-700 sm:text-base"
+              className="inline-flex min-h-12 items-center justify-center rounded-full bg-primary-600 px-7 py-3.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-primary-700 sm:text-base"
             >
               {t('pages.home.viewMenu')}
             </Link>
             <a
               href={orderPhone.href}
-              className="inline-flex items-center justify-center rounded-full border-2 border-secondary-500 bg-white px-7 py-3.5 text-sm font-semibold text-secondary-800 transition-colors hover:bg-secondary-50 sm:text-base"
+              className="inline-flex min-h-12 items-center justify-center rounded-full border-2 border-secondary-500 bg-white px-7 py-3.5 text-sm font-semibold text-secondary-800 transition-colors hover:bg-secondary-50 sm:text-base"
             >
               {t('pages.home.orderNow')}
             </a>

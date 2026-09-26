@@ -1,4 +1,5 @@
 import { Flame, Soup, Wheat } from 'lucide-react';
+import OptimizedImage from '../ui/OptimizedImage';
 
 const FALLBACK_WASH = {
   mala: 'from-secondary-700 via-primary-800 to-ink-950',
@@ -13,7 +14,7 @@ export default function DishPhoto({ item, alt, className = '' }) {
   return (
     <div className={`relative aspect-[4/3] overflow-hidden bg-ink-100 ${item.inStock ? '' : 'grayscale'} ${className}`}>
       {item.image ? (
-        <img
+        <OptimizedImage
           src={item.image}
           alt={alt}
           width={800}

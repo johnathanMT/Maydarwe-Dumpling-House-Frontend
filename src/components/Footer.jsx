@@ -31,7 +31,7 @@ export default function Footer() {
                   to={to}
                   end={end}
                   className={({ isActive }) =>
-                    `transition-colors hover:text-secondary-300 ${isActive ? 'text-secondary-400' : ''}`
+                    `inline-flex min-h-12 min-w-12 items-center px-0.5 transition-colors hover:text-secondary-300 ${isActive ? 'text-secondary-400' : ''}`
                   }
                 >
                   {t(labelKey)}
@@ -48,7 +48,7 @@ export default function Footer() {
               <li key={href}>
                 <a
                   href={href}
-                  className="inline-flex items-center gap-2 text-ink-100 transition-colors hover:text-secondary-300"
+                  className="inline-flex min-h-12 items-center gap-2 text-ink-100 transition-colors hover:text-secondary-300"
                 >
                   <Phone className="h-4 w-4 text-secondary-400" strokeWidth={2} />
                   <span className="tabular-nums">{display}</span>

@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react';
 import { createBrowserRouter, Outlet, RouterProvider, ScrollRestoration } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Navbar from './components/Navbar';
@@ -10,10 +11,15 @@ import BackToTop from './components/ui/BackToTop';
 import CartToast from './components/ui/CartToast';
 import ConstructionPopup from './components/ui/ConstructionPopup';
 import { CartProvider } from './context/CartContext';
-import Home from './pages/Home';
-import Menu from './pages/Menu';
-import About from './pages/About';
-import Contact from './pages/Contact';
+
+const Home = lazy(() => import('./pages/Home'));
+const Menu = lazy(() => import('./pages/Menu'));
+const About = lazy(() => import('./pages/About'));
+const Contact = lazy(() => import('./pages/Contact'));
+
+function PageFallback() {
+  return <div className="min-h-[40vh] bg-white" aria-hidden="true" />;
+}
 
 function Layout() {
   const { t } = useTranslation();
@@ -33,7 +39,9 @@ function Layout() {
       <ConstructionPopup />
 
       <main id="main" className="flex-1">
-        <Outlet />
+        <Suspense fallback={<PageFallback />}>
+          <Outlet />
+        </Suspense>
       </main>
 
       <Footer />

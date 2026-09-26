@@ -34,7 +34,7 @@ export default function CartToast() {
                 dismissToast();
                 openCart();
               }}
-              className="shrink-0 rounded-full bg-primary-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-primary-700"
+              className="inline-flex min-h-12 shrink-0 items-center rounded-full bg-primary-600 px-4 text-xs font-semibold text-white hover:bg-primary-700"
             >
               {t('ui.toastView')}
             </button>

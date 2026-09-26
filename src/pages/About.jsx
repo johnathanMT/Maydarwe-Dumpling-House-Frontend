@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Flame, Hand, Soup } from 'lucide-react';
 import BrandLogo from '../components/ui/BrandLogo';
+import OptimizedImage from '../components/ui/OptimizedImage';
 
 const VALUES = [
   { icon: Hand, titleKey: 'pages.about.value1Title', bodyKey: 'pages.about.value1Body' },
@@ -32,7 +33,7 @@ export default function About() {
         <div className="lg:col-span-5">
           <div className="overflow-hidden rounded-[2rem] border border-ink-100 bg-ink-50 p-8 sm:p-10">
             <BrandLogo size="footer" />
-            <img
+            <OptimizedImage
               src="/IMG_7928.JPG"
               alt={t('pages.menu.dumplings')}
               width={800}
@@ -46,13 +47,13 @@ export default function About() {
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
               to="/menu"
-              className="inline-flex rounded-full bg-primary-600 px-6 py-3 text-sm font-semibold text-white hover:bg-primary-700 sm:text-base"
+              className="inline-flex min-h-12 items-center rounded-full bg-primary-600 px-6 py-3 text-sm font-semibold text-white hover:bg-primary-700 sm:text-base"
             >
               {t('pages.home.viewMenu')}
             </Link>
             <Link
               to="/contact"
-              className="inline-flex rounded-full border-2 border-secondary-500 bg-white px-6 py-3 text-sm font-semibold text-secondary-800 hover:bg-secondary-50 sm:text-base"
+              className="inline-flex min-h-12 items-center rounded-full border-2 border-secondary-500 bg-white px-6 py-3 text-sm font-semibold text-secondary-800 hover:bg-secondary-50 sm:text-base"
             >
               {t('nav.contact')}
             </Link>
