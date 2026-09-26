@@ -53,6 +53,8 @@ export default function Home() {
           <RevealGroup className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-3 lg:gap-8">
             {CATEGORIES.map(({ id, title, caption }) => {
               const Icon = CATEGORY_ICONS[id];
+              const cardTitle = id === 'dumplings' ? t('pages.home.pillarDumplingsTitle') : pickLocale(title, language);
+              const cardCaption = id === 'dumplings' ? t('pages.home.pillarDumplingsCaption') : pickLocale(caption, language);
               return (
                 <RevealItem
                   key={id}
@@ -61,8 +63,8 @@ export default function Home() {
                   <span className="grid h-12 w-12 place-items-center rounded-full bg-butter text-ink-950 ring-4 ring-butter-100">
                     <Icon className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />
                   </span>
-                  <h3 className="mt-6 font-display text-2xl font-semibold text-ink-950">{pickLocale(title, language)}</h3>
-                  <p className="mt-2 text-ink-600">{pickLocale(caption, language)}</p>
+                  <h3 className="mt-6 font-display text-2xl font-semibold text-ink-950">{cardTitle}</h3>
+                  <p className="mt-2 text-ink-600">{cardCaption}</p>
                   <ArrowLink to="/menu" className="mt-5">
                     {t('pages.home.featuredCta')}
                   </ArrowLink>

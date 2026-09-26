@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { m } from 'framer-motion';
-import { Check, Plus } from 'lucide-react';
+import { Check, Plus, Utensils } from 'lucide-react';
 import DishPhoto from './DishPhoto';
 import { MEAT_TYPES } from './meatIcons';
 import { formatPrice, pickLocale } from '../../data/menu';
@@ -70,6 +70,10 @@ function DishCard({ item, language, added = false, onAdd }) {
         <h3 className="font-display text-xl font-semibold leading-snug text-ink-900">{name}</h3>
         <p className="mt-1 text-sm text-primary-600">{otherName}</p>
         <p className="mt-3 flex-1 text-sm leading-relaxed text-ink-600">{pickLocale(item.blurb, language)}</p>
+        <span className="mt-3 inline-flex items-center gap-1 self-start rounded-full border border-gray-200 bg-gray-50 px-2 py-1 text-xs text-gray-600">
+          <Utensils className="h-3 w-3" strokeWidth={1.75} aria-hidden="true" />
+          {t('pages.menu.portion')}
+        </span>
 
         <div aria-hidden="true" className="gold-rule mt-5 opacity-60" />
 

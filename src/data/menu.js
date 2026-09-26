@@ -141,8 +141,8 @@ export const MENU_ITEMS = [
 export const CATEGORIES = [
   {
     id: 'dumplings',
-    title: { en: 'Signature Dumplings', my: 'အထူးဖက်ထုပ်များ' },
-    caption: { en: 'Pan-fried and in broth.', my: 'အကြော်နှင့် ဟင်းရည်။' },
+    title: { en: 'Delicious and most popular main dumplings', my: 'အရသာရှိ၍ လူကြိုက်အများဆုံး အဓိက ဖက်ထုပ်များ' },
+    caption: { en: 'Pan-fried and boiled dumplings.', my: 'ဖက်ထုပ်အိုးကပ်နှင့် ဖက်ထုပ်ပြုတ်များ' },
   },
   {
     id: 'mala',

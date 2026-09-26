@@ -75,7 +75,9 @@
       "videoUnmute": "Unmute video",
       "featuredCta": "See the full menu",
       "pillarsKicker": "The kitchen",
-      "pillarsTitle": "Three ways to eat",
+      "pillarsTitle": "3 main menus available at Maydarwe Dumpling House",
+      "pillarDumplingsTitle": "Delicious and most popular main dumpling group",
+      "pillarDumplingsCaption": "Homemade original taste pan-fried dumplings",
       "visitKicker": "Visit",
       "visitTitle": "Come hungry",
       "visitSub": "Order by phone or walk in. We cook each plate when you ask for it.",
@@ -100,6 +102,7 @@
       "addToCart": "Add to cart",
       "added": "Added",
       "outOfStock": "Out of stock",
+      "portion": "Available in large / small portions",
       "showing": "Showing {{count}} dishes",
       "empty": "No dishes in this category yet.",
       "meat": {
