@@ -15,7 +15,8 @@
   }
 
   html {
-    scroll-behavior: smooth;
+    /* Lenis owns wheel smoothing. Native smooth scroll fights it. */
+    scroll-behavior: auto;
     -webkit-tap-highlight-color: transparent;
   }
 
@@ -45,6 +46,14 @@
   :focus-visible {
     outline: 2px solid theme('colors.secondary.400');
     outline-offset: 3px;
+  }
+
+  :is(a[href], button, summary, label, select, [role='button'], [role='link']) {
+    cursor: pointer;
+  }
+
+  :is(button:disabled, [aria-disabled='true']) {
+    cursor: not-allowed;
   }
 }
 

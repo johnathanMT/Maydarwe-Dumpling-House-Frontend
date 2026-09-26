@@ -46,7 +46,7 @@ export default function CartDrawer() {
         </div>
       ) : (
         <>
-          <ul className="flex-1 space-y-4 overflow-y-auto px-5 py-5">
+          <ul data-lenis-prevent className="flex-1 space-y-4 overflow-y-auto px-5 py-5">
             {lines.map((line) => {
               const name = pickLocale(line.name, language);
               return (

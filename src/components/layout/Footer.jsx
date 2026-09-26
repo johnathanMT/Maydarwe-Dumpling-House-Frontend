@@ -2,6 +2,7 @@ import { NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Clock, Phone } from 'lucide-react';
 import BrandLogo from '../ui/BrandLogo';
+import { Reveal } from '../ui/Reveal';
 import { BUSINESS, NAV_LINKS, telHref } from '../../constants/site';
 import { useBusinessCopy } from '../../lib/businessHours';
 
@@ -15,13 +16,18 @@ export default function Footer() {
   const copy = useBusinessCopy();
 
   return (
-    <footer className="bg-ink-950 text-ink-300">
+    <Reveal
+      as="footer"
+      distance={40}
+      viewport={{ once: true, amount: 0.15 }}
+      className="bg-ink-950 text-ink-300"
+    >
       <div aria-hidden="true" className="h-1 bg-gradient-to-r from-primary-700 via-primary-600 to-secondary-500" />
 
-      <div className="mx-auto grid max-w-7xl gap-12 px-4 py-14 sm:grid-cols-2 sm:px-6 lg:grid-cols-12 lg:gap-8 lg:px-8 lg:py-20">
+      <div className="mx-auto grid max-w-7xl gap-14 px-4 py-20 sm:grid-cols-2 sm:px-6 lg:grid-cols-12 lg:gap-10 lg:px-8 lg:py-28">
         <div className="sm:col-span-2 lg:col-span-5">
           <BrandLogo size="footer" />
-          <p className="mt-5 max-w-xs">{t('footer.about')}</p>
+          <p className="mt-5 max-w-sm leading-relaxed">{t('footer.about')}</p>
         </div>
 
         <div className="lg:col-span-2">
@@ -74,6 +80,6 @@ export default function Footer() {
           © {year} {t('brand.official')}. {t('footer.rights')}
         </p>
       </div>
-    </footer>
+    </Reveal>
   );
 }

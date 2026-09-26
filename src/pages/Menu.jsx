@@ -7,6 +7,7 @@ import { usePageMeta } from '../lib/seo';
 import { DURATION, EASE_OUT, fadeUp, stagger } from '../lib/motion';
 import { useAddedFlash } from '../hooks/useAddedFlash';
 import PageHeader from '../components/ui/PageHeader';
+import { Reveal } from '../components/ui/Reveal';
 import DishCard from '../components/menu/DishCard';
 import MenuAccordion from '../components/menu/MenuAccordion';
 import { CATEGORIES, MENU_ITEMS, pickLocale } from '../data/menu';
@@ -58,7 +59,9 @@ export default function Menu() {
     <section className="bg-ivory">
       <PageHeader kicker={t('pages.menu.kicker')} title={t('pages.menu.title')} subtitle={t('pages.menu.subtitle')} />
 
-      <MenuAccordion />
+      <Reveal distance={40}>
+        <MenuAccordion />
+      </Reveal>
 
       <div className="sticky top-header z-30 border-b border-butter-200 bg-ivory/90 backdrop-blur-md">
         <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
@@ -98,7 +101,7 @@ export default function Menu() {
         </div>
       </div>
 
-      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 md:py-14 lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 md:py-28 lg:px-8">
         <AnimatePresence mode="wait" initial={false}>
           <m.div
             key={filter}
@@ -106,7 +109,7 @@ export default function Menu() {
             exit={{ opacity: 0, transition: { duration: DURATION.ui } }}
           >
             {filter === 'all' ? (
-              <div className="space-y-16 md:space-y-20">
+              <div className="space-y-20 md:space-y-28">
                 {CATEGORY_LIST.map(({ id, icon: Icon, title, caption }) => (
                   <section key={id} aria-labelledby={`menu-${id}`}>
                     <div className="mb-8 flex items-end gap-4">
@@ -119,7 +122,7 @@ export default function Menu() {
                             {pickLocale(title, language)}
                           </h2>
                         </div>
-                        <p className="mt-2 text-ink-500">{pickLocale(caption, language)}</p>
+                        <p className="mt-2 leading-relaxed text-ink-500">{pickLocale(caption, language)}</p>
                       </div>
                       <span aria-hidden="true" className="mb-3 hidden h-px flex-1 bg-gradient-to-r from-butter-400 to-transparent md:block" />
                     </div>

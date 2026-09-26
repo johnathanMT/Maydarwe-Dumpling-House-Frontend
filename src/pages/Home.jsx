@@ -31,7 +31,7 @@ export default function Home() {
       <HomeReel />
 
       {/* House favourites */}
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20 lg:px-8 lg:py-24">
+      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 md:py-28 lg:px-8 lg:py-32">
         <SectionHeading
           eyebrow={t('pages.home.featuredKicker')}
           title={t('pages.home.featuredTitle')}
@@ -48,9 +48,9 @@ export default function Home() {
 
       {/* Three ways to eat — butter-yellow band */}
       <section className="bg-sunny">
-        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20 lg:px-8 lg:py-24">
+        <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 md:py-28 lg:px-8 lg:py-32">
           <SectionHeading eyebrow={t('pages.home.pillarsKicker')} title={t('pages.home.pillarsTitle')} />
-          <RevealGroup className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-3 lg:gap-8">
+          <RevealGroup className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-3 lg:mt-16 lg:gap-8">
             {CATEGORIES.map(({ id, title, caption }) => {
               const Icon = CATEGORY_ICONS[id];
               const cardTitle = id === 'dumplings' ? t('pages.home.pillarDumplingsTitle') : pickLocale(title, language);
@@ -58,13 +58,14 @@ export default function Home() {
               return (
                 <RevealItem
                   key={id}
+                  distance={40}
                   className="rounded-[1.75rem] bg-white p-6 shadow-card ring-1 ring-butter-200 transition-[transform,box-shadow] duration-300 ease-out-soft hover:-translate-y-1 hover:shadow-lift lg:p-8"
                 >
                   <span className="grid h-12 w-12 place-items-center rounded-full bg-butter text-ink-950 ring-4 ring-butter-100">
                     <Icon className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />
                   </span>
                   <h3 className="mt-6 font-display text-2xl font-semibold text-ink-950">{cardTitle}</h3>
-                  <p className="mt-2 text-ink-600">{cardCaption}</p>
+                  <p className="mt-2 leading-relaxed text-ink-600">{cardCaption}</p>
                   <ArrowLink to="/menu" className="mt-5">
                     {t('pages.home.featuredCta')}
                   </ArrowLink>
@@ -76,16 +77,16 @@ export default function Home() {
       </section>
 
       {/* Visit / order */}
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20 lg:px-8 lg:py-24">
+      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 md:py-28 lg:px-8 lg:py-32">
         <CtaBanner
           eyebrow={t('pages.home.visitKicker')}
           title={t('pages.home.visitTitle')}
           body={t('pages.home.visitSub')}
         >
-          <Button variant="light" onClick={openOrder}>
+          <Button variant="light" onClick={openOrder} magnetic>
             {t('nav.order')}
           </Button>
-          <Button as={Link} to="/menu" variant="ghostLight">
+          <Button as={Link} to="/menu" variant="ghostLight" magnetic>
             {t('pages.home.viewMenu')}
           </Button>
         </CtaBanner>

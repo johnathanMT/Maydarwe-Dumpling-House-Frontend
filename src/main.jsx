@@ -2,6 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './i18n';
 import './styles/fonts';
+import 'lenis/dist/lenis.css';
 import './index.css';
 import App from './App';
 import { reloadOnce } from './lib/chunkReload';

@@ -1,6 +1,8 @@
-import { Suspense } from 'react';
+import { Suspense, useCallback, useEffect, useState } from 'react';
 import { Outlet, ScrollRestoration } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { ReactLenis, useLenis } from 'lenis/react';
+import { bindLenis } from '../../lib/lenisControl';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import BottomNav from './BottomNav';
@@ -10,6 +12,24 @@ import AnnouncementBar from '../ui/AnnouncementBar';
 import ScrollProgress from '../ui/ScrollProgress';
 import BackToTop from '../ui/BackToTop';
 import CartToast from '../cart/CartToast';
+import LoadingScreen from '../ui/LoadingScreen';
+
+const LENIS_OPTIONS = {
+  lerp: 0.085,
+  smoothWheel: true,
+  anchors: true,
+  autoToggle: true,
+  stopInertiaOnNavigate: true,
+};
+
+function LenisBridge() {
+  const lenis = useLenis();
+  useEffect(() => {
+    bindLenis(lenis);
+    return () => bindLenis(null);
+  }, [lenis]);
+  return null;
+}
 
 function PageFallback() {
   return <div className="min-h-[60vh] bg-white" aria-hidden="true" />;
@@ -18,9 +38,14 @@ function PageFallback() {
 /** App shell shared by every route. Pages render into <Outlet />. */
 export default function Layout() {
   const { t } = useTranslation();
+  const [ready, setReady] = useState(false);
+  const markReady = useCallback(() => setReady(true), []);
 
   return (
-    <div className="flex min-h-dvh flex-col bg-ivory pb-[5.75rem] md:pb-0">
+    <ReactLenis root options={LENIS_OPTIONS}>
+      <LenisBridge />
+      {ready ? null : <LoadingScreen onDone={markReady} />}
+      <div inert={ready ? undefined : true} className="flex min-h-dvh flex-col bg-ivory pb-[5.75rem] md:pb-0">
       <a
         href="#main"
         className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-ink-900 focus:px-4 focus:py-2 focus:text-white"
@@ -49,5 +74,6 @@ export default function Layout() {
       <OrderSheet />
       <ScrollRestoration />
     </div>
+    </ReactLenis>
   );
 }

@@ -31,6 +31,7 @@ export default function OrderRedirectActions({ className = '' }) {
         target="_blank"
         rel="noopener noreferrer"
         block
+        magnetic
         className="mt-4"
         aria-label={`${t('cart.messenger')} (${t('order.newTab')})`}
       >

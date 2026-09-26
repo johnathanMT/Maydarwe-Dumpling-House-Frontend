@@ -8,6 +8,7 @@ import { useUiActions } from '../../context/UiContext';
 import { NAV_LINKS } from '../../constants/site';
 import BrandLogo from '../ui/BrandLogo';
 import LanguageToggle from '../ui/LanguageToggle';
+import MagneticWrapper from '../ui/MagneticWrapper';
 
 const desktopLinkClass = ({ isActive }) =>
   [
@@ -90,13 +91,15 @@ export default function Navbar() {
         <div className="flex items-center gap-1 sm:gap-3">
           <LanguageToggle />
           <CartButton />
-          <button
-            type="button"
-            onClick={openOrder}
-            className="inline-flex min-h-12 items-center whitespace-nowrap rounded-full bg-primary-600 px-4 text-sm font-semibold text-white shadow-cta transition-colors hover:bg-primary-700 sm:px-5 lg:min-h-11"
-          >
-            {t('nav.order')}
-          </button>
+          <MagneticWrapper>
+            <button
+              type="button"
+              onClick={openOrder}
+              className="inline-flex min-h-12 items-center whitespace-nowrap rounded-full bg-primary-600 px-4 text-sm font-semibold text-white shadow-cta transition-colors hover:bg-primary-700 sm:px-5 lg:min-h-11"
+            >
+              {t('nav.order')}
+            </button>
+          </MagneticWrapper>
         </div>
       </nav>
     </header>

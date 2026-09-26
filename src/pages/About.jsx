@@ -27,7 +27,7 @@ export default function About() {
         <p className="mt-1 font-display text-lg italic text-secondary-800">{t('brand.english')}</p>
       </PageHeader>
 
-      <section className="mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 md:grid-cols-2 md:gap-10 md:py-20 lg:gap-20 lg:px-8 lg:py-24">
+      <section className="mx-auto grid max-w-7xl items-center gap-12 px-4 py-20 sm:px-6 md:grid-cols-2 md:gap-12 md:py-28 lg:gap-20 lg:px-8 lg:py-32">
         <Reveal className="relative mx-auto w-full max-w-md">
           <div className="rounded-[2.5rem] bg-white p-2 shadow-warm ring-1 ring-butter-400/60">
             <OptimizedImage
@@ -52,7 +52,7 @@ export default function About() {
           <Eyebrow rule>{t('pages.about.kicker')}</Eyebrow>
           <p className="mt-5 font-display text-2xl leading-relaxed text-ink-900 sm:text-[1.7rem]">{t('pages.about.body')}</p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Button as={Link} to="/menu" className="group">
+            <Button as={Link} to="/menu" className="group" magnetic>
               {t('pages.home.viewMenu')}
               <ArrowRight className="h-4 w-4 transition-transform duration-200 ease-out-soft group-hover:translate-x-0.5" aria-hidden="true" />
             </Button>
@@ -64,7 +64,7 @@ export default function About() {
       </section>
 
       <section className="border-t border-butter-200 bg-white">
-        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 md:py-28 lg:px-8 lg:py-32">
           <RevealGroup className="grid grid-cols-1 gap-6 md:grid-cols-3 lg:gap-8">
             {VALUES.map(({ icon: Icon, titleKey, bodyKey }) => (
               <RevealItem key={titleKey} className="rounded-[1.75rem] bg-butter-50 p-6 ring-1 ring-inset ring-butter-200 lg:p-8">

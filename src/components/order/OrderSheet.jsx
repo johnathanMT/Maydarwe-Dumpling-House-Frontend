@@ -36,7 +36,7 @@ export default function OrderSheet() {
         <SheetCloseButton onClick={closePanel} />
       </div>
 
-      <div className="space-y-5 overflow-y-auto px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-3 sm:px-6 sm:pb-6">
+      <div data-lenis-prevent className="space-y-5 overflow-y-auto px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-3 sm:px-6 sm:pb-6">
         {count > 0 ? (
           <p className="rounded-2xl bg-butter-50 px-4 py-3 text-sm text-ink-700 ring-1 ring-butter-400/60">
             {t('nav.cartCount', { count })} · <span className="font-semibold tabular-nums">{formatPrice(subtotal, lang)}</span>

@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { X } from 'lucide-react';
+import { pauseLenis, resumeLenis } from '../../lib/lenisControl';
 
 /* ---------- scroll lock (shared, counted, so overlays never fight) ---------- */
 
@@ -11,13 +12,17 @@ function lockScroll() {
   if (lockCount === 0) {
     savedOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
+    pauseLenis();
   }
   lockCount += 1;
 }
 
 function unlockScroll() {
   lockCount = Math.max(0, lockCount - 1);
-  if (lockCount === 0) document.body.style.overflow = savedOverflow;
+  if (lockCount === 0) {
+    document.body.style.overflow = savedOverflow;
+    resumeLenis();
+  }
 }
 
 export function useScrollLock(active) {

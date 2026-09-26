@@ -1,3 +1,5 @@
+import MagneticWrapper from './MagneticWrapper';
+
 /**
  * The site's one button style, rendered as <button>, <a> or a router <Link>.
  *
@@ -32,6 +34,7 @@ export default function Button({
   variant = 'primary',
   size = 'md',
   block = false,
+  magnetic = false,
   className = '',
   type,
   children,
@@ -41,9 +44,13 @@ export default function Button({
     .filter(Boolean)
     .join(' ');
 
-  return (
+  const control = (
     <Component className={classes} type={Component === 'button' ? type ?? 'button' : type} {...props}>
       {children}
     </Component>
   );
+
+  if (!magnetic) return control;
+
+  return <MagneticWrapper className={block ? 'flex w-full' : 'inline-flex'}>{control}</MagneticWrapper>;
 }

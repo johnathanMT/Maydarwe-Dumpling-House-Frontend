@@ -22,6 +22,7 @@
     "toastAdded": "Added to cart",
     "toastView": "View cart",
     "scrollProgress": "Page scroll",
+    "loading": "Loading",
     "routeError": {
       "title": "This page could not be shown",
       "body": "Please try again, or browse the menu.",

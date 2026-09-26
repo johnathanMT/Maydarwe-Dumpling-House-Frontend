@@ -67,7 +67,7 @@ export default function Contact() {
     <div className="bg-ivory">
       <PageHeader kicker={t('pages.contact.kicker')} title={t('pages.contact.title')} subtitle={t('pages.contact.sub')} />
 
-      <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
+      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
         <RevealGroup as="div" className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           <RevealItem as="article" className="rounded-[1.75rem] bg-white p-6 shadow-card ring-1 ring-ink-900/5 md:col-span-2 lg:col-span-1">
             <h2 className="font-display text-2xl font-semibold text-ink-900">{t('pages.contact.phonesTitle')}</h2>
@@ -140,17 +140,17 @@ export default function Contact() {
                 <span className="grid h-9 w-9 place-items-center rounded-full bg-primary-600 font-display text-sm font-semibold text-white ring-4 ring-primary-100">
                   {index + 1}
                 </span>
-                <p className="mt-3 text-ink-700">{t(key)}</p>
+                <p className="mt-3 leading-relaxed text-ink-700">{t(key)}</p>
               </li>
             ))}
           </ol>
         </Reveal>
 
         <CtaBanner className="mt-10" title={t('brand.official')} body={t('pages.contact.sub')}>
-          <Button variant="light" onClick={openOrder}>
+          <Button variant="light" onClick={openOrder} magnetic>
             {t('nav.order')}
           </Button>
-          <Button as={Link} to="/menu" variant="ghostLight">
+          <Button as={Link} to="/menu" variant="ghostLight" magnetic>
             {t('pages.home.viewMenu')}
           </Button>
         </CtaBanner>

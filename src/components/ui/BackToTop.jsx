@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ArrowUp } from 'lucide-react';
+import { scrollToTop } from '../../lib/lenisControl';
 
 export default function BackToTop() {
   const { t } = useTranslation();
@@ -19,7 +20,7 @@ export default function BackToTop() {
   return (
     <button
       type="button"
-      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+      onClick={scrollToTop}
       aria-label={t('ui.backToTop')}
       className={`fixed right-4 z-[46] grid h-12 w-12 place-items-center rounded-full border border-secondary-400/40 bg-white/95 text-ink-900 shadow-lift backdrop-blur-md transition-all duration-300 hover:bg-secondary-100 bottom-[5.6rem] md:bottom-6 ${
         visible ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-3 opacity-0'
