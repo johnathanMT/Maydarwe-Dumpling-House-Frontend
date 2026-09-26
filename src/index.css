@@ -72,6 +72,15 @@
     background-size: auto, auto, 22px 22px, auto;
   }
 
+  /* Hide the bar on sideways menu scrolling so the row feels like a native swipe. */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
   /* A thin gold line that fades out at both ends. */
   .gold-rule {
     @apply h-px bg-gradient-to-r from-transparent via-secondary-500/70 to-transparent;

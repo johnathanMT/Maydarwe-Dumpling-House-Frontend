@@ -26,18 +26,19 @@ const ITEMS_BY_CATEGORY = Object.fromEntries(
   CATEGORIES.map(({ id }) => [id, MENU_ITEMS.filter((item) => item.category === id)])
 );
 
-/** Grid whose cards stagger in each time it mounts (i.e. on every filter change). */
+/** Sideways swipe on a phone; a grid from the md breakpoint up. */
 function MenuGrid({ items, language, addedId, onAdd }) {
   return (
     <m.ul
-      className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8"
+      data-lenis-prevent
+      className="no-scrollbar -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain px-4 pb-6 md:mx-0 md:grid md:grid-cols-2 md:gap-6 md:overflow-visible md:px-0 lg:grid-cols-3 lg:gap-8"
       variants={stagger(0.06)}
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, amount: 0.1 }}
     >
       {items.map((item) => (
-        <m.li key={item.id} variants={fadeUp(14)}>
+        <m.li key={item.id} variants={fadeUp(14)} className="w-[85vw] shrink-0 snap-center sm:w-[70vw] md:w-auto md:shrink">
           <DishCard item={item} language={language} added={addedId === item.id} onAdd={onAdd} />
         </m.li>
       ))}
