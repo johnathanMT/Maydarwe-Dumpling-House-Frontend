@@ -65,31 +65,27 @@ export const DISH_PHOTOS = {
   }),
 };
 
-/** Menu accordion: six house dishes, shown in this order. */
+/** Menu accordion: official plates we have on Cloudinary, in menu order. */
 export const MENU_GALLERY = [
   {
     name: 'ကြက်သားဖက်ထုပ်အိုးကပ်',
     src: 'https://res.cloudinary.com/dhlhzmmtt/image/upload/v1790345037/IMG_7925_txkyjj.jpg',
   },
   {
-    name: 'ကြက်မဲမာလာ',
-    src: 'https://res.cloudinary.com/dhlhzmmtt/image/upload/v1790345036/IMG_7923_vhenho.jpg',
-  },
-  {
     name: 'ဝက်သားဖက်ထုပ်အိုးကပ်',
     src: 'https://res.cloudinary.com/dhlhzmmtt/image/upload/v1790345036/IMG_7926_s3clwe.jpg',
   },
   {
-    name: 'စပိုက်ဆီခေါက်ဆွဲသုပ်',
+    name: 'မာလာခေါက်ဆွဲသုပ်၊ မာလာအကင်သုပ်',
     src: 'https://res.cloudinary.com/dhlhzmmtt/image/upload/v1790345037/IMG_7924_pgfjwo.jpg',
+  },
+  {
+    name: 'မာလာဟင်း၊ ကြက်မဲမာလာ',
+    src: 'https://res.cloudinary.com/dhlhzmmtt/image/upload/v1790345036/IMG_7923_vhenho.jpg',
   },
   {
     name: 'ကြက်ခြေထောက်မာလာ',
     src: 'https://res.cloudinary.com/dhlhzmmtt/image/upload/v1790345035/IMG_7927_s52kgg.jpg',
-  },
-  {
-    name: 'စပိုက်ဆီခေါက်ဆွဲ ဖက်ထုပ်',
-    src: 'https://res.cloudinary.com/dhlhzmmtt/image/upload/v1790345036/IMG_7922_cpg939.jpg',
   },
 ];
 
