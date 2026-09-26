@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useCartActions } from '../context/CartContext';
-import { useUiActions } from '../context/UiContext';
+import { useCartActions } from '../context/useCart';
+import { useUiActions } from '../context/useUi';
 import { useLang } from '../lib/businessHours';
 import { usePageMeta } from '../lib/seo';
 import { useAddedFlash } from '../hooks/useAddedFlash';
@@ -40,7 +40,7 @@ export default function Home() {
         />
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 z-0 bg-gradient-to-b from-primary-950/85 via-ink-950/72 to-ink-950/92"
+          className="via-ink-950/72 to-ink-950/92 pointer-events-none absolute inset-0 z-0 bg-gradient-to-b from-primary-950/85"
         />
         <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionHeading
@@ -74,7 +74,8 @@ export default function Home() {
             {CATEGORIES.map(({ id, title, caption }) => {
               const Icon = CATEGORY_ICONS[id];
               const cardTitle = id === 'dumplings' ? t('pages.home.pillarDumplingsTitle') : pickLocale(title, language);
-              const cardCaption = id === 'dumplings' ? t('pages.home.pillarDumplingsCaption') : pickLocale(caption, language);
+              const cardCaption =
+                id === 'dumplings' ? t('pages.home.pillarDumplingsCaption') : pickLocale(caption, language);
               return (
                 <RevealItem
                   key={id}
@@ -98,10 +99,7 @@ export default function Home() {
 
       {/* Visit / order */}
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 md:py-28 lg:px-8 lg:py-32">
-        <CtaBanner
-          title={t('pages.home.visitTitle')}
-          body={t('pages.home.visitSub')}
-        >
+        <CtaBanner title={t('pages.home.visitTitle')} body={t('pages.home.visitSub')}>
           <Button variant="light" onClick={openOrder} magnetic>
             {t('nav.order')}
           </Button>

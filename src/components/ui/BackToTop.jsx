@@ -13,7 +13,7 @@ export default function BackToTop() {
       type="button"
       onClick={scrollToTop}
       aria-label={t('ui.backToTop')}
-      className={`fixed right-4 z-[46] grid h-12 w-12 place-items-center rounded-full border border-secondary-400/40 bg-white/95 text-ink-900 shadow-lift backdrop-blur-md transition-all duration-300 hover:bg-secondary-100 bottom-[5.6rem] md:bottom-6 ${
+      className={`fixed bottom-[5.6rem] right-4 z-[46] grid h-12 w-12 place-items-center rounded-full border border-secondary-400/40 bg-white/95 text-ink-900 shadow-lift backdrop-blur-md transition-all duration-300 hover:bg-secondary-100 md:bottom-6 ${
         visible ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-3 opacity-0'
       }`}
     >

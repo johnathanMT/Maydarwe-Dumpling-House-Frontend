@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useInView } from 'framer-motion';
 import { Check, Plus, Utensils } from 'lucide-react';
 import DishPhoto from './DishPhoto';
-import { MEAT_TYPES } from './meatIcons';
+import { MEAT_TYPES } from './meatTypes';
 import { formatPrice, pickLocale } from '../../data/menu';
 import { LOOP_VIEWPORT } from '../../lib/motion';
 
@@ -68,7 +68,10 @@ function DishCard({ item, language, added = false, onAdd }) {
       <div className="relative">
         <DishPhoto item={item} alt={name} />
         <MeatBadge type={item.meatType} />
-        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-ink-950/30 to-transparent" />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-ink-950/30 to-transparent"
+        />
         {available ? (
           <span className="absolute bottom-3 left-4 rounded-full bg-butter px-3 py-1 text-sm font-bold tabular-nums text-ink-950 shadow-sm ring-2 ring-white">
             {formatPrice(item.price, language)}

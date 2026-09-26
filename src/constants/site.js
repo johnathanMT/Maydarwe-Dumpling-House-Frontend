@@ -95,8 +95,7 @@ export const MAPS_URL = 'https://maps.app.goo.gl/W3EpjYz76sKvwDNj9?g_st=ic';
 const MAPS_PIN = { lat: 16.8988787, lng: 96.1529404 };
 
 /** @returns {string} Google Maps embed URL for the shop pin. */
-export const mapsEmbedUrl = () =>
-  `https://www.google.com/maps?q=${MAPS_PIN.lat},${MAPS_PIN.lng}&z=16&output=embed`;
+export const mapsEmbedUrl = () => `https://www.google.com/maps?q=${MAPS_PIN.lat},${MAPS_PIN.lng}&z=16&output=embed`;
 
 /**
  * "09:00" → "9:00 AM", used for English copy and build-time meta tags.

@@ -43,7 +43,9 @@ export default function MenuFilterBar({ filters, active, onChange, count }) {
                 aria-pressed={isActive}
                 onClick={() => onChange(id)}
                 className={`relative inline-flex min-h-12 shrink-0 items-center whitespace-nowrap rounded-full px-5 text-sm font-semibold transition-colors duration-200 ${
-                  isActive ? 'text-white' : 'bg-white text-ink-700 ring-1 ring-inset ring-butter-200 hover:bg-butter-50 hover:ring-butter-400 hover:text-ink-950'
+                  isActive
+                    ? 'text-white'
+                    : 'bg-white text-ink-700 ring-1 ring-inset ring-butter-200 hover:bg-butter-50 hover:text-ink-950 hover:ring-butter-400'
                 }`}
               >
                 {isActive ? (

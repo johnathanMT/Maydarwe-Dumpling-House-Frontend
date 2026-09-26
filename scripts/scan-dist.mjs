@@ -29,10 +29,24 @@ const SECRET_PATTERNS = [
   ['Vercel token', /\bvercel_[A-Za-z0-9]{24,}\b/i],
   ['JSON Web Token', /\beyJ[A-Za-z0-9_-]{10,}\.eyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\b/],
   ['Database URL with password', /\b(?:postgres(?:ql)?|mysql|mongodb(?:\+srv)?|redis):\/\/[^\s:@/]+:[^\s@/]+@/],
-  ['Server env var name', /\b(?:DATABASE_URL|SECRET_KEY|PRIVATE_KEY|API_SECRET|CLIENT_SECRET|SUPABASE_SERVICE_ROLE_KEY)\b/],
+  [
+    'Server env var name',
+    /\b(?:DATABASE_URL|SECRET_KEY|PRIVATE_KEY|API_SECRET|CLIENT_SECRET|SUPABASE_SERVICE_ROLE_KEY)\b/,
+  ],
 ];
 
-const TEXT_EXTENSIONS = new Set(['.html', '.js', '.mjs', '.css', '.json', '.txt', '.xml', '.svg', '.webmanifest', '.map']);
+const TEXT_EXTENSIONS = new Set([
+  '.html',
+  '.js',
+  '.mjs',
+  '.css',
+  '.json',
+  '.txt',
+  '.xml',
+  '.svg',
+  '.webmanifest',
+  '.map',
+]);
 
 /**
  * Every file path under `dir`, recursively.
@@ -70,7 +84,8 @@ const html = readFileSync(join(DIST, 'index.html'), 'utf8');
 for (const [, attrs] of html.matchAll(/<script\b([^>]*)>/g)) {
   const external = /\bsrc=/.test(attrs);
   const dataBlock = /type="application\/ld\+json"/.test(attrs);
-  if (!external && !dataBlock) errors.push(`index.html: inline <script${attrs}> found (the CSP forbids inline scripts).`);
+  if (!external && !dataBlock)
+    errors.push(`index.html: inline <script${attrs}> found (the CSP forbids inline scripts).`);
 }
 const placeholder = /\{\{[A-Z_]+\}\}/.exec(html.replace(/<!--[\s\S]*?-->/g, ''));
 if (placeholder) errors.push(`index.html: unfilled placeholder ${placeholder[0]}.`);

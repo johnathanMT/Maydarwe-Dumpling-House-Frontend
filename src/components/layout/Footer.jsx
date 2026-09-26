@@ -22,11 +22,7 @@ export default function Footer() {
   const address = BUSINESS.address[lang] || BUSINESS.address.en;
 
   return (
-    <Reveal
-      as="footer"
-      distance={40}
-      className="bg-ink-950 text-ink-300"
-    >
+    <Reveal as="footer" distance={40} className="bg-ink-950 text-ink-300">
       <div aria-hidden="true" className="h-1 bg-gradient-to-r from-primary-700 via-primary-600 to-secondary-500" />
 
       <div className="mx-auto grid max-w-7xl gap-14 px-4 py-20 sm:grid-cols-2 sm:px-6 lg:grid-cols-12 lg:gap-10 lg:px-8 lg:py-28">

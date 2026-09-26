@@ -26,7 +26,7 @@ export default function MascotGreeting() {
       animate={{ opacity: 1, scale: 1 }}
       transition={{ type: 'spring', stiffness: 200, damping: 20, delay: 1 }}
       style={{ transformOrigin: 'top left' }}
-      className="absolute -top-3 left-[3.4rem] z-20 max-w-[11.5rem] rounded-[1.75rem] rounded-tl-lg border border-white/60 bg-gradient-to-br from-sky-100/75 via-sky-200/65 to-sky-300/55 px-3.5 py-2.5 text-xs font-semibold leading-[1.65] text-ink-950 shadow-lg shadow-sky-900/15 backdrop-blur-md backdrop-saturate-150 text-balance [text-shadow:0_1px_0_rgb(255_255_255/0.55)] sm:-top-4 sm:left-[4.5rem] sm:max-w-[13.5rem] sm:px-4 sm:py-3 sm:text-sm"
+      className="absolute -top-3 left-[3.4rem] z-20 max-w-[11.5rem] text-balance rounded-[1.75rem] rounded-tl-lg border border-white/60 bg-gradient-to-br from-sky-100/75 via-sky-200/65 to-sky-300/55 px-3.5 py-2.5 text-xs font-semibold leading-[1.65] text-ink-950 shadow-lg shadow-sky-900/15 backdrop-blur-md backdrop-saturate-150 [text-shadow:0_1px_0_rgb(255_255_255/0.55)] sm:-top-4 sm:left-[4.5rem] sm:max-w-[13.5rem] sm:px-4 sm:py-3 sm:text-sm"
     >
       {toPhrases(t('pages.home.mascotGreeting')).map((phrase, i) => (
         <Fragment key={i}>

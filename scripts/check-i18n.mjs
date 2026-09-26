@@ -8,8 +8,9 @@
  */
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const root = new URL('..', import.meta.url).pathname;
+const root = fileURLToPath(new URL('..', import.meta.url));
 /**
  * Parsed translation file for one language.
  * @param {string} lang
@@ -46,8 +47,14 @@ const report = (label, keys) => {
   console.error(`✗ ${label}:\n  ${keys.join('\n  ')}`);
 };
 
-report('Keys missing in my/translation.json', [...en].filter((k) => !my.has(k)));
-report('Keys missing in en/translation.json', [...my].filter((k) => !en.has(k)));
+report(
+  'Keys missing in my/translation.json',
+  [...en].filter((k) => !my.has(k))
+);
+report(
+  'Keys missing in en/translation.json',
+  [...my].filter((k) => !en.has(k))
+);
 
 // Collect string literals in the code that look like translation keys.
 const NAMESPACES = [...new Set([...en].map((k) => k.split('.')[0]))];

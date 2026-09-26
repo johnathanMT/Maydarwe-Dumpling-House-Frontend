@@ -1,0 +1,12 @@
+# Paths Semgrep skips (this file replaces Semgrep's built-in ignore list).
+node_modules/
+dist/
+coverage/
+playwright-report/
+test-results/
+.lighthouseci/
+# Vendored, minified third-party decoder (not our code)
+public/draco/
+# Test fixtures deliberately contain hostile strings
+tests/
+package-lock.json

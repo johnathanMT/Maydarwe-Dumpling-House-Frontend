@@ -69,7 +69,11 @@
       radial-gradient(ellipse 60% 50% at 0% 100%, rgb(200 16 46 / 0.06), transparent 60%),
       radial-gradient(circle at 1.5px 1.5px, rgb(232 160 6 / 0.18) 1.5px, transparent 0),
       linear-gradient(180deg, theme('colors.butter.200') 0%, theme('colors.butter.100') 45%, theme('colors.ivory') 100%);
-    background-size: auto, auto, 22px 22px, auto;
+    background-size:
+      auto,
+      auto,
+      22px 22px,
+      auto;
   }
 
   /* Hide the bar on sideways menu scrolling so the row feels like a native swipe. */

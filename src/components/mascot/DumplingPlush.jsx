@@ -1,4 +1,5 @@
 import { useId } from 'react';
+import { PLUSH_COLORS } from './plushTokens';
 
 /**
  * The shop mascot: a soft, plush pan-fried dumpling with a pleated top and a
@@ -15,18 +16,8 @@ const PLEATS =
 const FOLDS =
   'M28.8 62.4 L31.9 68 M37.9 55.1 L39.3 61.3 M48.5 50.6 L48.3 56.9 M60 49 L60 55 M71.5 50.6 L71.7 56.9 M82.1 55.1 L80.7 61.3 M91.2 62.4 L88.1 68';
 
-export const PLUSH_COLORS = {
-  outline: '#D8993A',
-  fold: '#E6AE4E',
-  face: '#141110',
-  steam: '#E8A006',
-  red: '#C8102E',
-};
-
 /** Tight square framing around the body alone. */
 const PLUSH_VIEWBOX = '10 23 100 100';
-/** Square framing with room above the body for an accessory. */
-export const PLUSH_VIEWBOX_ROOMY = '4 4 112 112';
 
 /** Unique, CSS-safe gradient ids, so many mascots can share a page. */
 function usePlushIds() {
@@ -89,7 +80,7 @@ export function PlushBody({ strokeWidth = 2.2, groundShadow = true }) {
 
 /**
  * Static mascot. `children` are extra SVG elements drawn on top (steam, a hat…);
- * use PLUSH_VIEWBOX_ROOMY when they sit above the body.
+ * use PLUSH_VIEWBOX_ROOMY (plushTokens.js) when they sit above the body.
  * @param {object} props
  * @param {string} [props.className]
  * @param {string} [props.viewBox]

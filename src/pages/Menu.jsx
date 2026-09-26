@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AnimatePresence, m } from 'framer-motion';
-import { useCartActions } from '../context/CartContext';
+import { useCartActions } from '../context/useCart';
 import { useLang } from '../lib/businessHours';
 import { usePageMeta } from '../lib/seo';
 import { DURATION } from '../lib/motion';
@@ -55,11 +55,7 @@ export default function Menu() {
 
       <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 md:py-28 lg:px-8">
         <AnimatePresence mode="wait" initial={false}>
-          <m.div
-            key={filter}
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0, transition: { duration: DURATION.ui } }}
-          >
+          <m.div key={filter} initial={{ opacity: 1 }} exit={{ opacity: 0, transition: { duration: DURATION.ui } }}>
             {filter === 'all' ? (
               <div className="space-y-20 md:space-y-28">
                 {CATEGORY_LIST.map(({ id, icon: Icon, title, caption }) => (
@@ -70,13 +66,19 @@ export default function Menu() {
                           <span className="grid h-11 w-11 place-items-center rounded-full bg-butter text-ink-950 ring-4 ring-butter-100">
                             <Icon className="h-5 w-5" strokeWidth={1.5} />
                           </span>
-                          <h2 id={`menu-${id}`} className="font-display text-3xl font-semibold text-ink-900 sm:text-4xl">
+                          <h2
+                            id={`menu-${id}`}
+                            className="font-display text-3xl font-semibold text-ink-900 sm:text-4xl"
+                          >
                             {pickLocale(title, language)}
                           </h2>
                         </div>
                         <p className="mt-2 leading-relaxed text-ink-500">{pickLocale(caption, language)}</p>
                       </div>
-                      <span aria-hidden="true" className="mb-3 hidden h-px flex-1 bg-gradient-to-r from-butter-400 to-transparent md:block" />
+                      <span
+                        aria-hidden="true"
+                        className="mb-3 hidden h-px flex-1 bg-gradient-to-r from-butter-400 to-transparent md:block"
+                      />
                     </div>
                     <MenuGrid items={ITEMS_BY_CATEGORY[id]} language={language} addedId={addedId} onAdd={onAdd} />
                   </section>

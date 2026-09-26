@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { NAV_LINKS } from '../../constants/site';
-import { NAV_ICONS } from './NavIcons';
+import { NAV_ICONS } from './navIconMap';
 
 /**
  * Phone and small-tablet navigation (hidden from `md`, where the header shows the links).

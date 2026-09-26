@@ -16,7 +16,14 @@ import { REVEAL_VIEWPORT, fadeUp, stagger } from '../../lib/motion';
 export function Reveal({ as = 'div', distance = 18, className = '', children, ...rest }) {
   const Tag = m[as];
   return (
-    <Tag className={className} initial="hidden" whileInView="show" viewport={REVEAL_VIEWPORT} variants={fadeUp(distance)} {...rest}>
+    <Tag
+      className={className}
+      initial="hidden"
+      whileInView="show"
+      viewport={REVEAL_VIEWPORT}
+      variants={fadeUp(distance)}
+      {...rest}
+    >
       {children}
     </Tag>
   );
@@ -29,7 +36,14 @@ export function Reveal({ as = 'div', distance = 18, className = '', children, ..
 export function RevealGroup({ as = 'ul', step = 0.08, className = '', children, ...rest }) {
   const Tag = m[as];
   return (
-    <Tag className={className} initial="hidden" whileInView="show" viewport={REVEAL_VIEWPORT} variants={stagger(step)} {...rest}>
+    <Tag
+      className={className}
+      initial="hidden"
+      whileInView="show"
+      viewport={REVEAL_VIEWPORT}
+      variants={stagger(step)}
+      {...rest}
+    >
       {children}
     </Tag>
   );

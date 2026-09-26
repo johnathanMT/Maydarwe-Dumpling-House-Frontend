@@ -1,0 +1,13 @@
+# Build output and generated files
+dist/
+coverage/
+playwright-report/
+test-results/
+.lighthouseci/
+package-lock.json
+# Generated from src/lib/securityHeaders.js by `npm run headers`
+vercel.json
+# Vendored binaries / third-party files
+public/draco/
+# Hand-written docs: keep their own table layout
+*.md

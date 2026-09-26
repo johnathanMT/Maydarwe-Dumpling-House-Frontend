@@ -55,11 +55,7 @@ export default function Sheet({
       : 'translate-y-full opacity-0 sm:translate-y-8';
 
   return (
-    <div
-      className={`fixed inset-0 z-[70] ${open ? '' : 'pointer-events-none'}`}
-      inert={!open}
-      aria-hidden={!open}
-    >
+    <div className={`fixed inset-0 z-[70] ${open ? '' : 'pointer-events-none'}`} inert={!open} aria-hidden={!open}>
       <div
         aria-hidden="true"
         onClick={onClose}

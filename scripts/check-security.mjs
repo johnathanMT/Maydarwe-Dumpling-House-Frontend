@@ -52,10 +52,20 @@ for (const [name, expected] of Object.entries(REQUIRED)) {
 }
 if (!directives.has('upgrade-insecure-requests')) fail('CSP is missing "upgrade-insecure-requests".');
 
-const FORBIDDEN_TOKENS = ["'unsafe-eval'", "'unsafe-hashes'", "'wasm-unsafe-eval'", '*', 'http:', 'https:', 'data:', 'blob:'];
+const FORBIDDEN_TOKENS = [
+  "'unsafe-eval'",
+  "'unsafe-hashes'",
+  "'wasm-unsafe-eval'",
+  '*',
+  'http:',
+  'https:',
+  'data:',
+  'blob:',
+];
 for (const name of ['script-src', 'script-src-attr', 'default-src', 'object-src', 'base-uri']) {
   for (const token of csp(name) ?? []) {
-    if (FORBIDDEN_TOKENS.includes(token) || token === "'unsafe-inline'") fail(`CSP "${name}" must not contain ${token}.`);
+    if (FORBIDDEN_TOKENS.includes(token) || token === "'unsafe-inline'")
+      fail(`CSP "${name}" must not contain ${token}.`);
   }
 }
 for (const [name, values] of directives) {
@@ -79,8 +89,15 @@ for (const [name, values] of directives) {
 
 const hsts = PRODUCTION_HEADERS['Strict-Transport-Security'] ?? '';
 const maxAge = Number(/max-age=(\d+)/.exec(hsts)?.[1] ?? 0);
-if (maxAge < 31536000 || !hsts.includes('includeSubDomains')) fail('HSTS must be at least one year with includeSubDomains.');
-for (const header of ['X-Content-Type-Options', 'X-Frame-Options', 'Referrer-Policy', 'Permissions-Policy', 'Cross-Origin-Opener-Policy']) {
+if (maxAge < 31536000 || !hsts.includes('includeSubDomains'))
+  fail('HSTS must be at least one year with includeSubDomains.');
+for (const header of [
+  'X-Content-Type-Options',
+  'X-Frame-Options',
+  'Referrer-Policy',
+  'Permissions-Policy',
+  'Cross-Origin-Opener-Policy',
+]) {
   if (!PRODUCTION_HEADERS[header]) fail(`Missing response header: ${header}.`);
 }
 
@@ -110,7 +127,8 @@ function checkUrl(label, value, hosts) {
   }
   if (url.protocol !== 'https:') fail(`${label} must use https: (found ${url.protocol}).`);
   if (url.username || url.password) fail(`${label} must not contain a username or password.`);
-  if (!hosts.includes(url.hostname)) fail(`${label} points to ${url.hostname}, which is not an approved host (${hosts.join(', ')}).`);
+  if (!hosts.includes(url.hostname))
+    fail(`${label} points to ${url.hostname}, which is not an approved host (${hosts.join(', ')}).`);
 }
 
 for (const [key, hosts] of Object.entries(LINK_HOSTS)) {
@@ -120,7 +138,8 @@ checkUrl('MAPS_URL', MAPS_URL, ['maps.app.goo.gl', 'goo.gl', 'www.google.com', '
 checkUrl('SITE_URL', SITE_URL, [new URL(SITE_URL).hostname]);
 
 const pageId = BUSINESS.links.messengerPageId.trim();
-if (pageId && !/^[A-Za-z0-9.]{1,64}$/.test(pageId)) fail(`BUSINESS.links.messengerPageId has unexpected characters: "${pageId}".`);
+if (pageId && !/^[A-Za-z0-9.]{1,64}$/.test(pageId))
+  fail(`BUSINESS.links.messengerPageId has unexpected characters: "${pageId}".`);
 
 for (const phone of BUSINESS.phones) {
   if (!/^\+959\d{7,9}$/.test(phone.e164)) fail(`Phone ${phone.display} has an invalid E.164 number: ${phone.e164}.`);
@@ -130,7 +149,12 @@ for (const phone of BUSINESS.phones) {
 const robots = readFileSync(new URL('../public/robots.txt', import.meta.url), 'utf8');
 const groups = robots
   .split(/\n\s*\n/)
-  .map((block) => block.split('\n').map((line) => line.replace(/#.*/, '').trim()).filter(Boolean))
+  .map((block) =>
+    block
+      .split('\n')
+      .map((line) => line.replace(/#.*/, '').trim())
+      .filter(Boolean)
+  )
   .filter((lines) => lines.length);
 /**
  * The robots.txt group (its lines) that names this user agent.
@@ -139,14 +163,23 @@ const groups = robots
 const groupFor = (agent) =>
   groups.find((lines) => lines.some((line) => line.toLowerCase() === `user-agent: ${agent.toLowerCase()}`));
 
-for (const bot of ['GPTBot', 'ClaudeBot', 'CCBot', 'Google-Extended', 'Applebot-Extended', 'Meta-ExternalAgent', 'Bytespider']) {
+for (const bot of [
+  'GPTBot',
+  'ClaudeBot',
+  'CCBot',
+  'Google-Extended',
+  'Applebot-Extended',
+  'Meta-ExternalAgent',
+  'Bytespider',
+]) {
   if (!groupFor(bot)?.includes('Disallow: /')) fail(`robots.txt must disallow the AI training crawler ${bot}.`);
 }
 for (const bot of ['OAI-SearchBot', 'ChatGPT-User', 'PerplexityBot', 'Claude-SearchBot']) {
   const group = groupFor(bot);
   if (!group || group.includes('Disallow: /')) fail(`robots.txt must allow the AI search/assistant fetcher ${bot}.`);
 }
-if (!groupFor('*')?.includes('Disallow: /api/internal/')) fail('robots.txt lost the bot trap (Disallow: /api/internal/).');
+if (!groupFor('*')?.includes('Disallow: /api/internal/'))
+  fail('robots.txt lost the bot trap (Disallow: /api/internal/).');
 
 // ----------------------------------------------------------------- report
 if (errors.length) {

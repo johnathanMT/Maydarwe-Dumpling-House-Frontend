@@ -18,14 +18,10 @@ export default function RouteError() {
   return (
     <section className="mx-auto max-w-xl px-4 py-20 text-center sm:px-6">
       <Eyebrow>{t('brand.english')}</Eyebrow>
-      <h1 className="mt-3 font-display text-3xl font-semibold text-ink-900 sm:text-4xl">
-        {t('ui.routeError.title')}
-      </h1>
+      <h1 className="mt-3 font-display text-3xl font-semibold text-ink-900 sm:text-4xl">{t('ui.routeError.title')}</h1>
       <p className="mt-4 text-ink-600">{t('ui.routeError.body')}</p>
       <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-        <Button onClick={() => window.location.reload()}>
-          {t('ui.routeError.retry')}
-        </Button>
+        <Button onClick={() => window.location.reload()}>{t('ui.routeError.retry')}</Button>
         <Button as={Link} to="/menu" reloadDocument variant="secondary">
           {t('pages.home.viewMenu')}
         </Button>

@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   CART_STORAGE_KEY,
   addOne,
@@ -9,21 +9,17 @@ import {
   toCartState,
   writeStoredCart,
 } from '../lib/cart';
-import { useUiActions } from './UiContext';
+import { useUiActions } from './useUi';
+import { CartActionsContext, CartStateContext } from './useCart';
 
-/** @import { CartActions, CartEntry, CartState } from '../types' */
+/** @import { CartActions, CartEntry } from '../types' */
 
 /**
- * Cart state for the whole app. The rules (validation, storage, quantities)
- * live in src/lib/cart.js; this file only connects them to React.
- *
- * State and actions live in separate contexts: "Add to cart" buttons use
- * only the stable actions and do not re-render when the cart changes.
+ * Provides the cart (see ./useCart.js for the hooks that read it).
+ * The rules (validation, storage, quantities) live in src/lib/cart.js; this
+ * file only connects them to React.
+ * @param {{ children: import('react').ReactNode }} props
  */
-const CartStateContext = createContext(/** @type {CartState | null} */ (null));
-const CartActionsContext = createContext(/** @type {CartActions | null} */ (null));
-
-/** @param {{ children: import('react').ReactNode }} props */
 export function CartProvider({ children }) {
   const { showToast } = useUiActions();
   const [entries, setEntries] = useState(/** @type {() => CartEntry[]} */ (readStoredCart));
@@ -53,10 +49,14 @@ export function CartProvider({ children }) {
   );
 
   const updateQuantity = useCallback(
-    /** @type {CartActions['updateQuantity']} */ (id, quantity) => setEntries((prev) => setQuantity(prev, id, quantity)),
+    /** @type {CartActions['updateQuantity']} */ (id, quantity) =>
+      setEntries((prev) => setQuantity(prev, id, quantity)),
     []
   );
-  const removeItem = useCallback(/** @type {CartActions['removeItem']} */ (id) => setEntries((prev) => removeEntry(prev, id)), []);
+  const removeItem = useCallback(
+    /** @type {CartActions['removeItem']} */ (id) => setEntries((prev) => removeEntry(prev, id)),
+    []
+  );
   const clearCart = useCallback(() => setEntries([]), []);
 
   const state = useMemo(() => toCartState(entries), [entries]);
@@ -71,24 +71,4 @@ export function CartProvider({ children }) {
       <CartStateContext.Provider value={state}>{children}</CartStateContext.Provider>
     </CartActionsContext.Provider>
   );
-}
-
-/**
- * { lines, count, subtotal }: re-renders when the cart changes.
- * @returns {CartState}
- */
-export function useCart() {
-  const context = useContext(CartStateContext);
-  if (!context) throw new Error('useCart must be used within CartProvider');
-  return context;
-}
-
-/**
- * { addItem, updateQuantity, removeItem, clearCart }: stable, never re-renders.
- * @returns {CartActions}
- */
-export function useCartActions() {
-  const context = useContext(CartActionsContext);
-  if (!context) throw new Error('useCartActions must be used within CartProvider');
-  return context;
 }

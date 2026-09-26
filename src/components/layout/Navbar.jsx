@@ -3,8 +3,8 @@ import { NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ShoppingBag } from 'lucide-react';
 import { m } from 'framer-motion';
-import { useCart } from '../../context/CartContext';
-import { useUiActions } from '../../context/UiContext';
+import { useCart } from '../../context/useCart';
+import { useUiActions } from '../../context/useUi';
 import { NAV_LINKS } from '../../constants/site';
 import BrandLogo from '../ui/BrandLogo';
 import LanguageToggle from '../ui/LanguageToggle';
@@ -65,9 +65,7 @@ export default function Navbar() {
   return (
     <header
       className={`sticky top-0 z-50 border-b transition-[background-color,box-shadow,border-color] duration-300 ${
-        isScrolled
-          ? 'border-secondary-400/30 bg-white/90 shadow-nav backdrop-blur-md'
-          : 'border-transparent bg-white'
+        isScrolled ? 'border-secondary-400/30 bg-white/90 shadow-nav backdrop-blur-md' : 'border-transparent bg-white'
       }`}
     >
       <nav

@@ -32,7 +32,9 @@ personal data in logs.
 | Deploy-output scan | `scripts/scan-dist.mjs` (after every build) | Fails if `dist/` contains anything that looks like a secret, a source map, or an inline script. |
 | Crawler policy | `public/robots.txt` | AI training crawlers disallowed; AI search/assistant fetchers and search engines allowed; `/api/internal/` is a bot trap. |
 | Security contact | `/.well-known/security.txt` (generated at build from `site.js`) | RFC 9116 contact file; its expiry date renews on every deploy. |
-| Supply chain | `.github/workflows/main.yml`, `.github/dependabot.yml` | Actions pinned to commit SHAs, read-only token, install without lifecycle scripts, npm signature check, `npm audit`, TruffleHog secret scan of the full history, weekly Dependabot updates. |
+| Supply chain | `.github/workflows/main.yml`, `.github/dependabot.yml` | Actions pinned to commit SHAs and tools pinned by version or image digest, read-only token, install without lifecycle scripts, npm signature check, `npm audit` + OSV-Scanner (also flags known-malicious packages), TruffleHog secret scan, weekly Dependabot updates with a 5-day cooldown. |
+| Code scanning | `main.yml` (Semgrep), `codeql.yml` (CodeQL, public repos) | JavaScript/React security rules, hard-coded secrets, and injection in the CI workflows themselves, on every pull request. |
+| Regression tests | `tests/e2e/` (Playwright, in CI) | Every page is loaded under the production CSP and Trusted Types; the test fails on any CSP violation, console error or request to an unapproved origin. |
 
 Environment variables: Vite only exposes names starting with `MAYDARWE_PUBLIC_`,
 and everything it exposes is public. Never put a secret in one.

@@ -2,8 +2,8 @@ import { useId } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Minus, Plus, Trash2 } from 'lucide-react';
-import { useCart, useCartActions } from '../../context/CartContext';
-import { useUiActions, useUiState } from '../../context/UiContext';
+import { useCart, useCartActions } from '../../context/useCart';
+import { useUiActions, useUiState } from '../../context/useUi';
 import { useLang } from '../../lib/businessHours';
 import Sheet, { SheetCloseButton } from '../ui/Sheet';
 import Button from '../ui/Button';
@@ -98,7 +98,9 @@ export default function CartDrawer() {
                         <Plus className="h-4 w-4" />
                       </button>
                     </div>
-                    <p className="font-semibold tabular-nums text-ink-900">{formatPrice(line.price * line.quantity, language)}</p>
+                    <p className="font-semibold tabular-nums text-ink-900">
+                      {formatPrice(line.price * line.quantity, language)}
+                    </p>
                   </div>
                 </li>
               );

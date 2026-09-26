@@ -6,7 +6,8 @@
 const KEY = 'maydarwe-chunk-reload-at';
 const WINDOW_MS = 30_000;
 
-const CHUNK_ERROR = /Failed to fetch dynamically imported module|Importing a module script failed|error loading dynamically imported module|Unable to preload CSS/i;
+const CHUNK_ERROR =
+  /Failed to fetch dynamically imported module|Importing a module script failed|error loading dynamically imported module|Unable to preload CSS/i;
 
 /**
  * @param {unknown} error

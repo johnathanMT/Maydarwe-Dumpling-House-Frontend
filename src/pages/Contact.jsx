@@ -7,13 +7,8 @@ import OpenStatusBadge from '../components/ui/OpenStatusBadge';
 import PageHeader from '../components/ui/PageHeader';
 import { Reveal, RevealGroup, RevealItem } from '../components/ui/Reveal';
 import ShopMap from '../components/contact/ShopMap';
-import { useUiActions } from '../context/UiContext';
-import {
-  BUSINESS,
-  MAPS_URL,
-  hasAddress,
-  telHref,
-} from '../constants/site';
+import { useUiActions } from '../context/useUi';
+import { BUSINESS, MAPS_URL, hasAddress, telHref } from '../constants/site';
 import { useBusinessCopy, useLang } from '../lib/businessHours';
 import { usePageMeta } from '../lib/seo';
 
@@ -28,11 +23,18 @@ export default function Contact() {
 
   return (
     <div className="bg-ivory">
-      <PageHeader kicker={t('pages.contact.kicker')} title={t('pages.contact.title')} subtitle={t('pages.contact.sub')} />
+      <PageHeader
+        kicker={t('pages.contact.kicker')}
+        title={t('pages.contact.title')}
+        subtitle={t('pages.contact.sub')}
+      />
 
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
         <RevealGroup as="div" className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          <RevealItem as="article" className="rounded-[1.75rem] bg-white p-6 shadow-card ring-1 ring-ink-900/5 md:col-span-2 lg:col-span-1">
+          <RevealItem
+            as="article"
+            className="rounded-[1.75rem] bg-white p-6 shadow-card ring-1 ring-ink-900/5 md:col-span-2 lg:col-span-1"
+          >
             <h2 className="font-display text-2xl font-semibold text-ink-900">{t('pages.contact.phonesTitle')}</h2>
             <ul className="mt-6 space-y-3">
               {BUSINESS.phones.map((phone) => (
@@ -93,7 +95,10 @@ export default function Contact() {
           address={addressKnown ? address : copy.city}
         />
 
-        <Reveal as="article" className="mt-6 rounded-[1.75rem] bg-white p-6 ring-1 ring-inset ring-secondary-400/20 sm:p-8">
+        <Reveal
+          as="article"
+          className="mt-6 rounded-[1.75rem] bg-white p-6 ring-1 ring-inset ring-secondary-400/20 sm:p-8"
+        >
           <h2 className="font-display text-2xl font-semibold text-ink-900">{t('pages.contact.orderTitle')}</h2>
           <ol className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-3">
             {['pages.contact.order1', 'pages.contact.order2', 'pages.contact.order3'].map((key, index) => (

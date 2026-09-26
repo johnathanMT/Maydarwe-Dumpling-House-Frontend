@@ -84,35 +84,37 @@ export default function Layout() {
       <LenisBridge />
       {ready ? null : <LoadingScreen appReady={contentMounted && fontsReady} onDone={markReady} />}
       <div inert={ready ? undefined : true} className="flex min-h-dvh flex-col bg-ivory pb-[5.75rem] md:pb-0">
-      <a
-        href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-ink-900 focus:px-4 focus:py-2 focus:text-white"
-      >
-        {t('nav.skip')}
-      </a>
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-ink-900 focus:px-4 focus:py-2 focus:text-white"
+        >
+          {t('nav.skip')}
+        </a>
 
-      {/* Desktop only: on phones it competed with the header and bottom nav. */}
-      <div className="hidden lg:block">
-        <ScrollProgress />
+        {/* Desktop only: on phones it competed with the header and bottom nav. */}
+        <div className="hidden lg:block">
+          <ScrollProgress />
+        </div>
+        <AnnouncementBar />
+        <Navbar />
+
+        <main id="main" className="flex-1">
+          <Suspense fallback={<PageFallback />}>
+            <Outlet
+              context={/** @satisfies {LayoutOutletContext} */ ({ introReady: ready, introSkipped: !showIntro })}
+            />
+            <ContentMounted onMounted={markContentMounted} />
+          </Suspense>
+        </main>
+
+        <Footer />
+        <BottomNav />
+        <BackToTop />
+        <CartToast />
+        <CartDrawer />
+        <OrderSheet />
+        <ScrollRestoration />
       </div>
-      <AnnouncementBar />
-      <Navbar />
-
-      <main id="main" className="flex-1">
-        <Suspense fallback={<PageFallback />}>
-          <Outlet context={/** @satisfies {LayoutOutletContext} */ ({ introReady: ready, introSkipped: !showIntro })} />
-          <ContentMounted onMounted={markContentMounted} />
-        </Suspense>
-      </main>
-
-      <Footer />
-      <BottomNav />
-      <BackToTop />
-      <CartToast />
-      <CartDrawer />
-      <OrderSheet />
-      <ScrollRestoration />
-    </div>
     </ReactLenis>
   );
 }

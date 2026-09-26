@@ -1,7 +1,8 @@
 import { useRef } from 'react';
 import { m, useInView, useReducedMotion } from 'framer-motion';
 import { LOOP_VIEWPORT } from '../../lib/motion';
-import { PlushBody, PLUSH_COLORS } from './DumplingPlush';
+import { PlushBody } from './DumplingPlush';
+import { PLUSH_COLORS } from './plushTokens';
 
 /**
  * One curl of steam that rises, stretches and fades on a loop.
@@ -56,21 +57,23 @@ export default function DumplingMascot({ className = '' }) {
       transition={{ type: 'spring', stiffness: 220, damping: 14, mass: 0.8 }}
     >
       <svg viewBox="4 0 112 118" className="relative mx-auto h-auto w-full overflow-visible" aria-hidden="true">
-        {/* Shadow stays on the ground while the dumpling bobs above it. */}
+        {/* Shadow stays on the ground while the dumpling bobs above it. It breathes
+            with scaleX (36 × 0.83–1.11 = the old 30–40 radius): a transform animates
+            on the compositor, and animating the `rx` attribute made framer-motion
+            write rx="undefined" (a console error) when the loop was interrupted. */}
         <m.ellipse
           cx="60"
           cy="112"
           rx="36"
           ry="4.5"
           fill="#B8741A"
-          animate={loop ? { opacity: [0.12, 0.26, 0.12], rx: [30, 40, 30] } : { opacity: 0.18, rx: 36 }}
+          animate={
+            loop ? { opacity: [0.12, 0.26, 0.12], scaleX: [30 / 36, 40 / 36, 30 / 36] } : { opacity: 0.18, scaleX: 1 }
+          }
           transition={loop ? LOOP : SETTLE}
         />
 
-        <m.g
-          animate={loop ? { y: [0, -5, 0] } : { y: 0 }}
-          transition={loop ? LOOP : SETTLE}
-        >
+        <m.g animate={loop ? { y: [0, -5, 0] } : { y: 0 }} transition={loop ? LOOP : SETTLE}>
           <PlushBody strokeWidth={2.2} groundShadow={false} />
           <SteamWisp running={onScreen} delay={0} d="M46 34 C42 28 50 24 46 16" />
           <SteamWisp running={onScreen} delay={0.35} d="M60 31 C56 25 64 21 60 11" />

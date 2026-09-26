@@ -24,7 +24,11 @@ export default function MenuGrid({ items, language, addedId, onAdd }) {
       viewport={REVEAL_VIEWPORT}
     >
       {items.map((item) => (
-        <m.li key={item.id} variants={fadeUp(14)} className="w-[85vw] shrink-0 snap-center sm:w-[70vw] md:w-auto md:shrink">
+        <m.li
+          key={item.id}
+          variants={fadeUp(14)}
+          className="w-[85vw] shrink-0 snap-center sm:w-[70vw] md:w-auto md:shrink"
+        >
           <DishCard item={item} language={language} added={addedId === item.id} onAdd={onAdd} />
         </m.li>
       ))}

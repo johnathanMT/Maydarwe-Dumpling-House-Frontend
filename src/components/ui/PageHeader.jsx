@@ -13,7 +13,7 @@ import Eyebrow from './Eyebrow';
  */
 export default function PageHeader({ kicker, title, subtitle, sticker = null, children }) {
   return (
-    <div className="relative overflow-hidden bg-sunny">
+    <div className="bg-sunny relative overflow-hidden">
       <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-24 lg:px-8 lg:py-28">
         <div className="animate-rise">
           <Eyebrow rule>{kicker}</Eyebrow>
@@ -22,7 +22,9 @@ export default function PageHeader({ kicker, title, subtitle, sticker = null, ch
           {title}
         </h1>
         {subtitle ? (
-          <p className="mt-5 max-w-2xl animate-rise text-lg leading-relaxed text-ink-700 [animation-delay:140ms]">{subtitle}</p>
+          <p className="mt-5 max-w-2xl animate-rise text-lg leading-relaxed text-ink-700 [animation-delay:140ms]">
+            {subtitle}
+          </p>
         ) : null}
         {children ? <div className="animate-rise [animation-delay:200ms]">{children}</div> : null}
 

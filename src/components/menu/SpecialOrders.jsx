@@ -48,7 +48,8 @@ const FRAMES = [
   {
     src: photo('v1790427353', 'IMG_8011_q1zkly.jpg', 1200),
     altKey: 'pages.menu.specialPhoto5',
-    place: 'right-[4%] top-[67%] z-40 h-[30%] w-[46%] md:bottom-auto md:left-[26%] md:right-auto md:top-[54%] md:h-[38%] md:w-[32%]',
+    place:
+      'right-[4%] top-[67%] z-40 h-[30%] w-[46%] md:bottom-auto md:left-[26%] md:right-auto md:top-[54%] md:h-[38%] md:w-[32%]',
     tilt: '-rotate-2',
   },
 ];
@@ -95,7 +96,7 @@ export default function SpecialOrders() {
               as="a"
               href={telHref(PRIMARY_PHONE)}
               magnetic
-              className="h-auto max-w-xl whitespace-normal px-7 py-3.5 text-left leading-snug !bg-primary-900 !shadow-[0_18px_40px_-16px_rgba(64,4,14,0.75)] ring-2 ring-secondary-400/80 hover:!bg-primary-800"
+              className="h-auto max-w-xl whitespace-normal !bg-primary-900 px-7 py-3.5 text-left leading-snug !shadow-[0_18px_40px_-16px_rgba(64,4,14,0.75)] ring-2 ring-secondary-400/80 hover:!bg-primary-800"
             >
               <Phone className="h-4 w-4 shrink-0" strokeWidth={2.25} aria-hidden="true" />
               {t('pages.menu.specialCta')}

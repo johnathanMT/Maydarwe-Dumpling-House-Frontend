@@ -66,10 +66,14 @@ export default function HomeReel() {
   };
 
   return (
-    <section ref={sectionRef} className="relative w-full overflow-hidden bg-ink-950" aria-label={t('pages.home.videoLabel')}>
+    <section
+      ref={sectionRef}
+      className="relative w-full overflow-hidden bg-ink-950"
+      aria-label={t('pages.home.videoLabel')}
+    >
       <video
         ref={videoRef}
-        className="mx-auto block aspect-video h-auto w-full max-h-[calc(100dvh-8rem)] object-contain object-center"
+        className="mx-auto block aspect-video h-auto max-h-[calc(100dvh-8rem)] w-full object-contain object-center"
         src={near ? HOME_REEL_SRC : undefined}
         loop
         muted
@@ -83,9 +87,13 @@ export default function HomeReel() {
           onClick={toggleMute}
           aria-label={muted ? t('pages.home.videoUnmute') : t('pages.home.videoMute')}
           aria-pressed={!muted}
-          className="absolute bottom-4 right-4 z-10 grid h-12 w-12 place-items-center rounded-full border border-white/45 bg-white/15 text-white shadow-lift backdrop-blur-md backdrop-saturate-150 ring-1 ring-white/30 transition-[background-color,transform] duration-200 ease-out-soft hover:bg-white/25 max-md:bottom-20 sm:right-5 md:bottom-5"
+          className="absolute bottom-4 right-4 z-10 grid h-12 w-12 place-items-center rounded-full border border-white/45 bg-white/15 text-white shadow-lift ring-1 ring-white/30 backdrop-blur-md backdrop-saturate-150 transition-[background-color,transform] duration-200 ease-out-soft hover:bg-white/25 max-md:bottom-20 sm:right-5 md:bottom-5"
         >
-          {muted ? <VolumeX className="h-5 w-5" strokeWidth={2} aria-hidden="true" /> : <Volume2 className="h-5 w-5" strokeWidth={2} aria-hidden="true" />}
+          {muted ? (
+            <VolumeX className="h-5 w-5" strokeWidth={2} aria-hidden="true" />
+          ) : (
+            <Volume2 className="h-5 w-5" strokeWidth={2} aria-hidden="true" />
+          )}
         </button>
       )}
     </section>

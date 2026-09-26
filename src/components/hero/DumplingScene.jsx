@@ -1,4 +1,4 @@
-import { Suspense, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { ContactShadows } from '@react-three/drei';
 import { useReducedMotion } from 'framer-motion';
@@ -7,7 +7,7 @@ import DumplingModel from './scene/DumplingModel';
 import Garnishes from './scene/Garnishes';
 import Lighting from './scene/Lighting';
 import StageBackdrop from './scene/StageBackdrop';
-import { preloadDumplingModel } from './scene/modelLoader';
+import { loadDumplingModel } from './scene/modelLoader';
 import { useFrameloop } from './scene/useFrameloop';
 
 const STAGE_GRADIENT =
@@ -15,12 +15,13 @@ const STAGE_GRADIENT =
 
 /**
  * Interactive 3D dumpling. Loaded lazily by <HeroShowcase> (its own chunk
- * with three.js), never on first paint. Errors propagate to the caller's
- * error boundary so the photo simply stays in place.
+ * with three.js), never on first paint. If the model can't be downloaded,
+ * onError is called so the caller keeps the photo in place; render errors
+ * (WebGL) still propagate to the caller's error boundary.
  * Tap / Enter / Space spins it once more.
- * @param {{ onReady?: () => void }} props
+ * @param {{ onReady?: () => void, onError?: (error: unknown) => void }} props
  */
-export default function DumplingScene({ onReady }) {
+export default function DumplingScene({ onReady, onError }) {
   const { t } = useTranslation();
   const reduce = Boolean(useReducedMotion());
   /** @type {import('react').RefObject<() => void>} */
@@ -28,6 +29,18 @@ export default function DumplingScene({ onReady }) {
   /** @type {import('react').RefObject<HTMLDivElement | null>} */
   const wrapperRef = useRef(null);
   const frameloop = useFrameloop(wrapperRef);
+  const [scene, setScene] = useState(/** @type {import('three').Object3D | null} */ (null));
+
+  useEffect(() => {
+    let active = true;
+    loadDumplingModel().then(
+      (loaded) => active && setScene(loaded),
+      (error) => active && onError?.(error)
+    );
+    return () => {
+      active = false;
+    };
+  }, [onError]);
 
   return (
     <div
@@ -53,11 +66,13 @@ export default function DumplingScene({ onReady }) {
       >
         <Lighting />
         <StageBackdrop />
-        <Suspense fallback={null}>
-          <DumplingModel reduce={reduce} spinApiRef={spinApiRef} onReady={onReady} />
-          {/* Baked once after the model loads instead of re-rendering a depth pass every frame. */}
-          <ContactShadows position={[0, -1.55, 0]} opacity={0.2} scale={10} blur={3.2} far={2.8} frames={1} />
-        </Suspense>
+        {scene ? (
+          <>
+            <DumplingModel scene={scene} reduce={reduce} spinApiRef={spinApiRef} onReady={onReady} />
+            {/* Baked once after the model loads instead of re-rendering a depth pass every frame. */}
+            <ContactShadows position={[0, -1.55, 0]} opacity={0.2} scale={10} blur={3.2} far={2.8} frames={1} />
+          </>
+        ) : null}
         <Garnishes reduce={reduce} />
       </Canvas>
     </div>
@@ -65,4 +80,5 @@ export default function DumplingScene({ onReady }) {
 }
 
 // Safe here: this module only loads when the visitor asks for 3D (or on an idle desktop).
-preloadDumplingModel();
+// Starts the download while the scene mounts; the scene handles any failure.
+loadDumplingModel().catch(() => {});

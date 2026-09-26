@@ -2,11 +2,7 @@ import { Link, useOutletContext } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { m } from 'framer-motion';
 import { ArrowRight, Phone } from 'lucide-react';
-import {
-  BUSINESS,
-  PRIMARY_PHONE,
-  telHref,
-} from '../../constants/site';
+import { BUSINESS, PRIMARY_PHONE, telHref } from '../../constants/site';
 import { FOODPANDA_LOGO_SRC, GRAB_LOGO_SRC } from '../../constants/partnerLogos';
 import { useBusinessCopy } from '../../lib/businessHours';
 import Button from '../ui/Button';
@@ -32,7 +28,7 @@ export default function Hero() {
   const showcaseHidden = introSkipped ? { opacity: 1, y: 24 } : { opacity: 0, y: 24 };
 
   return (
-    <section className="relative bg-sunny text-ink-900">
+    <section className="bg-sunny relative text-ink-900">
       <div className="mx-auto grid max-w-7xl items-center gap-14 px-4 py-24 sm:px-6 md:grid-cols-[1.15fr_0.85fr] md:gap-12 lg:gap-16 lg:px-8 lg:py-28">
         <m.div
           className="text-center md:text-left"
@@ -45,11 +41,11 @@ export default function Hero() {
           </m.div>
 
           <m.h1 className="mt-5 font-display" variants={item}>
-            <span className="block bg-gradient-to-b from-primary-400 via-primary-600 to-primary-900 bg-clip-text py-4 font-extrabold leading-relaxed text-transparent text-[clamp(3.75rem,10vw,8rem)] drop-shadow-[0_12px_24px_rgba(64,4,14,0.22)]">
+            <span className="block bg-gradient-to-b from-primary-400 via-primary-600 to-primary-900 bg-clip-text py-4 text-[clamp(3.75rem,10vw,8rem)] font-extrabold leading-relaxed text-transparent drop-shadow-[0_12px_24px_rgba(64,4,14,0.22)]">
               မေဓါဝီ
             </span>
             <span
-              className="mt-4 block font-medium text-secondary-800 text-[clamp(1.35rem,3.2vw,2.15rem)]"
+              className="mt-4 block text-[clamp(1.35rem,3.2vw,2.15rem)] font-medium text-secondary-800"
               style={{ lineHeight: 1.35 }}
             >
               ဖက်ထုပ်အိုးကပ်
@@ -96,7 +92,12 @@ export default function Hero() {
           </m.div>
 
           <m.div className="mt-4 flex gap-3 sm:justify-center md:justify-start" variants={item}>
-            <PartnerLink href={BUSINESS.links.grab} label={t('order.grab')} logoSrc={GRAB_LOGO_SRC} ring="ring-partner-grab/60" />
+            <PartnerLink
+              href={BUSINESS.links.grab}
+              label={t('order.grab')}
+              logoSrc={GRAB_LOGO_SRC}
+              ring="ring-partner-grab/60"
+            />
             <PartnerLink
               href={BUSINESS.links.foodpanda}
               label={t('order.foodpanda')}

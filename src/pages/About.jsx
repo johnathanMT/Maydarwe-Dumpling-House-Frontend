@@ -34,6 +34,7 @@ export default function About() {
               image={ABOUT_PHOTO}
               alt={t('pages.home.heroPhotoAlt')}
               sizes="(min-width: 768px) 448px, 92vw"
+              priority // the page's largest image, in view on arrival on phones and desktops
               pictureClassName="block"
               className="aspect-[4/5] w-full rounded-[2rem] object-cover"
             />
@@ -50,11 +51,16 @@ export default function About() {
 
         <Reveal>
           <Eyebrow rule>{t('pages.about.kicker')}</Eyebrow>
-          <p className="mt-5 font-display text-2xl leading-relaxed text-ink-900 sm:text-[1.7rem]">{t('pages.about.body')}</p>
+          <p className="mt-5 font-display text-2xl leading-relaxed text-ink-900 sm:text-[1.7rem]">
+            {t('pages.about.body')}
+          </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Button as={Link} to="/menu" className="group" magnetic>
               {t('pages.home.viewMenu')}
-              <ArrowRight className="h-4 w-4 transition-transform duration-200 ease-out-soft group-hover:translate-x-0.5" aria-hidden="true" />
+              <ArrowRight
+                className="h-4 w-4 transition-transform duration-200 ease-out-soft group-hover:translate-x-0.5"
+                aria-hidden="true"
+              />
             </Button>
             <Button as={Link} to="/contact" variant="outline">
               {t('nav.contact')}
@@ -67,7 +73,10 @@ export default function About() {
         <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 md:py-28 lg:px-8 lg:py-32">
           <RevealGroup className="grid grid-cols-1 gap-6 md:grid-cols-3 lg:gap-8">
             {VALUES.map(({ icon: Icon, titleKey, bodyKey }) => (
-              <RevealItem key={titleKey} className="rounded-[1.75rem] bg-butter-50 p-6 ring-1 ring-inset ring-butter-200 lg:p-8">
+              <RevealItem
+                key={titleKey}
+                className="rounded-[1.75rem] bg-butter-50 p-6 ring-1 ring-inset ring-butter-200 lg:p-8"
+              >
                 <span className="grid h-12 w-12 place-items-center rounded-full bg-primary-600 text-white ring-4 ring-primary-100">
                   <Icon className="h-5 w-5" strokeWidth={1.5} />
                 </span>

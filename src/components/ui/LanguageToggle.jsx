@@ -35,7 +35,7 @@ export default function LanguageToggle({ className = '' }) {
             title={name}
             onClick={() => i18n.changeLanguage(sanitizeLanguage(code))}
             className={`relative z-10 min-h-12 min-w-12 rounded-full text-xs font-bold transition-colors lg:h-8 lg:min-h-0 lg:w-11 lg:min-w-0 ${
-              isActive ? 'text-ink-950' : 'text-ink-500 hover:text-ink-900'
+              isActive ? 'text-ink-950' : 'text-ink-600 hover:text-ink-900'
             }`}
           >
             {label}

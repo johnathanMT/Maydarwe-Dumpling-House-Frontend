@@ -68,14 +68,20 @@ export default function Button({
   children,
   ...props
 }) {
-  const classes = [BASE, BUTTON_VARIANTS[variant] ?? BUTTON_VARIANTS.primary, SIZES[size] ?? SIZES.md, block ? 'w-full' : '', className]
+  const classes = [
+    BASE,
+    BUTTON_VARIANTS[variant] ?? BUTTON_VARIANTS.primary,
+    SIZES[size] ?? SIZES.md,
+    block ? 'w-full' : '',
+    className,
+  ]
     .filter(Boolean)
     .join(' ');
 
   // `as` accepts any element type; callers pass one that takes these props (e.g. `to` with Link).
   const Tag = /** @type {import('react').ElementType<ButtonElementProps>} */ (Component);
   const control = (
-    <Tag className={classes} type={Component === 'button' ? type ?? 'button' : type} {...props}>
+    <Tag className={classes} type={Component === 'button' ? (type ?? 'button') : type} {...props}>
       {children}
     </Tag>
   );

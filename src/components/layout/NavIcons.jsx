@@ -3,7 +3,8 @@
  * "sticker" in the hero). All four share the same plush dumpling; each tab adds
  * one small accessory so they're easy to tell apart. Pure SVG, no assets.
  */
-import DumplingPlush, { PLUSH_COLORS, PLUSH_VIEWBOX_ROOMY } from '../mascot/DumplingPlush';
+import DumplingPlush from '../mascot/DumplingPlush';
+import { PLUSH_COLORS, PLUSH_VIEWBOX_ROOMY } from '../mascot/plushTokens';
 
 // Icons render at ~28px, so the outline is drawn a little thicker than on large art.
 const ICON_STROKE = 3;
@@ -20,7 +21,7 @@ export function DumplingHomeIcon({ className = 'h-7 w-7' }) {
  * Menu: fresh from the pan, with three curls of steam.
  * @param {{ className?: string }} props
  */
-function DumplingMenuIcon({ className = 'h-7 w-7' }) {
+export function DumplingMenuIcon({ className = 'h-7 w-7' }) {
   return (
     <DumplingPlush className={className} viewBox={PLUSH_VIEWBOX_ROOMY} strokeWidth={ICON_STROKE}>
       <g fill="none" stroke={PLUSH_COLORS.steam} strokeWidth="4.5" strokeLinecap="round">
@@ -36,7 +37,7 @@ function DumplingMenuIcon({ className = 'h-7 w-7' }) {
  * About: the dumpling in a little chef's hat.
  * @param {{ className?: string }} props
  */
-function DumplingAboutIcon({ className = 'h-7 w-7' }) {
+export function DumplingAboutIcon({ className = 'h-7 w-7' }) {
   return (
     <DumplingPlush className={className} viewBox={PLUSH_VIEWBOX_ROOMY} strokeWidth={ICON_STROKE}>
       <g fill="#fff" stroke={PLUSH_COLORS.outline} strokeWidth={ICON_STROKE} strokeLinejoin="round">
@@ -51,7 +52,7 @@ function DumplingAboutIcon({ className = 'h-7 w-7' }) {
  * Contact: the dumpling with a small red heart.
  * @param {{ className?: string }} props
  */
-function DumplingContactIcon({ className = 'h-7 w-7' }) {
+export function DumplingContactIcon({ className = 'h-7 w-7' }) {
   return (
     <DumplingPlush className={className} viewBox={PLUSH_VIEWBOX_ROOMY} strokeWidth={ICON_STROKE}>
       <path
@@ -62,14 +63,3 @@ function DumplingContactIcon({ className = 'h-7 w-7' }) {
     </DumplingPlush>
   );
 }
-
-/**
- * Route → icon, used by <BottomNav>.
- * @type {Record<string, import('react').ComponentType<{ className?: string }>>}
- */
-export const NAV_ICONS = {
-  '/': DumplingHomeIcon,
-  '/menu': DumplingMenuIcon,
-  '/about': DumplingAboutIcon,
-  '/contact': DumplingContactIcon,
-};

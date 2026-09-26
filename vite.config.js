@@ -36,7 +36,9 @@ function businessMetaPlugin(env) {
     transformIndexHtml: {
       order: 'pre',
       handler(html) {
-        return html.replace(/\{\{([A-Z_]+)\}\}/g, (match, /** @type {string} */ key) => (key in tokens ? tokens[key] : match));
+        return html.replace(/\{\{([A-Z_]+)\}\}/g, (match, /** @type {string} */ key) =>
+          key in tokens ? tokens[key] : match
+        );
       },
     },
   };

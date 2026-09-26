@@ -16,11 +16,10 @@ export default function OpenStatusBadge({ className = '', tone = 'light' }) {
         : 'bg-ink-50 text-ink-700 ring-ink-900/10';
 
   return (
-    <p className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold ring-1 ${surface} ${className}`}>
-      <span
-        aria-hidden="true"
-        className={`h-2 w-2 rounded-full ${isOpen ? 'bg-emerald-500' : 'bg-ink-400'}`}
-      />
+    <p
+      className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold ring-1 ${surface} ${className}`}
+    >
+      <span aria-hidden="true" className={`h-2 w-2 rounded-full ${isOpen ? 'bg-emerald-500' : 'bg-ink-400'}`} />
       {label}
     </p>
   );

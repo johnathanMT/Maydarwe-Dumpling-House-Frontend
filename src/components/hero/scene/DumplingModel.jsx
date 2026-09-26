@@ -1,9 +1,8 @@
 import { useEffect, useLayoutEffect, useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { Center, useGLTF } from '@react-three/drei';
+import { Center } from '@react-three/drei';
 import { Box3, Color, Vector3 } from 'three';
 import { easeOutCubic } from './easing';
-import { DUMPLING_MODEL_URL, releaseDecoder, withLocalDraco } from './modelLoader';
 
 /** Longest side of the model after scaling, in scene units. */
 const TARGET_SIZE = 2.15;
@@ -12,6 +11,7 @@ const SPIN_SECONDS = 2.15;
 
 /**
  * @typedef {object} DumplingModelProps
+ * @property {import('three').Object3D} scene The loaded .glb scene (see loadDumplingModel).
  * @property {boolean} reduce Reduced motion: no intro spin.
  * @property {import('react').RefObject<() => void>} spinApiRef Set to a function that starts a spin.
  * @property {() => void} [onReady] Called once the model is on screen.
@@ -22,12 +22,9 @@ const SPIN_SECONDS = 2.15;
  * finish, and spun once on arrival (and again on tap, via spinApiRef).
  * @param {DumplingModelProps} props
  */
-export default function DumplingModel({ reduce, spinApiRef, onReady }) {
+export default function DumplingModel({ scene, reduce, spinApiRef, onReady }) {
   /** @type {import('react').RefObject<import('three').Group | null>} */
   const group = useRef(null);
-  const { scene } = /** @type {{ scene: import('three').Object3D }} */ (
-    useGLTF(DUMPLING_MODEL_URL, false, false, withLocalDraco)
-  );
   const clone = useMemo(() => scene.clone(true), [scene]);
   const yaw = useRef(reduce ? 0.35 : 0);
   const spin = useRef({ from: reduce ? 0.35 : 0, progress: reduce ? 1 : 0 });
@@ -59,8 +56,6 @@ export default function DumplingModel({ reduce, spinApiRef, onReady }) {
   }, [clone]);
 
   useEffect(() => {
-    // The model is decoded and cached: the decoder worker can go.
-    releaseDecoder();
     onReady?.();
   }, [onReady]);
 

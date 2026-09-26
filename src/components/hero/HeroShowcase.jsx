@@ -51,7 +51,10 @@ export default function HeroShowcase() {
         className={`relative rounded-[2.5rem] bg-white p-2 shadow-warm ring-1 ring-butter-400/60 ${onScreen ? '' : 'loop-paused'}`}
       >
         {/* Cartoon dumpling "sticker" peeking over the frame. */}
-        <div aria-hidden="true" className="pointer-events-none absolute -left-4 -top-5 z-10 rotate-[-10deg] sm:-left-6 sm:-top-6">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -left-4 -top-5 z-10 rotate-[-10deg] sm:-left-6 sm:-top-6"
+        >
           <div
             className={`grid h-16 w-16 animate-float place-items-center rounded-full bg-butter shadow-warm ring-4 ring-white sm:h-20 sm:w-20 ${onScreen ? 'will-change-transform' : ''}`}
           >
@@ -75,7 +78,10 @@ export default function HeroShowcase() {
               className="h-full w-full animate-settle object-cover"
             />
             {/* Gentle bottom shade so the "View in 3D" button stays readable, plus rising steam. */}
-            <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-ink-950/35 to-transparent" />
+            <div
+              aria-hidden="true"
+              className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-ink-950/35 to-transparent"
+            />
             <Steam />
           </div>
 
@@ -86,7 +92,7 @@ export default function HeroShowcase() {
             >
               <SceneBoundary onError={handleError}>
                 <Suspense fallback={null}>
-                  <DumplingScene onReady={handleReady} />
+                  <DumplingScene onReady={handleReady} onError={handleError} />
                 </Suspense>
               </SceneBoundary>
             </div>
@@ -96,7 +102,9 @@ export default function HeroShowcase() {
         </div>
       </div>
 
-      {show3D ? <p className="mt-3 text-center text-xs font-medium text-ink-500 sm:text-sm">{t('pages.home.tapSpin')}</p> : null}
+      {show3D ? (
+        <p className="mt-3 text-center text-xs font-medium text-ink-500 sm:text-sm">{t('pages.home.tapSpin')}</p>
+      ) : null}
     </div>
   );
 }

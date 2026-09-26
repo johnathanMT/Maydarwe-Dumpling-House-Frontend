@@ -18,7 +18,9 @@ const SUPPORTED_LANGUAGES = new Set(['en', 'my']);
  * @returns {string}
  */
 export function sanitizeId(value) {
-  const id = String(value ?? '').trim().toLowerCase();
+  const id = String(value ?? '')
+    .trim()
+    .toLowerCase();
   return SAFE_ID.test(id) ? id : '';
 }
 
@@ -40,7 +42,9 @@ export function sanitizeInteger(value, { min = 0, max = 20 } = {}) {
  * @returns {Language}
  */
 export function sanitizeLanguage(value) {
-  const language = String(value ?? '').trim().toLowerCase();
+  const language = String(value ?? '')
+    .trim()
+    .toLowerCase();
   // The Set check above guarantees `language` is 'en' or 'my'.
   return SUPPORTED_LANGUAGES.has(language) ? /** @type {Language} */ (language) : 'my';
 }

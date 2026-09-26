@@ -8,3 +8,8 @@ dist-ssr
 .DS_Store
 .vscode/*
 !.vscode/extensions.json
+
+# Test and audit output
+playwright-report/
+test-results/
+.lighthouseci/

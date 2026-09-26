@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { MessageCircle } from 'lucide-react';
 import { BUSINESS, messengerOrderHref } from '../../constants/site';
 import { FOODPANDA_LOGO_SRC, GRAB_LOGO_SRC } from '../../constants/partnerLogos';
-import { useCart } from '../../context/CartContext';
+import { useCart } from '../../context/useCart';
 import { useLang } from '../../lib/businessHours';
 import { formatOrderItems } from '../../lib/orderMessage';
 import Button from '../ui/Button';

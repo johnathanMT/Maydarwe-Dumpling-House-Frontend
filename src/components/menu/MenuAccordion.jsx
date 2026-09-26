@@ -38,14 +38,16 @@ export default function MenuAccordion() {
                 alt=""
                 className="absolute inset-0 h-full w-full object-cover"
                 sizes="(min-width: 1024px) 50vw, 60vh"
-                loading={index < 2 ? 'eager' : 'lazy'}
+                // The whole strip is on screen at load (and is the page's LCP), so no lazy loading.
+                loading="eager"
+                fetchPriority={index < 2 ? 'high' : 'auto'}
                 decoding="async"
               />
               <span
                 className={`pointer-events-none absolute bottom-4 z-10 rounded-full font-display font-semibold tracking-wide ${GLASS} ${
                   open
                     ? 'inset-x-3 px-4 py-2 text-center text-sm sm:text-base'
-                    : 'left-1/2 -translate-x-1/2 px-2 py-3 text-[11px] [writing-mode:vertical-rl] rotate-180 group-hover:inset-x-3 group-hover:left-auto group-hover:translate-x-0 group-hover:px-4 group-hover:py-2 group-hover:text-center group-hover:text-sm group-hover:[writing-mode:horizontal-tb] group-hover:rotate-0'
+                    : 'left-1/2 -translate-x-1/2 rotate-180 px-2 py-3 text-[11px] [writing-mode:vertical-rl] group-hover:inset-x-3 group-hover:left-auto group-hover:translate-x-0 group-hover:rotate-0 group-hover:px-4 group-hover:py-2 group-hover:text-center group-hover:text-sm group-hover:[writing-mode:horizontal-tb]'
                 }`}
               >
                 {dish.name}

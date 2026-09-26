@@ -1,0 +1,80 @@
+{
+  "ci": {
+    "collect": {
+      "startServerCommand": "npx vite preview --port 4173 --strictPort",
+      "startServerReadyPattern": "Local",
+      "url": [
+        "http://localhost:4173/",
+        "http://localhost:4173/menu",
+        "http://localhost:4173/about",
+        "http://localhost:4173/contact"
+      ],
+      "numberOfRuns": 3,
+      "settings": {
+        "chromeFlags": "--no-sandbox --headless=new"
+      }
+    },
+    "assert": {
+      "assertMatrix": [
+        {
+          "matchingUrlPattern": ".*",
+          "aggregationMethod": "median-run",
+          "assertions": {
+            "categories:accessibility": ["error", { "minScore": 1 }],
+            "categories:seo": ["error", { "minScore": 1 }],
+            "categories:best-practices": ["error", { "minScore": 0.95 }],
+            "cumulative-layout-shift": ["error", { "maxNumericValue": 0.05 }],
+            "first-contentful-paint": ["error", { "maxNumericValue": 5000 }],
+            "total-blocking-time": ["error", { "maxNumericValue": 900 }],
+            "resource-summary:stylesheet:size": ["error", { "maxNumericValue": 20480 }],
+            "resource-summary:font:size": ["error", { "maxNumericValue": 409600 }]
+          }
+        },
+        {
+          "matchingUrlPattern": "^http://[^/]+/$",
+          "aggregationMethod": "median-run",
+          "assertions": {
+            "categories:performance": ["error", { "minScore": 0.55 }],
+            "largest-contentful-paint": ["error", { "maxNumericValue": 7500 }],
+            "resource-summary:script:size": ["error", { "maxNumericValue": 266240 }],
+            "resource-summary:total:size": ["error", { "maxNumericValue": 1048576 }]
+          }
+        },
+        {
+          "matchingUrlPattern": "/menu$",
+          "aggregationMethod": "median-run",
+          "assertions": {
+            "categories:performance": ["error", { "minScore": 0.45 }],
+            "largest-contentful-paint": ["error", { "maxNumericValue": 10000 }],
+            "resource-summary:script:size": ["error", { "maxNumericValue": 266240 }],
+            "resource-summary:total:size": ["error", { "maxNumericValue": 1536000 }]
+          }
+        },
+        {
+          "matchingUrlPattern": "/about$",
+          "aggregationMethod": "median-run",
+          "assertions": {
+            "categories:performance": ["error", { "minScore": 0.6 }],
+            "largest-contentful-paint": ["error", { "maxNumericValue": 6500 }],
+            "resource-summary:script:size": ["error", { "maxNumericValue": 266240 }],
+            "resource-summary:total:size": ["error", { "maxNumericValue": 768000 }]
+          }
+        },
+        {
+          "matchingUrlPattern": "/contact$",
+          "aggregationMethod": "median-run",
+          "assertions": {
+            "categories:performance": ["error", { "minScore": 0.55 }],
+            "largest-contentful-paint": ["error", { "maxNumericValue": 6500 }],
+            "resource-summary:script:size": ["error", { "maxNumericValue": 768000 }],
+            "resource-summary:total:size": ["error", { "maxNumericValue": 1228800 }]
+          }
+        }
+      ]
+    },
+    "upload": {
+      "target": "filesystem",
+      "outputDir": ".lighthouseci/reports"
+    }
+  }
+}

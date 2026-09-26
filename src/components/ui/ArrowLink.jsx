@@ -17,9 +17,15 @@ const TONES = {
  */
 export default function ArrowLink({ to, tone = 'light', className = '', children }) {
   return (
-    <Link to={to} className={`group inline-flex min-h-12 items-center gap-2 text-sm font-semibold ${TONES[tone]} ${className}`}>
+    <Link
+      to={to}
+      className={`group inline-flex min-h-12 items-center gap-2 text-sm font-semibold ${TONES[tone]} ${className}`}
+    >
       {children}
-      <ArrowRight className="h-4 w-4 transition-transform duration-200 ease-out-soft group-hover:translate-x-0.5" aria-hidden="true" />
+      <ArrowRight
+        className="h-4 w-4 transition-transform duration-200 ease-out-soft group-hover:translate-x-0.5"
+        aria-hidden="true"
+      />
     </Link>
   );
 }

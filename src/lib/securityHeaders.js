@@ -16,8 +16,7 @@ import { fileURLToPath } from 'node:url';
  * @param {string} name
  * @returns {boolean}
  */
-const partnerLogo = (name) =>
-  existsSync(fileURLToPath(new URL(`../assets/partners/${name}.svg`, import.meta.url)));
+const partnerLogo = (name) => existsSync(fileURLToPath(new URL(`../assets/partners/${name}.svg`, import.meta.url)));
 
 /** True once grab.svg and foodpanda.svg are self-hosted (src/assets/partners). */
 const PARTNER_LOGOS_SELF_HOSTED = partnerLogo('grab') && partnerLogo('foodpanda');
@@ -57,8 +56,9 @@ const PRODUCTION_DIRECTIVES = {
   // three.js loads textures and the Draco decoder in workers created from blob: URLs.
   'worker-src': ["'self'", 'blob:'],
   'child-src': ["'self'", 'blob:'],
-  // The 3D dumpling model (.glb) is hosted on Cloudinary.
-  'connect-src': ["'self'", 'https://res.cloudinary.com'],
+  // The 3D dumpling model (.glb) is hosted on Cloudinary. Its embedded textures
+  // are unpacked into blob: URLs that three.js then fetch()es.
+  'connect-src': ["'self'", 'blob:', 'https://res.cloudinary.com'],
   // Trusted Types: the browser refuses to turn strings into HTML or script
   // (innerHTML, eval-like sinks, worker URLs) unless they pass the one "default"
   // policy in src/lib/trustedTypes.js. This closes DOM-based XSS even if a

@@ -1,7 +1,7 @@
 import { AnimatePresence, m } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { ShoppingBag } from 'lucide-react';
-import { useUiActions, useUiState } from '../../context/UiContext';
+import { useUiActions, useUiState } from '../../context/useUi';
 import { pickLocale } from '../../data/menu';
 import { useLang } from '../../lib/businessHours';
 

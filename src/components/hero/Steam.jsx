@@ -27,7 +27,7 @@ export default function Steam() {
             strokeWidth="1.4"
             strokeLinecap="round"
             vectorEffect="non-scaling-stroke"
-            className="opacity-0 animate-steam [transform-box:fill-box] [transform-origin:bottom]"
+            className="animate-steam opacity-0 [transform-box:fill-box] [transform-origin:bottom]"
             style={{ animationDelay: delay, filter: 'blur(1.5px)' }}
           />
         </g>

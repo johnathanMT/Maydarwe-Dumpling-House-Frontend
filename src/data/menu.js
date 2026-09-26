@@ -102,7 +102,10 @@ export const MENU_ITEMS = [
     inStock: true,
     photo: 'malaXiangGuo',
     name: { en: 'Mala Xiang Guo - Chicken, Black Chicken, Pork', my: 'မာလာရှမ်းကော(ကြက်၊ ကြက်မဲ၊ ဝက်)' },
-    blurb: { en: 'Dry pot — choose chicken, black chicken or pork.', my: 'ကြက်၊ ကြက်မဲ သို့မဟုတ် ဝက်သား ရွေးချယ်နိုင်သည်။' },
+    blurb: {
+      en: 'Dry pot — choose chicken, black chicken or pork.',
+      my: 'ကြက်၊ ကြက်မဲ သို့မဟုတ် ဝက်သား ရွေးချယ်နိုင်သည်။',
+    },
   },
   {
     id: 'kway-teow',

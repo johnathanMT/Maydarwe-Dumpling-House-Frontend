@@ -4,8 +4,8 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Layout from './components/layout/Layout';
 import RouteError from './components/ui/RouteError';
 import RootError from './components/ui/RootError';
-import { UiProvider } from './context/UiContext';
-import { CartProvider } from './context/CartContext';
+import { UiProvider } from './context/UiProvider';
+import { CartProvider } from './context/CartProvider';
 import { DURATION, EASE_OUT, loadMotionFeatures } from './lib/motion';
 
 const Home = lazy(() => import('./pages/Home'));
