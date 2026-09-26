@@ -17,13 +17,14 @@ export default function DishPhoto({ item, alt, className = '' }) {
   const photo = PHOTOS[item.photo];
 
   return (
-    <div className={`relative aspect-[4/3] overflow-hidden bg-ink-100 ${item.inStock ? '' : 'grayscale'} ${className}`}>
+    <div className={`relative h-48 overflow-hidden bg-ink-100 md:h-56 ${item.inStock ? '' : 'grayscale'} ${className}`}>
       {photo ? (
         <OptimizedImage
           image={photo}
           alt={alt}
           sizes={CARD_SIZES}
-          className="h-full w-full object-cover object-center transition duration-700 ease-out group-hover:scale-110"
+          pictureClassName="block h-full w-full"
+          className="h-48 w-full rounded-t-xl object-cover object-center transition duration-700 ease-out group-hover:scale-110 md:h-56"
         />
       ) : (
         <>
