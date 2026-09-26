@@ -34,11 +34,10 @@ export default function ChefMascot({ className = '' }) {
       <m.svg
         viewBox="0 0 400 450"
         className="relative mx-auto h-auto w-full"
-        role="img"
+        aria-hidden="true"
         animate={reduce ? undefined : { y: [0, -12, 0] }}
         transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
       >
-        <title>Maydarwe chef holding a golden pan-fried dumpling</title>
 
         <m.ellipse
           cx="176"

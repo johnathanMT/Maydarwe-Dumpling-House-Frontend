@@ -1,5 +1,6 @@
-import { Flame, Soup, Wheat } from 'lucide-react';
 import OptimizedImage from '../ui/OptimizedImage';
+import { PHOTOS } from '../../assets/photos';
+import { CATEGORY_ICONS } from './categoryIcons';
 
 const FALLBACK_WASH = {
   mala: 'from-secondary-700 via-primary-800 to-ink-950',
@@ -7,18 +8,21 @@ const FALLBACK_WASH = {
   dumplings: 'from-primary-700 via-primary-900 to-ink-950',
 };
 
+// Card widths: 1 column on phones, 2 from `sm`, 3 from `lg` (max container 1280px).
+const CARD_SIZES = '(min-width: 1280px) 384px, (min-width: 1024px) 31vw, (min-width: 640px) 46vw, 92vw';
+
 export default function DishPhoto({ item, alt, className = '' }) {
   const wash = FALLBACK_WASH[item.category] ?? FALLBACK_WASH.dumplings;
-  const Icon = item.category === 'mala' ? Flame : item.category === 'noodles' ? Wheat : Soup;
+  const Icon = CATEGORY_ICONS[item.category] ?? CATEGORY_ICONS.dumplings;
+  const photo = PHOTOS[item.photo];
 
   return (
     <div className={`relative aspect-[4/3] overflow-hidden bg-ink-100 ${item.inStock ? '' : 'grayscale'} ${className}`}>
-      {item.image ? (
+      {photo ? (
         <OptimizedImage
-          src={item.image}
+          image={photo}
           alt={alt}
-          width={800}
-          height={600}
+          sizes={CARD_SIZES}
           className="h-full w-full object-cover object-center transition duration-700 ease-out group-hover:scale-110"
         />
       ) : (
@@ -34,8 +38,8 @@ export default function DishPhoto({ item, alt, className = '' }) {
           />
           <div className="absolute inset-4 rounded-[1.25rem] border border-secondary-400/30" />
           <div className="absolute inset-0 grid place-items-center">
-            <span className="grid h-16 w-16 place-items-center rounded-full bg-white/10 ring-1 ring-secondary-300/50 backdrop-blur-sm">
-              <Icon className="h-7 w-7 text-secondary-300" strokeWidth={1.5} />
+            <span className="grid h-16 w-16 place-items-center rounded-full bg-white/15 ring-1 ring-butter/60 backdrop-blur-sm">
+              <Icon className="h-7 w-7 text-butter" strokeWidth={1.5} />
             </span>
           </div>
         </>

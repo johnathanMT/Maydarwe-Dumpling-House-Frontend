@@ -20,9 +20,9 @@ export default function CartToast() {
             initial={{ opacity: 0, y: -16, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.98 }}
-            className="pointer-events-auto flex max-w-md items-center gap-3 rounded-full border border-secondary-400/40 bg-white/95 px-3 py-2 shadow-[0_16px_40px_-20px_rgb(34_30_27_/_0.55)] backdrop-blur-md"
+            className="pointer-events-auto flex max-w-md items-center gap-3 rounded-full border border-secondary-400/40 bg-white/95 px-3 py-2 shadow-lift backdrop-blur-md"
           >
-            <span className="grid h-9 w-9 place-items-center rounded-full bg-lacquer text-secondary-300">
+            <span className="grid h-9 w-9 place-items-center rounded-full bg-butter text-ink-950">
               <ShoppingBag className="h-4 w-4" strokeWidth={2} />
             </span>
             <p className="min-w-0 flex-1 text-sm font-semibold text-ink-900">

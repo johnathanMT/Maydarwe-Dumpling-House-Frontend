@@ -1,9 +1,9 @@
 /**
- * Small gold label above a heading ("HOUSE FAVORITES").
- * tone="dark" for lacquer backgrounds. `rule` adds a short gold line before it.
+ * Small red label above a heading ("HOUSE FAVORITES").
+ * tone="dark" for ink (black) backgrounds such as the footer. `rule` adds a short line before it.
  */
 export default function Eyebrow({ children, tone = 'light', rule = false, className = '', as: Tag = 'p' }) {
-  const color = tone === 'dark' ? 'text-secondary-300' : 'text-secondary-700';
+  const color = tone === 'dark' ? 'text-butter' : 'text-primary-600';
   return (
     <Tag
       className={`inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] sm:text-[0.8rem] ${color} ${className}`}

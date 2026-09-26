@@ -1,13 +1,26 @@
 import { Suspense, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Center, ContactShadows, useGLTF } from '@react-three/drei';
+import { DRACOLoader } from 'three-stdlib';
 import { Box3, Color, Vector3 } from 'three';
 import { useReducedMotion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 
-// useGLTF(url, useDraco = true, useMeshopt = false): the meshopt decoder compiles
-// WebAssembly on load, which the production CSP (script-src 'self') blocks, and the
-// model does not need it.
+/*
+ * Model loading, kept inside our own CSP:
+ * - Draco: if the model is Draco-compressed, decode it with the self-hosted
+ *   pure-JS decoder in /public/draco (no Google CDN, no WebAssembly).
+ *   The decoder is only downloaded if the model actually needs it.
+ * - Meshopt: off. Its decoder compiles WebAssembly, which script-src 'self' blocks.
+ */
+const dracoLoader = new DRACOLoader();
+dracoLoader.setDecoderPath('/draco/');
+dracoLoader.setDecoderConfig({ type: 'js' });
+
+const withLocalDraco = (loader) => {
+  loader.setDRACOLoader(dracoLoader);
+};
+
 export const DUMPLING_MODEL_URL =
   'https://res.cloudinary.com/dhlhzmmtt/image/upload/v1790346466/Big_dumplings_3d_model_fopwnk.glb';
 
@@ -113,9 +126,9 @@ function Garnish({ kind, target, delay, spin, tilt, reduce }) {
   );
 }
 
-function DumplingModel({ reduce, spinApi, onReady }) {
+function DumplingModel({ reduce, spinApiRef, onReady }) {
   const group = useRef();
-  const { scene } = useGLTF(DUMPLING_MODEL_URL, true, false);
+  const { scene } = useGLTF(DUMPLING_MODEL_URL, false, false, withLocalDraco);
   const clone = useMemo(() => scene.clone(true), [scene]);
   const yaw = useRef(reduce ? 0.35 : 0);
   const spin = useRef({ from: reduce ? 0.35 : 0, progress: reduce ? 1 : 0 });
@@ -151,14 +164,14 @@ function DumplingModel({ reduce, spinApi, onReady }) {
   }, [onReady]);
 
   useLayoutEffect(() => {
-    spinApi.current = () => {
+    spinApiRef.current = () => {
       spin.current.from = yaw.current;
       spin.current.progress = 0;
     };
     return () => {
-      spinApi.current = () => {};
+      spinApiRef.current = () => {};
     };
-  }, [spinApi]);
+  }, [spinApiRef]);
 
   useFrame((_, delta) => {
     if (!group.current) return;
@@ -178,27 +191,27 @@ function DumplingModel({ reduce, spinApi, onReady }) {
   );
 }
 
-/** Dark lacquer stage with a warm gold halo behind the dumpling (matches the hero). */
+/** Warm cream stage with a soft butter-yellow halo behind the dumpling (matches the hero). */
 function LacquerBackdrop() {
   return (
     <group>
       <mesh position={[0, 0.45, -3.6]}>
         <planeGeometry args={[16, 10]} />
-        <meshStandardMaterial color="#0E0A08" roughness={0.7} metalness={0.2} />
+        <meshStandardMaterial color="#FFE3A0" roughness={0.85} metalness={0} />
       </mesh>
       <mesh position={[0, 0.32, -2.75]}>
         <circleGeometry args={[3.7, 64]} />
-        <meshBasicMaterial color="#E8A006" transparent opacity={0.05} />
+        <meshBasicMaterial color="#FED271" transparent opacity={0.35} />
       </mesh>
       <mesh position={[0, 0.3, -2.4]}>
         <circleGeometry args={[2.7, 64]} />
-        <meshBasicMaterial color="#FFE9B0" transparent opacity={0.12} />
+        <meshBasicMaterial color="#FFFFFF" transparent opacity={0.45} />
       </mesh>
     </group>
   );
 }
 
-function SceneContent({ reduce, spinApi, onReady }) {
+function SceneContent({ reduce, spinApiRef, onReady }) {
   const garnishes = useGarnishes(24);
 
   return (
@@ -218,7 +231,7 @@ function SceneContent({ reduce, spinApi, onReady }) {
       <LacquerBackdrop />
 
       <Suspense fallback={null}>
-        <DumplingModel reduce={reduce} spinApi={spinApi} onReady={onReady} />
+        <DumplingModel reduce={reduce} spinApiRef={spinApiRef} onReady={onReady} />
         {/* Baked once after the model loads instead of re-rendering a depth pass every frame. */}
         <ContactShadows position={[0, -1.55, 0]} opacity={0.2} scale={10} blur={3.2} far={2.8} frames={1} />
       </Suspense>
@@ -261,7 +274,7 @@ function useFrameloop(ref) {
 export default function DumplingScene({ onReady }) {
   const { t } = useTranslation();
   const reduce = useReducedMotion();
-  const spinApi = useRef(() => {});
+  const spinApiRef = useRef(() => {});
   const wrapperRef = useRef(null);
   const frameloop = useFrameloop(wrapperRef);
 
@@ -269,11 +282,11 @@ export default function DumplingScene({ onReady }) {
     <div
       ref={wrapperRef}
       className="relative h-full w-full cursor-pointer"
-      onClick={() => spinApi.current()}
+      onClick={() => spinApiRef.current()}
       onKeyDown={(event) => {
         if (event.key === 'Enter' || event.key === ' ') {
           event.preventDefault();
-          spinApi.current();
+          spinApiRef.current();
         }
       }}
       role="button"
@@ -285,7 +298,7 @@ export default function DumplingScene({ onReady }) {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            'radial-gradient(ellipse 60% 45% at 50% 55%, rgb(255 222 150 / 0.22) 0%, rgb(232 160 6 / 0.08) 45%, transparent 70%), #120E0C',
+            'radial-gradient(ellipse 60% 45% at 50% 55%, #FFFFFF 0%, rgb(254 210 113 / 0.35) 55%, transparent 75%), #FFF4D6',
         }}
       />
       <Canvas
@@ -294,11 +307,11 @@ export default function DumplingScene({ onReady }) {
         camera={{ position: [0, 1.5, 6.2], fov: 36 }}
         gl={{ antialias: true, alpha: true, toneMappingExposure: 1.35, powerPreference: 'low-power' }}
       >
-        <SceneContent reduce={Boolean(reduce)} spinApi={spinApi} onReady={onReady} />
+        <SceneContent reduce={Boolean(reduce)} spinApiRef={spinApiRef} onReady={onReady} />
       </Canvas>
     </div>
   );
 }
 
 // Safe here: this module only loads when the visitor asks for 3D (or on an idle desktop).
-useGLTF.preload(DUMPLING_MODEL_URL, true, false);
+useGLTF.preload(DUMPLING_MODEL_URL, false, false, withLocalDraco);

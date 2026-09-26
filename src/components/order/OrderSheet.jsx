@@ -3,16 +3,16 @@ import { useTranslation } from 'react-i18next';
 import { ChevronRight, Phone } from 'lucide-react';
 import Sheet, { SheetCloseButton } from '../ui/Sheet';
 import OpenStatusBadge from '../ui/OpenStatusBadge';
+import { useLang } from '../../lib/businessHours';
 import { useUiActions, useUiState } from '../../context/UiContext';
 import { useCart } from '../../context/CartContext';
 import { formatPrice } from '../../data/menu';
 import {
   BUSINESS,
-  FOODPANDA_LOGO_SRC,
-  GRAB_LOGO_SRC,
   PRIMARY_PHONE,
   telHref,
 } from '../../constants/site';
+import { FOODPANDA_LOGO_SRC, GRAB_LOGO_SRC } from '../../constants/partnerLogos';
 
 function FacebookMark({ className }) {
   return (
@@ -51,6 +51,7 @@ export default function OrderSheet() {
   const { isOrderOpen } = useUiState();
   const { closePanel } = useUiActions();
   const { count, subtotal } = useCart();
+  const lang = useLang();
   const titleId = useId();
   const callRef = useRef(null);
   const otherPhones = BUSINESS.phones.slice(1);
@@ -82,7 +83,7 @@ export default function OrderSheet() {
           <a
             ref={callRef}
             href={telHref(PRIMARY_PHONE)}
-            className="flex items-center gap-4 rounded-2xl bg-primary-600 px-4 py-4 text-white shadow-[0_14px_30px_-18px_rgb(200_16_46_/_0.9)] transition-colors hover:bg-primary-700"
+            className="flex items-center gap-4 rounded-2xl bg-primary-600 px-4 py-4 text-white shadow-cta transition-colors hover:bg-primary-700"
           >
             <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-white/15 ring-1 ring-white/25">
               <Phone className="h-5 w-5" strokeWidth={2} />
@@ -113,14 +114,14 @@ export default function OrderSheet() {
               label={t('order.grab')}
               logoSrc={GRAB_LOGO_SRC}
               logoAlt="Grab"
-              accent="border-[#00B14F]/60 hover:border-[#00B14F] hover:bg-green-50"
+              accent="border-partner-grab/60 hover:border-partner-grab hover:bg-green-50"
             />
             <PartnerLink
               href={BUSINESS.links.foodpanda}
               label={t('order.foodpanda')}
               logoSrc={FOODPANDA_LOGO_SRC}
               logoAlt="foodpanda"
-              accent="border-[#D70F64]/50 hover:border-[#D70F64] hover:bg-pink-50"
+              accent="border-partner-foodpanda/50 hover:border-partner-foodpanda hover:bg-pink-50"
             />
           </div>
         </div>
@@ -129,7 +130,7 @@ export default function OrderSheet() {
           href={BUSINESS.links.facebook}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex min-h-12 items-center gap-2 px-1 text-sm font-semibold text-[#1877F2] underline-offset-4 hover:underline"
+          className="inline-flex min-h-12 items-center gap-2 px-1 text-sm font-semibold text-partner-facebook underline-offset-4 hover:underline"
         >
           <FacebookMark className="h-4 w-4" />
           {t('order.facebook')}
@@ -137,8 +138,8 @@ export default function OrderSheet() {
         </a>
 
         {count > 0 ? (
-          <p className="rounded-2xl bg-brand-pearl px-4 py-3 text-sm text-ink-700 ring-1 ring-secondary-400/30">
-            {t('nav.cartCount', { count })} · <span className="font-semibold tabular-nums">{formatPrice(subtotal)}</span>
+          <p className="rounded-2xl bg-butter-50 px-4 py-3 text-sm text-ink-700 ring-1 ring-butter-400/60">
+            {t('nav.cartCount', { count })} · <span className="font-semibold tabular-nums">{formatPrice(subtotal, lang)}</span>
           </p>
         ) : null}
       </div>

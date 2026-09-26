@@ -1,10 +1,11 @@
 import { useTranslation } from 'react-i18next';
 import { SUPPORTED_LANGUAGES } from '../../constants/site';
 import { sanitizeLanguage } from '../../lib/sanitize';
+import { useLang } from '../../lib/businessHours';
 
 export default function LanguageToggle({ className = '' }) {
   const { t, i18n } = useTranslation();
-  const current = i18n.resolvedLanguage === 'my' ? 'my' : 'en';
+  const current = useLang();
 
   return (
     <div

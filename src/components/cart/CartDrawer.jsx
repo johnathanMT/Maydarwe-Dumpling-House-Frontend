@@ -2,13 +2,15 @@ import { useId } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Minus, Phone, Plus, ShoppingBag } from 'lucide-react';
-import { useCart, useCartActions } from '../context/CartContext';
-import { useUiActions, useUiState } from '../context/UiContext';
-import { PRIMARY_PHONE, telHref } from '../constants/site';
-import { useLang } from '../lib/businessHours';
-import Sheet, { SheetCloseButton } from './ui/Sheet';
-import OptimizedImage from './ui/OptimizedImage';
-import { formatPrice, pickLocale } from '../data/menu';
+import { useCart, useCartActions } from '../../context/CartContext';
+import { useUiActions, useUiState } from '../../context/UiContext';
+import { PRIMARY_PHONE, telHref } from '../../constants/site';
+import { useLang } from '../../lib/businessHours';
+import Sheet, { SheetCloseButton } from '../ui/Sheet';
+import Button from '../ui/Button';
+import OptimizedImage from '../ui/OptimizedImage';
+import { PHOTOS } from '../../assets/photos';
+import { formatPrice, pickLocale } from '../../data/menu';
 
 export default function CartDrawer() {
   const { t } = useTranslation();
@@ -38,13 +40,9 @@ export default function CartDrawer() {
               <ShoppingBag className="h-6 w-6" strokeWidth={1.75} />
             </span>
             <p className="mt-4 text-ink-600">{t('cart.empty')}</p>
-            <Link
-              to="/menu"
-              onClick={closePanel}
-              className="mt-6 inline-flex min-h-12 items-center rounded-full bg-primary-600 px-5 text-sm font-semibold text-white hover:bg-primary-700"
-            >
+            <Button as={Link} to="/menu" onClick={closePanel} size="sm" className="mt-6">
               {t('cart.browse')}
-            </Link>
+            </Button>
           </div>
         </div>
       ) : (
@@ -56,18 +54,17 @@ export default function CartDrawer() {
                 <li key={line.id} className="rounded-2xl border border-ink-100 p-4">
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex min-w-0 items-start gap-3">
-                      {line.image ? (
+                      {PHOTOS[line.photo] ? (
                         <OptimizedImage
-                          src={line.image}
+                          image={PHOTOS[line.photo]}
                           alt=""
-                          width={56}
-                          height={56}
+                          sizes="56px"
                           className="h-14 w-14 shrink-0 rounded-xl object-cover"
                         />
                       ) : null}
                       <div className="min-w-0">
                         <p className="font-display text-lg font-semibold text-ink-900">{name}</p>
-                        <p className="mt-1 text-sm text-primary-700">{formatPrice(line.price)}</p>
+                        <p className="mt-1 text-sm text-primary-700">{formatPrice(line.price, language)}</p>
                       </div>
                     </div>
                     <button
@@ -101,7 +98,7 @@ export default function CartDrawer() {
                         <Plus className="h-4 w-4" />
                       </button>
                     </div>
-                    <p className="font-semibold tabular-nums text-ink-900">{formatPrice(line.price * line.quantity)}</p>
+                    <p className="font-semibold tabular-nums text-ink-900">{formatPrice(line.price * line.quantity, language)}</p>
                   </div>
                 </li>
               );
@@ -111,23 +108,16 @@ export default function CartDrawer() {
           <div className="border-t border-ink-100 px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-5">
             <div className="flex items-center justify-between text-ink-900">
               <span className="font-medium">{t('cart.subtotal')}</span>
-              <span className="font-display text-2xl font-semibold tabular-nums">{formatPrice(subtotal)}</span>
+              <span className="font-display text-2xl font-semibold tabular-nums">{formatPrice(subtotal, language)}</span>
             </div>
             <p className="mt-2 text-sm text-ink-500">{t('cart.note')}</p>
-            <a
-              href={telHref(PRIMARY_PHONE)}
-              className="mt-4 flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-primary-600 px-5 py-3 font-semibold text-white hover:bg-primary-700"
-            >
-              <Phone className="h-4 w-4" strokeWidth={2.25} />
+            <Button as="a" href={telHref(PRIMARY_PHONE)} block className="mt-4">
+              <Phone className="h-4 w-4" strokeWidth={2.25} aria-hidden="true" />
               {t('cart.call')} · <span className="tabular-nums">{PRIMARY_PHONE.display}</span>
-            </a>
-            <button
-              type="button"
-              onClick={openOrder}
-              className="mt-2 flex min-h-12 w-full items-center justify-center rounded-full border-2 border-secondary-500 bg-white px-5 font-semibold text-secondary-800 hover:bg-secondary-50"
-            >
+            </Button>
+            <Button variant="secondary" block className="mt-2" onClick={openOrder}>
               {t('cart.moreWays')}
-            </button>
+            </Button>
           </div>
         </>
       )}

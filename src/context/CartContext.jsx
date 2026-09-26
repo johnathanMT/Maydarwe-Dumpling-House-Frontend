@@ -109,7 +109,7 @@ export function CartProvider({ children }) {
     const lines = entries
       .map(({ id, quantity }) => {
         const item = CATALOG.get(id);
-        return item ? { id, quantity, name: item.name, price: item.price, image: item.image } : null;
+        return item ? { id, quantity, name: item.name, price: item.price, photo: item.photo } : null;
       })
       .filter(Boolean);
     return {

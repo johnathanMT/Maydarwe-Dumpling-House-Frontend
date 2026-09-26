@@ -9,6 +9,9 @@ import { useAddedFlash } from '../hooks/useAddedFlash';
 import PageHeader from '../components/ui/PageHeader';
 import DishCard from '../components/menu/DishCard';
 import { CATEGORIES, MENU_ITEMS, pickLocale } from '../data/menu';
+import { CATEGORY_ICONS } from '../components/menu/categoryIcons';
+
+const CATEGORY_LIST = CATEGORIES.map((category) => ({ ...category, icon: CATEGORY_ICONS[category.id] }));
 
 const FILTERS = [
   { id: 'all', labelKey: 'pages.menu.all' },
@@ -51,10 +54,10 @@ export default function Menu() {
   const visibleCount = filter === 'all' ? MENU_ITEMS.length : ITEMS_BY_CATEGORY[filter].length;
 
   return (
-    <section className="bg-brand-pearl">
+    <section className="bg-ivory">
       <PageHeader kicker={t('pages.menu.kicker')} title={t('pages.menu.title')} subtitle={t('pages.menu.subtitle')} />
 
-      <div className="sticky top-header z-30 border-b border-secondary-400/20 bg-brand-pearl/90 backdrop-blur-md">
+      <div className="sticky top-header z-30 border-b border-butter-200 bg-ivory/90 backdrop-blur-md">
         <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
           <div
             role="group"
@@ -70,14 +73,14 @@ export default function Menu() {
                   aria-pressed={active}
                   onClick={() => setFilter(id)}
                   className={`relative inline-flex min-h-12 shrink-0 items-center whitespace-nowrap rounded-full px-5 text-sm font-semibold transition-colors duration-200 ${
-                    active ? 'text-secondary-200' : 'text-ink-700 ring-1 ring-inset ring-ink-200 hover:ring-secondary-400 hover:text-ink-950'
+                    active ? 'text-white' : 'bg-white text-ink-700 ring-1 ring-inset ring-butter-200 hover:bg-butter-50 hover:ring-butter-400 hover:text-ink-950'
                   }`}
                 >
                   {active ? (
                     <m.span
                       layoutId="menu-filter-pill"
                       aria-hidden="true"
-                      className="absolute inset-0 rounded-full bg-lacquer"
+                      className="absolute inset-0 rounded-full bg-primary-600 shadow-cta"
                       transition={{ duration: 0.35, ease: EASE_OUT }}
                     />
                   ) : null}
@@ -101,12 +104,12 @@ export default function Menu() {
           >
             {filter === 'all' ? (
               <div className="space-y-16 md:space-y-20">
-                {CATEGORIES.map(({ id, icon: Icon, title, caption }) => (
+                {CATEGORY_LIST.map(({ id, icon: Icon, title, caption }) => (
                   <section key={id} aria-labelledby={`menu-${id}`}>
                     <div className="mb-8 flex items-end gap-4">
                       <div>
                         <div className="flex items-center gap-3">
-                          <span className="grid h-11 w-11 place-items-center rounded-full bg-lacquer text-secondary-300 ring-1 ring-secondary-400/40">
+                          <span className="grid h-11 w-11 place-items-center rounded-full bg-butter text-ink-950 ring-4 ring-butter-100">
                             <Icon className="h-5 w-5" strokeWidth={1.5} />
                           </span>
                           <h2 id={`menu-${id}`} className="font-display text-3xl font-semibold text-ink-900 sm:text-4xl">
@@ -115,7 +118,7 @@ export default function Menu() {
                         </div>
                         <p className="mt-2 text-ink-500">{pickLocale(caption, language)}</p>
                       </div>
-                      <span aria-hidden="true" className="mb-3 hidden h-px flex-1 bg-gradient-to-r from-secondary-400/70 to-transparent md:block" />
+                      <span aria-hidden="true" className="mb-3 hidden h-px flex-1 bg-gradient-to-r from-butter-400 to-transparent md:block" />
                     </div>
                     <MenuGrid items={ITEMS_BY_CATEGORY[id]} language={language} addedId={addedId} onAdd={onAdd} />
                   </section>

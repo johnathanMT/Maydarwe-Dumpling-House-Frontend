@@ -81,7 +81,8 @@ export function defaultDescription() {
   return `${BUSINESS.name.en} | ${BUSINESS.name.my} — handmade pan-fried dumplings, mala xiang guo and noodles in ${BUSINESS.address.city.en}, Myanmar. Open daily ${formatTimeEn(opens)} – ${formatTimeEn(closes)}. Order by phone, Grab or foodpanda.`;
 }
 
-export const BRAND_LOGO_SRC = '/maydawe_dumpling_logo.JPG';
+// Share image (1200×630) and icons live in /public so crawlers can fetch them by a fixed URL.
+export const OG_IMAGE_PATH = '/og-image.jpg';
 
 export const NAV_LINKS = [
   { to: '/', labelKey: 'nav.home', end: true },
@@ -89,10 +90,6 @@ export const NAV_LINKS = [
   { to: '/about', labelKey: 'nav.about' },
   { to: '/contact', labelKey: 'nav.contact' },
 ];
-
-// Delivery-partner logos (still hot-linked; self-hosting them is audit item H7).
-export const GRAB_LOGO_SRC = 'https://upload.wikimedia.org/wikipedia/commons/f/f6/Grab_Logo.svg';
-export const FOODPANDA_LOGO_SRC = 'https://upload.wikimedia.org/wikipedia/commons/7/74/Foodpanda_wordmark.svg';
 
 // 'my' is the ISO 639-1 code for Burmese; "MM" is only the display label
 export const SUPPORTED_LANGUAGES = [

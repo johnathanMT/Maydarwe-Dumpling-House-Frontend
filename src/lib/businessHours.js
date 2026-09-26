@@ -1,13 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BUSINESS, formatTimeEn } from '../constants/site';
+import { toMyanmarDigits } from './digits';
 
-const MY_DIGITS = ['၀', '၁', '၂', '၃', '၄', '၅', '၆', '၇', '၈', '၉'];
-
-/** Latin digits → Burmese digits ("2021" → "၂၀၂၁"). */
-export function toMyanmarDigits(value) {
-  return String(value).replace(/\d/g, (d) => MY_DIGITS[Number(d)]);
-}
+export { toMyanmarDigits };
 
 function burmesePeriod(hour) {
   if (hour < 12) return 'မနက်';

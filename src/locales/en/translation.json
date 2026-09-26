@@ -1,9 +1,7 @@
 {
   "brand": {
     "official": "မေဓာဝီဖက်ထုပ်အိုးကပ်ဆိုင်",
-    "english": "Maydarwe Dumpling House",
-    "name": "Maydarwe Dumpling House",
-    "tagline": "မေဓာဝီဖက်ထုပ်အိုးကပ်ဆိုင်"
+    "english": "Maydarwe Dumpling House"
   },
   "nav": {
     "main": "Main navigation",
@@ -14,7 +12,6 @@
     "contact": "Contact",
     "order": "Order",
     "language": "Choose language",
-    "cart": "Cart",
     "cartCount_one": "Cart, {{count}} item",
     "cartCount_other": "Cart, {{count}} items",
     "bottom": "Bottom navigation"
@@ -53,7 +50,6 @@
   },
   "footer": {
     "about": "Handmade dumplings, made fresh every day.",
-    "follow": "Follow us",
     "explore": "Explore",
     "contact": "Call us",
     "hours": "Hours",
@@ -61,9 +57,7 @@
   },
   "pages": {
     "home": {
-      "title": "Welcome to Maydarwe",
       "kicker": "Established in {{year}}",
-      "headline": "Handmade dumplings, made fresh every day.",
       "sub": "Enjoy our popular pot-stuck dumplings, Shan dishes, and mala xiangguo in the shop — or order easily by phone, Foodpanda, or Grab.",
       "viewMenu": "View Menu",
       "orderByPhone": "Order by phone",

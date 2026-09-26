@@ -7,18 +7,17 @@ export default {
     extend: {
       colors: {
         brand: {
-          red: '#C8102E',
-          gold: '#E8A006',
-          yellow: '#FFDE59',
           pearl: '#FDFAF6',
-          white: '#FFFFFF',
-          black: '#141110',
         },
-        // Lacquer — the dark, warm base of the premium sections (hero, page headers, footer)
-        lacquer: {
-          DEFAULT: '#120E0C',
-          800: '#1C1613',
-          700: '#2A211C',
+        // Ivory — the warm off-white base of every page
+        ivory: '#FDFAF6',
+        // Butter — the soft yellow of the logo, used for friendly surfaces and highlights
+        butter: {
+          50: '#FFFBEF',
+          100: '#FFF4D6',
+          200: '#FFE8AC',
+          DEFAULT: '#FED271',
+          400: '#FDC24A',
         },
         // Primary Red — CTAs, active states, brand seal
         primary: {
@@ -81,7 +80,8 @@ export default {
         nav: '0 1px 0 0 rgb(232 160 6 / 0.25), 0 10px 30px -15px rgb(34 30 27 / 0.25)',
         card: '0 18px 40px -28px rgb(34 30 27 / 0.45)',
         lift: '0 28px 56px -26px rgb(34 30 27 / 0.55)',
-        gold: '0 0 0 1px rgb(232 160 6 / 0.35), 0 24px 60px -28px rgb(232 160 6 / 0.45)',
+        // Warm, soft lift for photos and stickers on light backgrounds
+        warm: '0 24px 50px -24px rgb(199 122 2 / 0.45)',
         cta: '0 14px 30px -18px rgb(200 16 46 / 0.9)',
       },
       spacing: {
@@ -108,6 +108,10 @@ export default {
           from: { opacity: '0', transform: 'translateY(-6px)' },
           to: { opacity: '1', transform: 'translateY(0)' },
         },
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-6px)' },
+        },
         steam: {
           '0%': { opacity: '0', transform: 'translateY(8px) scaleY(0.9)' },
           '35%': { opacity: '0.75' },
@@ -120,6 +124,7 @@ export default {
         settle: 'settle 1.4s cubic-bezier(0.22, 1, 0.36, 1) both',
         'fade-down': 'fade-down 0.6s cubic-bezier(0.22, 1, 0.36, 1) both',
         steam: 'steam 3.2s ease-in-out infinite',
+        float: 'float 3.6s ease-in-out infinite',
       },
     },
   },

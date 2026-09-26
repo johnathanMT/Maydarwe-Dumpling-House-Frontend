@@ -35,7 +35,7 @@ export default function ScrollProgress() {
       aria-valuenow={Math.round(progress * 100)}
     >
       <div
-        className="h-full origin-left bg-gradient-to-r from-primary-600 via-secondary-400 to-secondary-200 transition-[transform] duration-150 ease-out"
+        className="h-full origin-left bg-gradient-to-r from-primary-600 via-secondary-400 to-butter transition-[transform] duration-150 ease-out"
         style={{ transform: `scaleX(${progress})` }}
       />
     </div>

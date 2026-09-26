@@ -16,19 +16,19 @@ function DishCard({ item, language, added = false, onAdd }) {
 
   return (
     <article
-      className={`group relative flex h-full flex-col overflow-hidden rounded-[1.75rem] bg-white shadow-card ring-1 ring-ink-900/5 transition-[transform,box-shadow] duration-300 ease-out-soft ${
-        available ? 'hover:-translate-y-1 hover:shadow-lift hover:ring-secondary-400/40' : 'opacity-80'
+      className={`group relative flex h-full flex-col overflow-hidden rounded-[1.75rem] bg-white shadow-card ring-1 ring-butter-200 transition-[transform,box-shadow] duration-300 ease-out-soft ${
+        available ? 'hover:-translate-y-1 hover:shadow-lift hover:ring-butter-400' : 'opacity-80'
       }`}
     >
       <div className="relative">
         <DishPhoto item={item} alt={name} />
-        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-lacquer/60 to-transparent" />
+        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-ink-950/30 to-transparent" />
         {available ? (
-          <span className="absolute bottom-3 left-4 rounded-full bg-lacquer/85 px-3 py-1 text-sm font-semibold tabular-nums text-secondary-200 ring-1 ring-secondary-400/40 backdrop-blur">
-            {formatPrice(item.price)}
+          <span className="absolute bottom-3 left-4 rounded-full bg-butter px-3 py-1 text-sm font-bold tabular-nums text-ink-950 shadow-sm ring-2 ring-white">
+            {formatPrice(item.price, language)}
           </span>
         ) : (
-          <span className="absolute bottom-3 left-4 rounded-full bg-lacquer/90 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-secondary-300 ring-1 ring-secondary-400/40">
+          <span className="absolute bottom-3 left-4 rounded-full bg-ink-950/85 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white ring-2 ring-white/70">
             {t('pages.menu.outOfStock')}
           </span>
         )}
@@ -36,7 +36,7 @@ function DishCard({ item, language, added = false, onAdd }) {
 
       <div className="flex flex-1 flex-col px-5 pb-5 pt-5">
         <h3 className="font-display text-xl font-semibold leading-snug text-ink-900">{name}</h3>
-        <p className="mt-1 text-sm text-secondary-700">{otherName}</p>
+        <p className="mt-1 text-sm text-primary-600">{otherName}</p>
         <p className="mt-3 flex-1 text-sm leading-relaxed text-ink-600">{pickLocale(item.blurb, language)}</p>
 
         <div aria-hidden="true" className="gold-rule mt-5 opacity-60" />
@@ -49,7 +49,7 @@ function DishCard({ item, language, added = false, onAdd }) {
             !available
               ? 'cursor-not-allowed bg-ink-100 text-ink-400'
               : added
-                ? 'bg-lacquer text-secondary-200'
+                ? 'bg-butter text-ink-950'
                 : 'bg-primary-600 text-white hover:bg-primary-700'
           }`}
         >

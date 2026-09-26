@@ -4,40 +4,41 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <!--
+      Site-wide defaults for crawlers that do not run JavaScript.
+      {{TOKENS}} are filled at build time from src/constants/site.js (vite.config.js).
+      Each route then sets its own title, description and canonical (src/lib/seo.js);
+      there is deliberately no static canonical here.
+    -->
     <title>Maydarwe Dumpling House | မေဓာဝီဖက်ထုပ်အိုးကပ်ဆိုင်</title>
     <meta name="description" content="{{SITE_DESCRIPTION}}" />
-    <meta
-      name="keywords"
-      content="Maydarwe Dumpling House, မေဓာဝီဖက်ထုပ်အိုးကပ်ဆိုင်, dumplings, pan-fried dumplings, mala xiang guo, noodles, yangon, myanmar, dumpling house, ဖက်ထုပ်"
-    />
-    <meta name="author" content="Maydarwe Dumpling House" />
     <meta name="robots" content="index, follow" />
-    <meta name="google-site-verification" content="YOUR_GOOGLE_VERIFICATION_CODE_HERE" />
     <meta name="theme-color" content="#C8102E" />
+    {{GOOGLE_SITE_VERIFICATION}}
 
-    <!--
-      No static canonical: each route sets its own <link rel="canonical">
-      at runtime (src/lib/seo.js). A hard-coded "/" here would tell Google
-      that /menu, /about and /contact are duplicates of the home page.
-    -->
-
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content="restaurant" />
     <meta property="og:site_name" content="Maydarwe Dumpling House" />
-    <meta property="og:locale" content="en_US" />
-    <meta property="og:locale:alternate" content="my_MM" />
+    <meta property="og:locale" content="my_MM" />
+    <meta property="og:locale:alternate" content="en_US" />
     <meta property="og:title" content="Maydarwe Dumpling House | မေဓာဝီဖက်ထုပ်အိုးကပ်ဆိုင်" />
     <meta property="og:description" content="{{SITE_DESCRIPTION}}" />
-    <meta property="og:image" content="https://maydarwedumpling.com/maydawe_dumpling_logo.JPG" />
-    <meta property="og:image:alt" content="Maydarwe Dumpling House | မေဓာဝီဖက်ထုပ်အိုးကပ်ဆိုင်" />
+    <meta property="og:image" content="https://maydarwedumpling.com/og-image.jpg" />
     <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Golden pan-fried dumplings and the Maydarwe Dumpling House logo" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Maydarwe Dumpling House | မေဓာဝီဖက်ထုပ်အိုးကပ်ဆိုင်" />
     <meta name="twitter:description" content="{{SITE_DESCRIPTION}}" />
-    <meta name="twitter:image" content="https://maydarwedumpling.com/maydawe_dumpling_logo.JPG" />
+    <meta name="twitter:image" content="https://maydarwedumpling.com/og-image.jpg" />
 
-    <link rel="icon" type="image/jpeg" href="/maydawe_dumpling_logo.JPG" />
-    <link rel="apple-touch-icon" href="/maydawe_dumpling_logo.JPG" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!-- schema.org Restaurant (hours, price range, menu), generated from site data. A data block, not a script: CSP-safe. -->
+    <script type="application/ld+json">{{RESTAURANT_JSON_LD}}</script>
 
     <!-- Fonts are self-hosted and bundled by Vite: see src/styles/fonts.js -->
   </head>

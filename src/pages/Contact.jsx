@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Clock, MapPin, Navigation, Phone } from 'lucide-react';
+import Button from '../components/ui/Button';
+import CtaBanner from '../components/ui/CtaBanner';
 import OpenStatusBadge from '../components/ui/OpenStatusBadge';
 import PageHeader from '../components/ui/PageHeader';
 import { Reveal, RevealGroup, RevealItem } from '../components/ui/Reveal';
@@ -41,13 +43,9 @@ function MapEmbed({ title }) {
             <span className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-white text-primary-700 shadow-sm ring-1 ring-ink-100">
               <MapPin className="h-6 w-6" strokeWidth={1.75} />
             </span>
-            <button
-              type="button"
-              onClick={() => setLoaded(true)}
-              className="mt-4 inline-flex min-h-12 items-center rounded-full bg-ink-950 px-6 font-semibold text-white hover:bg-ink-800"
-            >
+            <Button variant="dark" className="mt-4" onClick={() => setLoaded(true)}>
               {t('pages.contact.mapShow')}
-            </button>
+            </Button>
             <p className="mt-2 text-xs text-ink-500">{t('pages.contact.mapNote')}</p>
           </div>
         </div>
@@ -66,7 +64,7 @@ export default function Contact() {
   usePageMeta('contact', { path: '/contact' });
 
   return (
-    <div className="bg-brand-pearl">
+    <div className="bg-ivory">
       <PageHeader kicker={t('pages.contact.kicker')} title={t('pages.contact.title')} subtitle={t('pages.contact.sub')} />
 
       <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
@@ -115,16 +113,19 @@ export default function Contact() {
               </span>
             </p>
             {addressKnown ? (
-              <a
+              <Button
+                as="a"
                 href={mapsDirectionsUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-5 inline-flex min-h-12 items-center gap-2 rounded-full border-2 border-secondary-500 bg-white px-5 text-sm font-semibold text-secondary-800 hover:bg-secondary-50"
+                variant="secondary"
+                size="sm"
+                className="mt-5"
               >
-                <Navigation className="h-4 w-4" strokeWidth={2} />
+                <Navigation className="h-4 w-4" strokeWidth={2} aria-hidden="true" />
                 {t('pages.contact.directions')}
                 <span className="sr-only">({t('order.newTab')})</span>
-              </a>
+              </Button>
             ) : null}
           </RevealItem>
         </RevealGroup>
@@ -135,8 +136,8 @@ export default function Contact() {
           <h2 className="font-display text-2xl font-semibold text-ink-900">{t('pages.contact.orderTitle')}</h2>
           <ol className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-3">
             {['pages.contact.order1', 'pages.contact.order2', 'pages.contact.order3'].map((key, index) => (
-              <li key={key} className="rounded-2xl bg-brand-pearl p-5">
-                <span className="grid h-9 w-9 place-items-center rounded-full bg-lacquer font-display text-sm font-semibold text-secondary-300 ring-1 ring-secondary-400/40">
+              <li key={key} className="rounded-2xl bg-butter-50 p-5 ring-1 ring-inset ring-butter-200">
+                <span className="grid h-9 w-9 place-items-center rounded-full bg-primary-600 font-display text-sm font-semibold text-white ring-4 ring-primary-100">
                   {index + 1}
                 </span>
                 <p className="mt-3 text-ink-700">{t(key)}</p>
@@ -145,27 +146,14 @@ export default function Contact() {
           </ol>
         </Reveal>
 
-        <Reveal className="mt-10 overflow-hidden rounded-[2rem] bg-gradient-to-br from-primary-600 via-primary-700 to-primary-900 px-6 py-10 text-white shadow-lift sm:px-10 md:flex md:items-center md:justify-between md:gap-8">
-          <div>
-            <p className="font-display text-3xl font-semibold">{t('brand.official')}</p>
-            <p className="mt-2 text-primary-50">{t('pages.contact.sub')}</p>
-          </div>
-          <div className="mt-6 flex flex-wrap gap-3 md:mt-0 md:shrink-0">
-            <Link
-              to="/menu"
-              className="inline-flex min-h-12 items-center rounded-full bg-white px-6 py-3 font-semibold text-primary-700 hover:bg-secondary-50"
-            >
-              {t('pages.home.viewMenu')}
-            </Link>
-            <button
-              type="button"
-              onClick={openOrder}
-              className="inline-flex min-h-12 items-center rounded-full border border-white/40 px-6 py-3 font-semibold text-white hover:bg-white/10"
-            >
-              {t('nav.order')}
-            </button>
-          </div>
-        </Reveal>
+        <CtaBanner className="mt-10" title={t('brand.official')} body={t('pages.contact.sub')}>
+          <Button variant="light" onClick={openOrder}>
+            {t('nav.order')}
+          </Button>
+          <Button as={Link} to="/menu" variant="ghostLight">
+            {t('pages.home.viewMenu')}
+          </Button>
+        </CtaBanner>
       </section>
     </div>
   );

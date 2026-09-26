@@ -50,16 +50,17 @@
 
 @layer components {
   /*
-   * Lacquer: the warm near-black surface of the premium sections.
-   * A soft gold glow top-left, a faint red ember bottom-right, and a
-   * barely-there lattice so large dark areas never look flat.
+   * Sunny: the friendly header surface. Butter yellow melting into ivory,
+   * with a light polka-dot texture taken from the logo's playful feel.
    */
-  .bg-lacquer {
-    background-color: theme('colors.lacquer.DEFAULT');
+  .bg-sunny {
+    background-color: theme('colors.butter.100');
     background-image:
-      radial-gradient(ellipse 70% 55% at 12% 0%, rgb(232 160 6 / 0.16), transparent 60%),
-      radial-gradient(ellipse 60% 50% at 95% 100%, rgb(200 16 46 / 0.14), transparent 60%),
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cpath d='M14 0l14 14-14 14L0 14z' fill='none' stroke='%23E8A006' stroke-opacity='0.05'/%3E%3C/svg%3E");
+      radial-gradient(ellipse 70% 60% at 85% 0%, rgb(254 210 113 / 0.75), transparent 65%),
+      radial-gradient(ellipse 60% 50% at 0% 100%, rgb(200 16 46 / 0.06), transparent 60%),
+      radial-gradient(circle at 1.5px 1.5px, rgb(232 160 6 / 0.18) 1.5px, transparent 0),
+      linear-gradient(180deg, theme('colors.butter.200') 0%, theme('colors.butter.100') 45%, theme('colors.ivory') 100%);
+    background-size: auto, auto, 22px 22px, auto;
   }
 
   /* A thin gold line that fades out at both ends. */
@@ -67,10 +68,6 @@
     @apply h-px bg-gradient-to-r from-transparent via-secondary-500/70 to-transparent;
   }
 
-  /* Gold foil text for the hero title. */
-  .text-gold-foil {
-    @apply bg-gradient-to-b from-secondary-200 via-secondary-400 to-secondary-600 bg-clip-text text-transparent;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
