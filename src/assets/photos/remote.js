@@ -17,6 +17,34 @@ function cloudinaryPicture({ version, publicId, width, height, widths }) {
   };
 }
 
+/** Menu accordion: six house dishes, shown in this order. */
+export const MENU_GALLERY = [
+  {
+    name: 'ကြက်သားဖက်ထုပ်အိုးကပ်',
+    src: 'https://res.cloudinary.com/dhlhzmmtt/image/upload/v1790345037/IMG_7925_txkyjj.jpg',
+  },
+  {
+    name: 'ကြက်မဲမာလာ',
+    src: 'https://res.cloudinary.com/dhlhzmmtt/image/upload/v1790345036/IMG_7923_vhenho.jpg',
+  },
+  {
+    name: 'ဝက်သားဖက်ထုပ်အိုးကပ်',
+    src: 'https://res.cloudinary.com/dhlhzmmtt/image/upload/v1790345036/IMG_7926_s3clwe.jpg',
+  },
+  {
+    name: 'စပိုက်ဆီခေါက်ဆွဲသုပ်',
+    src: 'https://res.cloudinary.com/dhlhzmmtt/image/upload/v1790345037/IMG_7924_pgfjwo.jpg',
+  },
+  {
+    name: 'ကြက်ခြေထောက်မာလာ',
+    src: 'https://res.cloudinary.com/dhlhzmmtt/image/upload/v1790345035/IMG_7927_s52kgg.jpg',
+  },
+  {
+    name: 'စပိုက်ဆီခေါက်ဆွဲ ဖက်ထုပ်',
+    src: 'https://res.cloudinary.com/dhlhzmmtt/image/upload/v1790345036/IMG_7922_cpg939.jpg',
+  },
+];
+
 /** Home cinematic reel, played edge-to-edge above the signature dishes. */
 export const HOME_REEL_SRC =
   'https://res.cloudinary.com/dhlhzmmtt/video/upload/v1790345459/image-to-video/i2v_0a18f0607e7841f1987cf6bb2d5cb31f.mp4';

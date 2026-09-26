@@ -8,6 +8,7 @@ import { DURATION, EASE_OUT, fadeUp, stagger } from '../lib/motion';
 import { useAddedFlash } from '../hooks/useAddedFlash';
 import PageHeader from '../components/ui/PageHeader';
 import DishCard from '../components/menu/DishCard';
+import MenuAccordion from '../components/menu/MenuAccordion';
 import { CATEGORIES, MENU_ITEMS, pickLocale } from '../data/menu';
 import { CATEGORY_ICONS } from '../components/menu/categoryIcons';
 
@@ -56,6 +57,8 @@ export default function Menu() {
   return (
     <section className="bg-ivory">
       <PageHeader kicker={t('pages.menu.kicker')} title={t('pages.menu.title')} subtitle={t('pages.menu.subtitle')} />
+
+      <MenuAccordion />
 
       <div className="sticky top-header z-30 border-b border-butter-200 bg-ivory/90 backdrop-blur-md">
         <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">

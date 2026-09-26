@@ -81,9 +81,10 @@
       "mascotGreeting": "Mingalaba! I'm Little Dumpling. Which dumplings would you like today?"
     },
     "menu": {
-      "title": "Our menu",
+      "title": "Our Special Menus",
       "kicker": "Kitchen",
       "subtitle": "Handmade dumplings, mala, and noodles — cooked to order.",
+      "galleryLabel": "Special dishes",
       "filter": "Filter menu",
       "all": "All",
       "dumplings": "Dumplings",
