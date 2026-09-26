@@ -53,7 +53,7 @@ export default function Hero() {
   const { introReady = true } = useOutletContext() ?? {};
 
   return (
-    <section className="relative overflow-hidden bg-sunny text-ink-900">
+    <section className="relative bg-sunny text-ink-900">
       <div className="mx-auto grid max-w-7xl items-center gap-14 px-4 py-24 sm:px-6 md:grid-cols-[1.15fr_0.85fr] md:gap-12 lg:gap-16 lg:px-8 lg:py-28">
         <m.div
           className="text-center md:text-left"
@@ -66,10 +66,7 @@ export default function Hero() {
           </m.div>
 
           <m.h1 className="mt-5 font-display" variants={fadeUp(20)}>
-            <span
-              className="block bg-gradient-to-b from-primary-400 via-primary-600 to-primary-900 bg-clip-text pb-1 font-extrabold text-transparent text-[clamp(3.75rem,10vw,8rem)] drop-shadow-[0_12px_24px_rgba(64,4,14,0.22)]"
-              style={{ lineHeight: 1.05 }}
-            >
+            <span className="block bg-gradient-to-b from-primary-400 via-primary-600 to-primary-900 bg-clip-text py-4 font-extrabold leading-relaxed text-transparent text-[clamp(3.75rem,10vw,8rem)] drop-shadow-[0_12px_24px_rgba(64,4,14,0.22)]">
               မေဓါဝီ
             </span>
             <span
