@@ -1,68 +1,52 @@
 /**
- * The shop's cartoon dumpling icons (bottom navigation, and as friendly
- * "stickers" elsewhere). Hand-drawn SVG, no external assets.
+ * The shop's dumpling mascot icons (bottom navigation, and as a friendly
+ * "sticker" in the hero). All four share the same plush dumpling; each tab adds
+ * one small accessory so they're easy to tell apart. Pure SVG, no assets.
  */
+import DumplingPlush, { PLUSH_COLORS, PLUSH_VIEWBOX_ROOMY } from '../mascot/DumplingPlush';
+
+// Icons render at ~28px, so the outline is drawn a little thicker than on large art.
+const ICON_STROKE = 3;
 
 export function DumplingHomeIcon({ className = 'h-7 w-7' }) {
-  return (
-    <svg viewBox="0 0 48 48" className={className} aria-hidden="true">
-      <ellipse cx="24" cy="30" rx="16" ry="11" fill="#F5C14A" stroke="#141110" strokeWidth="2.2" />
-      <path d="M10 27 C14 14, 34 14, 38 27" fill="#FFE588" stroke="#141110" strokeWidth="2.2" />
-      <path d="M16 24 C20 20, 28 20, 32 24" fill="none" stroke="#C77A02" strokeWidth="1.6" />
-      <circle cx="19" cy="29" r="1.5" fill="#141110" />
-      <circle cx="29" cy="29" r="1.5" fill="#141110" />
-      <path d="M20 33 C22 35, 26 35, 28 33" fill="none" stroke="#141110" strokeWidth="1.7" strokeLinecap="round" />
-      <circle cx="16.5" cy="32" r="1.4" fill="#F4A7B9" />
-      <circle cx="31.5" cy="32" r="1.4" fill="#F4A7B9" />
-    </svg>
-  );
+  return <DumplingPlush className={className} strokeWidth={ICON_STROKE} />;
 }
 
+/** Menu: fresh from the pan, with three curls of steam. */
 export function DumplingMenuIcon({ className = 'h-7 w-7' }) {
   return (
-    <svg viewBox="0 0 48 48" className={className} aria-hidden="true">
-      <ellipse cx="24" cy="32" rx="15" ry="10" fill="#F5C14A" stroke="#141110" strokeWidth="2.2" />
-      <path d="M11 29 C15 17, 33 17, 37 29" fill="#FFE588" stroke="#141110" strokeWidth="2.2" />
-      <path d="M18 22 C19 12, 21 8, 21 6" fill="none" stroke="#E8A006" strokeWidth="1.8" strokeLinecap="round" />
-      <path d="M24 20 C24 11, 26 7, 26 5" fill="none" stroke="#E8A006" strokeWidth="1.8" strokeLinecap="round" />
-      <path d="M30 22 C31 13, 32 9, 33 7" fill="none" stroke="#E8A006" strokeWidth="1.8" strokeLinecap="round" />
-      <rect x="17" y="28" width="14" height="9" rx="2" fill="#FFF8E6" stroke="#141110" strokeWidth="1.6" />
-      <path d="M20 31 H28 M20 34 H26" stroke="#C8102E" strokeWidth="1.5" strokeLinecap="round" />
-    </svg>
+    <DumplingPlush className={className} viewBox={PLUSH_VIEWBOX_ROOMY} strokeWidth={ICON_STROKE}>
+      <g fill="none" stroke={PLUSH_COLORS.steam} strokeWidth="4.5" strokeLinecap="round">
+        <path d="M44 34 C40 28 48 24 44 16" />
+        <path d="M60 31 C56 25 64 21 60 11" />
+        <path d="M76 34 C72 28 80 24 76 16" />
+      </g>
+    </DumplingPlush>
   );
 }
 
+/** About: the dumpling in a little chef's hat. */
 export function DumplingAboutIcon({ className = 'h-7 w-7' }) {
   return (
-    <svg viewBox="0 0 48 48" className={className} aria-hidden="true">
-      <ellipse cx="24" cy="33" rx="15" ry="9.5" fill="#F5C14A" stroke="#141110" strokeWidth="2.2" />
-      <path d="M11 30 C15 19, 33 19, 37 30" fill="#FFE588" stroke="#141110" strokeWidth="2.2" />
-      <ellipse cx="24" cy="16" rx="11" ry="4" fill="#fff" stroke="#141110" strokeWidth="2" />
-      <path d="M15 16 C15 8, 20 5, 24 4 C28 5, 33 8, 33 16" fill="#fff" stroke="#141110" strokeWidth="2" />
-      <ellipse cx="24" cy="4.5" rx="4" ry="2.6" fill="#fff" stroke="#141110" strokeWidth="1.8" />
-      <circle cx="19.5" cy="30" r="1.4" fill="#141110" />
-      <circle cx="28.5" cy="30" r="1.4" fill="#141110" />
-      <path d="M21 34 C22.5 35.5, 25.5 35.5, 27 34" fill="none" stroke="#141110" strokeWidth="1.6" strokeLinecap="round" />
-    </svg>
+    <DumplingPlush className={className} viewBox={PLUSH_VIEWBOX_ROOMY} strokeWidth={ICON_STROKE}>
+      <g fill="#fff" stroke={PLUSH_COLORS.outline} strokeWidth={ICON_STROKE} strokeLinejoin="round">
+        <path d="M45 33 C36 31 36 16 47 17 C48 8 59 6 62 13 C68 6 81 10 78 19 C86 21 85 32 75 33 Z" />
+        <rect x="44" y="31" width="32" height="10" rx="3" />
+      </g>
+    </DumplingPlush>
   );
 }
 
+/** Contact: the dumpling with a small red heart. */
 export function DumplingContactIcon({ className = 'h-7 w-7' }) {
   return (
-    <svg viewBox="0 0 48 48" className={className} aria-hidden="true">
-      <ellipse cx="22" cy="31" rx="14" ry="10" fill="#F5C14A" stroke="#141110" strokeWidth="2.2" />
-      <path d="M10 28 C14 16, 30 16, 34 28" fill="#FFE588" stroke="#141110" strokeWidth="2.2" />
-      <circle cx="18" cy="29" r="1.4" fill="#141110" />
-      <circle cx="26" cy="29" r="1.4" fill="#141110" />
-      <path d="M19 33 C21 35, 24 35, 26 33" fill="none" stroke="#141110" strokeWidth="1.6" strokeLinecap="round" />
+    <DumplingPlush className={className} viewBox={PLUSH_VIEWBOX_ROOMY} strokeWidth={ICON_STROKE}>
       <path
-        d="M34 18 C34 14, 40 14, 40 18 C40 23, 34 26, 34 26 C34 26, 28 23, 28 18 C28 14, 34 14, 34 18 Z"
-        fill="#C8102E"
-        stroke="#141110"
-        strokeWidth="1.7"
+        d="M92 23 C92 16 102 16 102 24 C102 31 92 37 92 37 C92 37 82 31 82 24 C82 16 92 16 92 23 Z"
+        fill={PLUSH_COLORS.red}
       />
-      <circle cx="34" cy="18.5" r="1.3" fill="#FFE588" />
-    </svg>
+      <circle cx="87.5" cy="22.5" r="2.2" fill="#fff" opacity="0.8" />
+    </DumplingPlush>
   );
 }
 

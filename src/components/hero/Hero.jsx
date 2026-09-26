@@ -63,8 +63,8 @@ export default function Hero() {
           </div>
 
           <h1 className="mt-5 animate-rise-still font-display [animation-delay:60ms]">
-            <span className="block pb-1 text-[clamp(3.25rem,13vw,6.75rem)] font-extrabold leading-[1.05] text-primary-600">
-              မေဓာဝီ
+            <span className="block pb-1 text-[clamp(3.75rem,15.5vw,8rem)] font-extrabold leading-[1.05] text-primary-600">
+              မေဓါဝီ
             </span>
             <span className="mt-1 block text-[clamp(1.6rem,6.2vw,3.1rem)] font-bold leading-tight text-ink-950">
               ဖက်ထုပ်အိုးကပ်

@@ -15,7 +15,7 @@ export const SITE_URL = 'https://maydarwedumpling.com';
 export const BUSINESS = {
   name: {
     en: 'Maydarwe Dumpling House',
-    my: 'မေဓာဝီဖက်ထုပ်အိုးကပ်ဆိုင်',
+    my: 'မေဓါဝီဖက်ထုပ်အိုးကပ်ဆိုင်',
   },
   established: 2021,
   timeZone: 'Asia/Yangon',

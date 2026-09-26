@@ -1,6 +1,6 @@
 {
   "brand": {
-    "official": "မေဓာဝီဖက်ထုပ်အိုးကပ်ဆိုင်",
+    "official": "မေဓါဝီဖက်ထုပ်အိုးကပ်ဆိုင်",
     "english": "Maydarwe Dumpling House"
   },
   "nav": {
@@ -90,13 +90,18 @@
       "added": "Added",
       "outOfStock": "Out of stock",
       "showing": "Showing {{count}} dishes",
-      "empty": "No dishes in this category yet."
+      "empty": "No dishes in this category yet.",
+      "meat": {
+        "prawn": "Prawn",
+        "pork": "Pork",
+        "chicken": "Chicken"
+      }
     },
     "about": {
       "kicker": "Our story",
       "title": "About us",
       "lead": "A Yangon dumpling house for handmade plates, cooked when you order them.",
-      "body": "မေဓာဝီဖက်ထုပ်အိုးကပ်ဆိုင် folds dumplings by hand and finishes them in the pan, in broth, or with mala heat. We keep the kitchen small and the menu focused: signatures you can taste, made fresh every day.",
+      "body": "မေဓါဝီဖက်ထုပ်အိုးကပ်ဆိုင် folds dumplings by hand and finishes them in the pan, in broth, or with mala heat. We keep the kitchen small and the menu focused: signatures you can taste, made fresh every day.",
       "value1Title": "Handmade",
       "value1Body": "Wrappers and fillings are prepared in our kitchen — not brought in ready-made.",
       "value2Title": "Cooked to order",

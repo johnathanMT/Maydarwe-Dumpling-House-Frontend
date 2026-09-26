@@ -31,17 +31,19 @@ class SceneBoundary extends Component {
 }
 
 /**
- * The dumpling mascot says hello: a speech bubble that springs in one second
- * after the page loads. Its sharp top-left corner points back at the mascot.
- * Visitors who prefer reduced motion get a plain fade (MotionConfig in App.jsx).
- */
-/**
  * Burmese has no reliable word breaks, so the browser may split a word in two.
  * Break only at the spaces in the copy, and keep punctuation (၊ ? !) on the
  * same line as the word before it.
  */
 const toPhrases = (text) => text.replace(/ ([?!၊။])/g, '\u00A0$1').split(' ');
 
+/**
+ * The dumpling mascot says hello: a small frosted-glass cloud that springs in
+ * one second after the page loads. It sits on the top edge of the frame, so
+ * the food photo stays visible, and the photo shows through the sky-blue glass.
+ * Its tighter top-left corner points back at the mascot.
+ * Visitors who prefer reduced motion get a plain fade (MotionConfig in App.jsx).
+ */
 function MascotGreeting() {
   const { t } = useTranslation();
   return (
@@ -50,7 +52,7 @@ function MascotGreeting() {
       animate={{ opacity: 1, scale: 1 }}
       transition={{ type: 'spring', stiffness: 200, damping: 20, delay: 1 }}
       style={{ transformOrigin: 'top left' }}
-      className="absolute left-12 top-3 z-20 max-w-[15rem] rounded-2xl rounded-tl-sm bg-ivory px-4 py-3 text-sm font-semibold leading-[1.9] text-ink-900 text-balance shadow-lg ring-1 ring-butter-200 sm:left-16 sm:top-4 sm:max-w-[16.5rem] sm:text-[0.95rem]"
+      className="absolute -top-3 left-[3.4rem] z-20 max-w-[11.5rem] rounded-[1.75rem] rounded-tl-lg border border-white/60 bg-gradient-to-br from-sky-100/75 via-sky-200/65 to-sky-300/55 px-3.5 py-2.5 text-xs font-semibold leading-[1.65] text-ink-950 shadow-lg shadow-sky-900/15 backdrop-blur-md backdrop-saturate-150 text-balance [text-shadow:0_1px_0_rgb(255_255_255/0.55)] sm:-top-4 sm:left-[4.5rem] sm:max-w-[13.5rem] sm:px-4 sm:py-3 sm:text-sm"
     >
       {toPhrases(t('pages.home.mascotGreeting')).map((phrase, i) => (
         <Fragment key={i}>
@@ -157,7 +159,7 @@ export default function HeroShowcase() {
         {/* Cartoon dumpling "sticker" peeking over the frame. */}
         <div aria-hidden="true" className="pointer-events-none absolute -left-4 -top-5 z-10 rotate-[-10deg] sm:-left-6 sm:-top-6">
           <div className="grid h-16 w-16 animate-float place-items-center rounded-full bg-butter shadow-warm ring-4 ring-white sm:h-20 sm:w-20">
-            <DumplingHomeIcon className="h-11 w-11 sm:h-14 sm:w-14" />
+            <DumplingHomeIcon className="h-12 w-12 sm:h-[3.75rem] sm:w-[3.75rem]" />
           </div>
         </div>
 

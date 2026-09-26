@@ -3,6 +3,8 @@
  * can read it too: vite.config.js turns it into the Restaurant JSON-LD.
  * Photos are looked up by `photo` key in src/assets/photos/index.js;
  * category icons live in src/components/menu/categoryIcons.js.
+ * `meatType` ('prawn' | 'pork' | 'chicken' | null) shows a badge on the dish photo;
+ * leave it null when a dish has no single main meat.
  */
 import { toMyanmarDigits } from '../lib/digits.js';
 
@@ -10,6 +12,7 @@ export const MENU_ITEMS = [
   {
     id: 'prawn-pan-fried',
     category: 'dumplings',
+    meatType: 'prawn',
     price: 25000,
     inStock: true,
     featured: true,
@@ -20,6 +23,7 @@ export const MENU_ITEMS = [
   {
     id: 'pork-pan-fried',
     category: 'dumplings',
+    meatType: 'pork',
     price: 20000,
     inStock: true,
     featured: true,
@@ -30,6 +34,7 @@ export const MENU_ITEMS = [
   {
     id: 'chicken-pan-fried',
     category: 'dumplings',
+    meatType: 'chicken',
     price: 18000,
     inStock: true,
     featured: true,
@@ -40,6 +45,7 @@ export const MENU_ITEMS = [
   {
     id: 'dumpling-soup',
     category: 'dumplings',
+    meatType: null,
     price: 5500,
     inStock: true,
     name: { en: 'Dumpling Soup', my: 'ဖက်ထုပ်ဟင်းချို' },
@@ -48,6 +54,7 @@ export const MENU_ITEMS = [
   {
     id: 'mala-xiang-guo',
     category: 'mala',
+    meatType: null,
     price: 15000,
     inStock: false,
     photo: 'malaXiangGuo',
@@ -57,6 +64,7 @@ export const MENU_ITEMS = [
   {
     id: 'mala-chicken-feet',
     category: 'mala',
+    meatType: 'chicken',
     price: 9000,
     inStock: true,
     photo: 'malaChickenFeet',
@@ -66,6 +74,7 @@ export const MENU_ITEMS = [
   {
     id: 'spicy-noodle-salad',
     category: 'mala',
+    meatType: null,
     price: 9000,
     inStock: true,
     photo: 'spicyNoodleSalad',
@@ -75,6 +84,7 @@ export const MENU_ITEMS = [
   {
     id: 'claypot-noodle',
     category: 'noodles',
+    meatType: null,
     price: 9500,
     inStock: true,
     photo: 'claypotNoodle',
@@ -84,6 +94,7 @@ export const MENU_ITEMS = [
   {
     id: 'shan-noodles',
     category: 'noodles',
+    meatType: null,
     price: 5000,
     inStock: true,
     name: { en: 'Shan Noodles', my: 'ရှမ်းခေါက်ဆွဲ' },
@@ -92,6 +103,7 @@ export const MENU_ITEMS = [
   {
     id: 'garlic-oil-noodles',
     category: 'noodles',
+    meatType: null,
     price: 5000,
     inStock: true,
     name: { en: 'Garlic Oil Noodles', my: 'ကြက်သွန်ဖြူဆီခေါက်ဆွဲ' },

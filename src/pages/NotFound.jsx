@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Button from '../components/ui/Button';
 import Eyebrow from '../components/ui/Eyebrow';
-import ChefMascot from '../components/hero/ChefMascot';
+import DumplingMascot from '../components/mascot/DumplingMascot';
 import { usePageMeta } from '../lib/seo';
 
 export default function NotFound() {
@@ -12,7 +12,7 @@ export default function NotFound() {
   return (
     <section className="bg-sunny">
       <div className="mx-auto flex max-w-2xl flex-col items-center px-4 py-14 text-center sm:px-6 lg:py-20">
-        <ChefMascot className="!w-[min(100%,13rem)] sm:!w-[16rem]" />
+        <DumplingMascot className="!w-[min(100%,13rem)] sm:!w-[16rem]" />
         <Eyebrow className="mt-6">{t('ui.notFound.kicker')}</Eyebrow>
         <h1 className="mt-2 font-display text-3xl font-semibold text-ink-900 sm:text-5xl">{t('ui.notFound.title')}</h1>
         <p className="mt-4 max-w-md text-lg text-ink-600">{t('ui.notFound.body')}</p>
