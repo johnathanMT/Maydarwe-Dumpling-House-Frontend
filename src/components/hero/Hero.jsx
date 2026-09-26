@@ -12,45 +12,24 @@ import { useBusinessCopy } from '../../lib/businessHours';
 import Button from '../ui/Button';
 import Eyebrow from '../ui/Eyebrow';
 import OpenStatusBadge from '../ui/OpenStatusBadge';
-import { DURATION, EASE_OUT, fadeUp, stagger } from '../../lib/motion';
+import { DURATION, EASE_OUT, fadeUp, slideUp, stagger } from '../../lib/motion';
 import HeroShowcase from './HeroShowcase';
-
-/** "Order on [logo]" in English, "[logo] မှ မှာယူရန်" in Burmese. The link carries the full aria-label. */
-function PartnerLabel({ logoSrc }) {
-  const { t } = useTranslation();
-  const before = t('pages.home.orderOnBefore');
-  const after = t('pages.home.orderOnAfter');
-  return (
-    <span aria-hidden="true" className="inline-flex items-center gap-2 text-sm font-semibold text-ink-800">
-      {before ? <span>{before}</span> : null}
-      <img src={logoSrc} alt="" className="h-[18px] w-auto" loading="lazy" decoding="async" />
-      {after ? <span>{after}</span> : null}
-    </span>
-  );
-}
-
-function PartnerLink({ href, label, logoSrc, ring }) {
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={label}
-      className={`inline-flex min-h-12 flex-1 items-center justify-center rounded-full bg-white px-5 shadow-sm ring-2 ring-inset transition-[transform,box-shadow] duration-200 ease-out-soft hover:-translate-y-0.5 hover:shadow-lift sm:flex-none ${ring}`}
-    >
-      <PartnerLabel logoSrc={logoSrc} />
-    </a>
-  );
-}
+import PartnerLink from './PartnerLink';
 
 /**
  * Home hero: a large maroon wordmark, a short tagline, one phone action,
- * and the food photo. Copy rises in sequence after the opening curtain.
+ * and the food photo. Copy rises in sequence after the opening curtain
+ * (fading in), or slides in already visible when the curtain was skipped.
  */
 export default function Hero() {
   const { t } = useTranslation();
   const copy = useBusinessCopy();
-  const { introReady = true } = useOutletContext() ?? {};
+  const { introReady = true, introSkipped = true } =
+    /** @type {{ introReady?: boolean, introSkipped?: boolean } | undefined} */ (useOutletContext()) ?? {};
+  // After the curtain (first visit) the copy fades up; when the curtain is
+  // skipped it is visible at once and only slides, so it is readable immediately.
+  const item = introSkipped ? slideUp(20) : fadeUp(20);
+  const showcaseHidden = introSkipped ? { opacity: 1, y: 24 } : { opacity: 0, y: 24 };
 
   return (
     <section className="relative bg-sunny text-ink-900">
@@ -61,11 +40,11 @@ export default function Hero() {
           initial="hidden"
           animate={introReady ? 'show' : 'hidden'}
         >
-          <m.div variants={fadeUp(20)}>
+          <m.div variants={item}>
             <Eyebrow rule>{t('pages.home.kicker', copy)}</Eyebrow>
           </m.div>
 
-          <m.h1 className="mt-5 font-display" variants={fadeUp(20)}>
+          <m.h1 className="mt-5 font-display" variants={item}>
             <span className="block bg-gradient-to-b from-primary-400 via-primary-600 to-primary-900 bg-clip-text py-4 font-extrabold leading-relaxed text-transparent text-[clamp(3.75rem,10vw,8rem)] drop-shadow-[0_12px_24px_rgba(64,4,14,0.22)]">
               မေဓါဝီ
             </span>
@@ -80,23 +59,23 @@ export default function Hero() {
           <m.p
             className="mt-3 font-sans text-xs font-semibold uppercase text-ink-500 sm:text-sm"
             style={{ letterSpacing: '0.32em' }}
-            variants={fadeUp(20)}
+            variants={item}
           >
             {t('brand.english')}
           </m.p>
 
-          <m.div variants={fadeUp(20)} aria-hidden="true" className="gold-rule mx-auto mt-6 w-28 md:mx-0" />
+          <m.div variants={item} aria-hidden="true" className="gold-rule mx-auto mt-6 w-28 md:mx-0" />
 
           <m.p
             className="mx-auto mt-6 max-w-xl text-pretty text-base leading-relaxed text-ink-600 sm:text-lg md:mx-0"
-            variants={fadeUp(20)}
+            variants={item}
           >
             {t('pages.home.sub')}
           </m.p>
 
           <m.div
             className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:justify-center md:justify-start"
-            variants={fadeUp(20)}
+            variants={item}
           >
             <Button
               as="a"
@@ -116,7 +95,7 @@ export default function Hero() {
             </Button>
           </m.div>
 
-          <m.div className="mt-4 flex gap-3 sm:justify-center md:justify-start" variants={fadeUp(20)}>
+          <m.div className="mt-4 flex gap-3 sm:justify-center md:justify-start" variants={item}>
             <PartnerLink href={BUSINESS.links.grab} label={t('order.grab')} logoSrc={GRAB_LOGO_SRC} ring="ring-partner-grab/60" />
             <PartnerLink
               href={BUSINESS.links.foodpanda}
@@ -126,14 +105,14 @@ export default function Hero() {
             />
           </m.div>
 
-          <m.div className="mt-8" variants={fadeUp(20)}>
+          <m.div className="mt-8" variants={item}>
             <OpenStatusBadge />
           </m.div>
         </m.div>
 
         <m.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={introReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+          initial={showcaseHidden}
+          animate={introReady ? { opacity: 1, y: 0 } : showcaseHidden}
           transition={{ duration: DURATION.reveal, ease: EASE_OUT, delay: introReady ? 0.2 : 0 }}
         >
           <HeroShowcase />

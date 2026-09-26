@@ -1,4 +1,48 @@
+# Maydarwe Dumpling House — crawler policy
+#
+# Search engines and AI *search/assistant* tools may read the whole site, so
+# guests can find us on Google, Bing, ChatGPT search, Perplexity, Claude, etc.
+# AI *training* crawlers are asked not to collect the site for model training.
+#
+# robots.txt is a request, not a lock: well-behaved bots follow it. Bots that
+# ignore it are blocked by the Vercel Firewall rules described in SECURITY.md.
+
+# --- AI training crawlers: not allowed -------------------------------------
+User-agent: GPTBot
+User-agent: ClaudeBot
+User-agent: anthropic-ai
+User-agent: CCBot
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: Meta-ExternalAgent
+User-agent: FacebookBot
+User-agent: Bytespider
+User-agent: cohere-training-data-crawler
+User-agent: Diffbot
+User-agent: ImagesiftBot
+User-agent: Omgilibot
+User-agent: Timpibot
+User-agent: PanguBot
+Disallow: /
+
+# --- AI search and assistant fetchers: allowed ------------------------------
+# (They fetch pages to answer a person's question or build a search index,
+# and say they don't use them to train models.)
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: DuckAssistBot
+Allow: /
+Disallow: /api/internal/
+
+# --- Everyone else (Googlebot, Bingbot, link previews, …) -------------------
 User-agent: *
 Allow: /
+# Trap: nothing lives here. Any bot that fetches it has ignored this file and
+# is blocked at the firewall (Vercel custom rule "Trap and scanner paths").
+Disallow: /api/internal/
 
 Sitemap: https://maydarwedumpling.com/sitemap.xml

@@ -2,12 +2,18 @@ import { useTranslation } from 'react-i18next';
 import { m } from 'framer-motion';
 import { Phone } from 'lucide-react';
 import { PRIMARY_PHONE, telHref } from '../../constants/site';
-import { fadeUp, stagger } from '../../lib/motion';
+import { REVEAL_VIEWPORT, fadeUp, stagger } from '../../lib/motion';
 import Button from '../ui/Button';
 
 const CLOUD = 'https://res.cloudinary.com/dhlhzmmtt/image/upload';
 
-/** Same photos, delivered smaller than the original uploads. */
+/**
+ * Same photos, delivered smaller than the original uploads.
+ * @param {string} version Cloudinary version segment, e.g. 'v1790427356'.
+ * @param {string} id Public id with extension.
+ * @param {number} width Maximum width in px.
+ * @returns {string}
+ */
 const photo = (version, id, width) => `${CLOUD}/f_auto,q_auto,c_limit,w_${width}/${version}/${id}`;
 
 /**
@@ -73,7 +79,7 @@ export default function SpecialOrders() {
         variants={stagger(0.16, 0.04)}
         initial="hidden"
         whileInView="show"
-        viewport={{ once: true, amount: 0.18 }}
+        viewport={REVEAL_VIEWPORT}
       >
         <m.div variants={fadeUp(24)} className="max-w-xl lg:col-span-4">
           <span aria-hidden="true" className="mb-6 block h-px w-16 bg-secondary-500" />

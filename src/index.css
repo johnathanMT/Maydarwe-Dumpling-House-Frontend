@@ -81,21 +81,57 @@
     scrollbar-width: none;
   }
 
+  /*
+   * Looping CSS animations inside a .loop-paused element stop where they are.
+   * Components add it while they are off screen (see LOOP_VIEWPORT in
+   * src/lib/motion.js), so nothing animates where nobody can see it.
+   */
+  .loop-paused,
+  .loop-paused * {
+    animation-play-state: paused !important;
+  }
+
   /* A thin gold line that fades out at both ends. */
   .gold-rule {
     @apply h-px bg-gradient-to-r from-transparent via-secondary-500/70 to-transparent;
   }
 
   /*
-   * Desktop parallax for section photos. background-attachment: fixed is
-   * broken on iOS, so phones and tablets keep a normal scrolling image.
+   * Parallax photo band (home "house favourites").
+   * The photo is a layer 30% taller than the band that drifts as the band
+   * crosses the screen. It uses a CSS scroll-driven animation on `transform`,
+   * so the browser moves it on the GPU with no JavaScript and no repaint.
+   * (The old background-attachment: fixed repainted the whole band on every
+   * scroll frame.) Browsers without scroll-driven animations, touch devices
+   * and reduced-motion visitors get a still photo.
    */
-  @media (min-width: 768px) and (hover: hover) and (pointer: fine) {
-    .bg-parallax {
-      background-attachment: fixed;
+  .parallax-band {
+    view-timeline: --parallax-band block;
+  }
+  .parallax-layer {
+    position: absolute;
+    inset: -15% 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  @media (min-width: 768px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .parallax-layer {
+        animation: parallax-drift linear both;
+        animation-timeline: --parallax-band;
+        animation-range: cover 0% cover 100%;
+      }
     }
   }
-
+  @keyframes parallax-drift {
+    from {
+      transform: translate3d(0, -10%, 0);
+    }
+    to {
+      transform: translate3d(0, 10%, 0);
+    }
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

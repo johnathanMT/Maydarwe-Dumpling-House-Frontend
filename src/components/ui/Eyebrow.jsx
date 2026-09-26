@@ -1,6 +1,12 @@
 /**
  * Small red label above a heading ("HOUSE FAVORITES").
  * tone="dark" for ink (black) backgrounds such as the footer. `rule` adds a short line before it.
+ * @param {object} props
+ * @param {import('react').ReactNode} [props.children]
+ * @param {'light' | 'dark'} [props.tone]
+ * @param {boolean} [props.rule]
+ * @param {string} [props.className]
+ * @param {'p' | 'span' | 'div'} [props.as]
  */
 export default function Eyebrow({ children, tone = 'light', rule = false, className = '', as: Tag = 'p' }) {
   const color = tone === 'dark' ? 'text-butter' : 'text-primary-600';

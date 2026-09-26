@@ -10,7 +10,7 @@ import Button from '../ui/Button';
 import OptimizedImage from '../ui/OptimizedImage';
 import DumplingMascot from '../mascot/DumplingMascot';
 import OrderRedirectActions from '../order/OrderRedirectActions';
-import { PHOTOS } from '../../assets/photos';
+import { photoFor } from '../../assets/photos';
 import { formatPrice, pickLocale } from '../../data/menu';
 
 export default function CartDrawer() {
@@ -49,13 +49,14 @@ export default function CartDrawer() {
           <ul data-lenis-prevent className="flex-1 space-y-4 overflow-y-auto px-5 py-5">
             {lines.map((line) => {
               const name = pickLocale(line.name, language);
+              const photo = photoFor(line.photo);
               return (
                 <li key={line.id} className="rounded-2xl border border-ink-100 p-4">
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex min-w-0 items-start gap-3">
-                      {PHOTOS[line.photo] ? (
+                      {photo ? (
                         <OptimizedImage
-                          image={PHOTOS[line.photo]}
+                          image={photo}
                           alt=""
                           sizes="56px"
                           className="h-14 w-14 shrink-0 rounded-xl object-cover"

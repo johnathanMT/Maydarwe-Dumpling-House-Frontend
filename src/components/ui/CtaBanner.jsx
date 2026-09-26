@@ -4,6 +4,12 @@ import { Reveal } from './Reveal';
 /**
  * Red call-to-action panel used at the foot of Home and Contact.
  * Put <Button variant="light"> / <Button variant="ghostLight"> in `children`.
+ * @param {object} props
+ * @param {import('react').ReactNode} [props.eyebrow]
+ * @param {import('react').ReactNode} props.title
+ * @param {import('react').ReactNode} [props.body]
+ * @param {import('react').ReactNode} [props.children]
+ * @param {string} [props.className]
  */
 export default function CtaBanner({ eyebrow, title, body, children, className = '' }) {
   return (

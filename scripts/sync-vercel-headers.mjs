@@ -10,6 +10,7 @@ import { CACHE_RULES, PRODUCTION_HEADERS } from '../src/lib/securityHeaders.js';
 
 const file = new URL('../vercel.json', import.meta.url);
 const current = readFileSync(file, 'utf8');
+/** @type {Record<string, unknown>} */
 const config = JSON.parse(current);
 
 config.headers = [

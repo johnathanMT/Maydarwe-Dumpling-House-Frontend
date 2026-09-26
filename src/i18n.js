@@ -39,5 +39,3 @@ i18n
       document.documentElement.lang = sanitizeLanguage(i18n.resolvedLanguage);
     }
   );
-
-export default i18n;

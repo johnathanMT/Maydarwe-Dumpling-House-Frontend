@@ -24,7 +24,7 @@ export const PLUSH_COLORS = {
 };
 
 /** Tight square framing around the body alone. */
-export const PLUSH_VIEWBOX = '10 23 100 100';
+const PLUSH_VIEWBOX = '10 23 100 100';
 /** Square framing with room above the body for an accessory. */
 export const PLUSH_VIEWBOX_ROOMY = '4 4 112 112';
 
@@ -40,6 +40,9 @@ function usePlushIds() {
  * `strokeWidth` is in viewBox units: thicker for small icons, thinner for big art.
  * `groundShadow` draws the warm drop shadow under the body; pass false when the
  * caller animates its own shadow.
+ * @param {object} props
+ * @param {number} [props.strokeWidth]
+ * @param {boolean} [props.groundShadow]
  */
 export function PlushBody({ strokeWidth = 2.2, groundShadow = true }) {
   const ids = usePlushIds();
@@ -87,6 +90,12 @@ export function PlushBody({ strokeWidth = 2.2, groundShadow = true }) {
 /**
  * Static mascot. `children` are extra SVG elements drawn on top (steam, a hat…);
  * use PLUSH_VIEWBOX_ROOMY when they sit above the body.
+ * @param {object} props
+ * @param {string} [props.className]
+ * @param {string} [props.viewBox]
+ * @param {number} [props.strokeWidth] See PlushBody.
+ * @param {boolean} [props.groundShadow] See PlushBody.
+ * @param {import('react').ReactNode} [props.children] Extra SVG elements drawn on top.
  */
 export default function DumplingPlush({
   className = 'h-7 w-7',

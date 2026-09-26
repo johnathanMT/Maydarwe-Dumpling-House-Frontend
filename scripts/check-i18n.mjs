@@ -10,20 +10,36 @@ import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 
 const root = new URL('..', import.meta.url).pathname;
+/**
+ * Parsed translation file for one language.
+ * @param {string} lang
+ * @returns {object}
+ */
 const load = (lang) => JSON.parse(readFileSync(join(root, `src/locales/${lang}/translation.json`), 'utf8'));
 
+/**
+ * Dotted key paths of every leaf string, e.g. 'nav.home'.
+ * @param {object} obj
+ * @param {string} [prefix]
+ * @returns {string[]}
+ */
 const flatten = (obj, prefix = '') =>
   Object.entries(obj).flatMap(([key, value]) =>
     value && typeof value === 'object' ? flatten(value, `${prefix}${key}.`) : [`${prefix}${key}`]
   );
 
 const PLURAL = /_(zero|one|two|few|many|other)$/;
+/** @param {string} key Key without its plural suffix. */
 const base = (key) => key.replace(PLURAL, '');
 
 const en = new Set(flatten(load('en')).map(base));
 const my = new Set(flatten(load('my')).map(base));
 
 let failed = false;
+/**
+ * @param {string} label
+ * @param {string[]} keys
+ */
 const report = (label, keys) => {
   if (keys.length === 0) return;
   failed = true;
@@ -37,6 +53,11 @@ report('Keys missing in en/translation.json', [...my].filter((k) => !en.has(k)))
 const NAMESPACES = [...new Set([...en].map((k) => k.split('.')[0]))];
 const KEY_LITERAL = new RegExp(`['"\`]((?:${NAMESPACES.join('|')})\\.[A-Za-z0-9_.]+)['"\`]`, 'g');
 
+/**
+ * Source files under `dir` (locales excluded).
+ * @param {string} dir
+ * @returns {string[]}
+ */
 const walk = (dir) =>
   readdirSync(dir).flatMap((name) => {
     const path = join(dir, name);
@@ -44,6 +65,7 @@ const walk = (dir) =>
     return /\.(jsx?|mjs)$/.test(name) ? [path] : [];
   });
 
+/** @type {Set<string>} */
 const used = new Set();
 for (const file of walk(join(root, 'src'))) {
   for (const [, key] of readFileSync(file, 'utf8').matchAll(KEY_LITERAL)) used.add(base(key));

@@ -36,6 +36,7 @@ const router = createBrowserRouter([
   },
 ]);
 
+/** Root component: motion defaults, UI and cart providers, and the router. */
 export default function App() {
   return (
     // reducedMotion="user": visitors who ask their OS for less motion get fades only, no movement.

@@ -3,6 +3,11 @@ import { SUPPORTED_LANGUAGES } from '../../constants/site';
 import { sanitizeLanguage } from '../../lib/sanitize';
 import { useLang } from '../../lib/businessHours';
 
+/**
+ * EN / MM switch, styled as a two-option radio group.
+ * @param {object} props
+ * @param {string} [props.className]
+ */
 export default function LanguageToggle({ className = '' }) {
   const { t, i18n } = useTranslation();
   const current = useLang();

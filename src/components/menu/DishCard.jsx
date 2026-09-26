@@ -1,36 +1,45 @@
-import { memo } from 'react';
+import { memo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { m } from 'framer-motion';
+import { useInView } from 'framer-motion';
 import { Check, Plus, Utensils } from 'lucide-react';
 import DishPhoto from './DishPhoto';
 import { MEAT_TYPES } from './meatIcons';
 import { formatPrice, pickLocale } from '../../data/menu';
+import { LOOP_VIEWPORT } from '../../lib/motion';
+
+/** @import { Language, Localized, MeatType, MenuItem } from '../../types' */
 
 /**
  * Frosted-glass badge in the photo's top-right corner showing the dish's main
  * meat, with a slow, continuous float. Screen readers hear the meat's name.
+ *
+ * The float is a CSS keyframe on `transform`, so the browser runs it on the
+ * compositor (GPU) instead of JavaScript every frame, and it pauses whenever
+ * the card is off screen. `will-change` is only set while it is running.
+ * @param {object} props
+ * @param {MeatType | null} props.type Null when the dish has no single main meat (no badge).
  */
 function MeatBadge({ type }) {
   const { t } = useTranslation();
-  const meat = MEAT_TYPES[type];
+  /** @type {import('react').RefObject<HTMLSpanElement | null>} */
+  const ref = useRef(null);
+  const onScreen = useInView(ref, LOOP_VIEWPORT);
+  const meat = type ? MEAT_TYPES[type] : null;
   if (!meat) return null;
   const { Icon, color, labelKey } = meat;
   const label = t(labelKey);
 
   return (
     <span
+      ref={ref}
       role="img"
       aria-label={label}
       title={label}
       className="absolute right-3 top-3 z-10 flex items-center justify-center rounded-full bg-white/80 p-2 shadow-sm ring-1 ring-white/60 backdrop-blur-md"
     >
-      <m.span
-        className={`block ${color}`}
-        animate={{ y: [0, -4, 0] }}
-        transition={{ repeat: Infinity, duration: 3, ease: 'easeInOut' }}
-      >
+      <span className={`block animate-bob ${color} ${onScreen ? 'will-change-transform' : 'loop-paused'}`}>
         <Icon className="h-6 w-6" />
-      </m.span>
+      </span>
     </span>
   );
 }
@@ -38,6 +47,11 @@ function MeatBadge({ type }) {
 /**
  * One dish, used on the home page (house favourites) and the menu.
  * Memoised: with a stable `onAdd`, adding one dish re-renders only that card.
+ * @param {object} props
+ * @param {MenuItem & { note?: Localized }} props.item A few dishes carry an extra note (e.g. an optional add-on).
+ * @param {Language} props.language
+ * @param {boolean} [props.added] True for a moment after the dish was added to the cart.
+ * @param {(item: MenuItem) => void} props.onAdd
  */
 function DishCard({ item, language, added = false, onAdd }) {
   const { t } = useTranslation();

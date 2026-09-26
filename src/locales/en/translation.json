@@ -42,13 +42,11 @@
     "browse": "Browse the menu",
     "subtotal": "Subtotal",
     "note": "This list is for ordering. Send it on Messenger, or open Grab or foodpanda.",
-    "call": "Call to order",
     "close": "Close cart",
     "remove": "Remove",
     "clear": "Clear all",
     "increase": "Increase quantity",
     "decrease": "Decrease quantity",
-    "moreWays": "Other ways to order",
     "messenger": "Order via Messenger",
     "messengerBody": "Hello, I would like to order the following — [{{items}}]",
     "messengerEmpty": "Hello, I would like to place an order.",
@@ -145,10 +143,7 @@
       "order2": "Call either kitchen number and confirm what you want.",
       "order3": "Pick up when it is ready, or eat in if we have space.",
       "addressTitle": "Address",
-      "directions": "Get directions",
       "viewOnMaps": "View on Google Maps",
-      "mapShow": "Show map",
-      "mapNote": "Loads Google Maps",
       "mapTitle": "Map to {{name}}"
     }
   },
@@ -160,13 +155,8 @@
   "order": {
     "kicker": "Order",
     "title": "How would you like to order?",
-    "callTitle": "Call the kitchen",
-    "callSub": "Fastest for pickup and eat-in",
-    "altPhone": "Or call {{phone}}",
-    "deliveryTitle": "Delivery",
     "grab": "Order on Grab",
     "foodpanda": "Order on foodpanda",
-    "facebook": "Message us on Facebook",
     "newTab": "opens in a new tab",
     "close": "Close"
   },

@@ -8,8 +8,13 @@ const WINDOW_MS = 30_000;
 
 const CHUNK_ERROR = /Failed to fetch dynamically imported module|Importing a module script failed|error loading dynamically imported module|Unable to preload CSS/i;
 
+/**
+ * @param {unknown} error
+ * @returns {boolean}
+ */
 export function isChunkLoadError(error) {
-  return CHUNK_ERROR.test(String(error?.message ?? error ?? ''));
+  const message = error instanceof Error ? error.message : error;
+  return CHUNK_ERROR.test(String(message ?? ''));
 }
 
 /** Reloads once per 30 s. Returns true if a reload was triggered. */

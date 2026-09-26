@@ -1,7 +1,10 @@
 import OptimizedImage from '../ui/OptimizedImage';
-import { PHOTOS } from '../../assets/photos';
+import { photoFor } from '../../assets/photos';
 import { CATEGORY_ICONS } from './categoryIcons';
 
+/** @import { CategoryId, MenuItem } from '../../types' */
+
+/** @type {Record<CategoryId, string>} */
 const FALLBACK_WASH = {
   mala: 'from-secondary-700 via-primary-800 to-ink-950',
   noodles: 'from-ink-800 via-ink-900 to-ink-950',
@@ -11,10 +14,18 @@ const FALLBACK_WASH = {
 // Card widths: 1 column on phones, 2 from `sm`, 3 from `lg` (max container 1280px).
 const CARD_SIZES = '(min-width: 1280px) 384px, (min-width: 1024px) 31vw, (min-width: 640px) 46vw, 92vw';
 
+/**
+ * Square dish photo; a branded gradient with the category icon when the dish has no photo yet.
+ * Greyed out when the dish is out of stock.
+ * @param {object} props
+ * @param {MenuItem} props.item
+ * @param {string} props.alt
+ * @param {string} [props.className]
+ */
 export default function DishPhoto({ item, alt, className = '' }) {
   const wash = FALLBACK_WASH[item.category] ?? FALLBACK_WASH.dumplings;
   const Icon = CATEGORY_ICONS[item.category] ?? CATEGORY_ICONS.dumplings;
-  const photo = PHOTOS[item.photo];
+  const photo = photoFor(item.photo);
 
   return (
     <div className={`relative aspect-square overflow-hidden bg-ivory ${item.inStock ? '' : 'grayscale'} ${className}`}>

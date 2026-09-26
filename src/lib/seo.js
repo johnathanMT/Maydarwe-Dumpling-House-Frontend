@@ -3,6 +3,12 @@ import { useTranslation } from 'react-i18next';
 import { PRIMARY_PHONE, SITE_URL } from '../constants/site';
 import { useBusinessCopy } from './businessHours';
 
+/**
+ * The first <head> element matching `selector`, created and appended if missing.
+ * @param {string} selector
+ * @param {() => Element} create
+ * @returns {Element}
+ */
 function upsertHeadTag(selector, create) {
   let el = document.head.querySelector(selector);
   if (!el) {
@@ -20,7 +26,7 @@ function upsertHeadTag(selector, create) {
  * reads the updated tags, so /menu is indexed as /menu, not as a copy of /.
  *
  * @param {string} pageKey   key under `meta.*` in the translation files
- * @param {object} options
+ * @param {object} [options]
  * @param {string} [options.path]  canonical path, e.g. '/menu'. Omit to skip canonical.
  * @param {boolean} [options.noindex]  mark the page as not indexable (404)
  */
@@ -56,6 +62,7 @@ export function usePageMeta(pageKey, { path, noindex = false } = {}) {
       canonical.remove();
     }
 
+    /** @type {HTMLMetaElement | null} */
     let robots = null;
     if (noindex) {
       robots = document.createElement('meta');

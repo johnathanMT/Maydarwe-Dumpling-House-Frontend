@@ -6,9 +6,6 @@ export default {
   theme: {
     extend: {
       colors: {
-        brand: {
-          pearl: '#FDFAF6',
-        },
         // Ivory — the warm off-white base of every page
         ivory: '#FDFAF6',
         // Butter — the soft yellow of the logo, used for friendly surfaces and highlights
@@ -68,7 +65,6 @@ export default {
         partner: {
           grab: '#00B14F',
           foodpanda: '#D70F64',
-          facebook: '#1877F2',
         },
       },
       fontFamily: {
@@ -112,6 +108,10 @@ export default {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(-6px)' },
         },
+        bob: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-4px)' },
+        },
         steam: {
           '0%': { opacity: '0', transform: 'translateY(8px) scaleY(0.9)' },
           '35%': { opacity: '0.75' },
@@ -125,6 +125,7 @@ export default {
         'fade-down': 'fade-down 0.6s cubic-bezier(0.22, 1, 0.36, 1) both',
         steam: 'steam 3.2s ease-in-out infinite',
         float: 'float 3.6s ease-in-out infinite',
+        bob: 'bob 3s ease-in-out infinite',
       },
     },
   },

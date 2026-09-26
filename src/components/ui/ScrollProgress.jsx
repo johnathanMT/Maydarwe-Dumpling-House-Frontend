@@ -1,29 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useScrollProgress } from '../../hooks/useScroll';
 import { useTranslation } from 'react-i18next';
 
+/** Thin gold bar across the top of the page showing how far you have scrolled (desktop). */
 export default function ScrollProgress() {
   const { t } = useTranslation();
-  const [progress, setProgress] = useState(0);
-
-  useEffect(() => {
-    let frame = 0;
-    const onScroll = () => {
-      if (frame) return;
-      frame = window.requestAnimationFrame(() => {
-        frame = 0;
-        const doc = document.documentElement;
-        const max = doc.scrollHeight - doc.clientHeight;
-        const next = max > 0 ? doc.scrollTop / max : 0;
-        setProgress((prev) => (Math.abs(prev - next) < 0.002 ? prev : next));
-      });
-    };
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-      if (frame) window.cancelAnimationFrame(frame);
-    };
-  }, []);
+  const progress = useScrollProgress();
 
   return (
     <div

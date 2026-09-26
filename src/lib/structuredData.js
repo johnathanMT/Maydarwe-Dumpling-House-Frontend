@@ -11,8 +11,17 @@ import { CATEGORIES, MENU_ITEMS } from '../data/menu.js';
 
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
+/**
+ * 25000 → "25,000".
+ * @param {number} n
+ * @returns {string}
+ */
 const grouped = (n) => new Intl.NumberFormat('en-US').format(n);
 
+/**
+ * The schema.org Restaurant object (with its Menu) for the whole site.
+ * @returns {Record<string, unknown>}
+ */
 export function restaurantJsonLd() {
   const prices = MENU_ITEMS.map((item) => item.price);
   const { address } = BUSINESS;
@@ -69,7 +78,11 @@ export function restaurantJsonLd() {
   };
 }
 
-/** Serialise for an inline <script type="application/ld+json"> (no "</script>" breakout). */
+/**
+ * Serialise for an inline <script type="application/ld+json"> (no "</script>" breakout).
+ * @param {unknown} data
+ * @returns {string}
+ */
 export function jsonLdScriptContent(data) {
   return JSON.stringify(data).replace(/</g, '\\u003c');
 }

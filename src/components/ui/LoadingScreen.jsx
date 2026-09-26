@@ -3,34 +3,53 @@ import { useTranslation } from 'react-i18next';
 import { m, useReducedMotion } from 'framer-motion';
 import DumplingPlush from '../mascot/DumplingPlush';
 import { EASE_OUT } from '../../lib/motion';
-import { useScrollLock } from './Sheet';
+import { useScrollLock } from '../../hooks/useScrollLock';
+import { markIntroSeen } from '../../lib/introSession';
+
+/** Keep the curtain long enough to read as intentional, never long enough to annoy. */
+const MIN_MS = 500;
+const MAX_MS = 1500;
 
 /**
- * First-paint curtain: the plush dumpling holds the ivory screen for a
- * moment, then the curtain fades and the site is there underneath.
+ * First-load curtain: the plush dumpling holds the ivory screen while the page
+ * mounts underneath, then fades away. It leaves as soon as `appReady` is true
+ * (page mounted and fonts loaded) after at least MIN_MS, and never later than
+ * MAX_MS even on a slow connection. Layout shows it only once per session.
+ * @param {object} props
+ * @param {boolean} [props.appReady] Page mounted and fonts loaded.
+ * @param {() => void} [props.onDone] Called once the curtain has fully gone.
  */
-export default function LoadingScreen({ onDone }) {
+export default function LoadingScreen({ appReady = false, onDone }) {
   const { t } = useTranslation();
   const reduceMotion = useReducedMotion();
-  const fade = reduceMotion ? 0.01 : 0.75;
-  const [phase, setPhase] = useState('show');
-  useScrollLock(phase !== 'done');
+  const fade = reduceMotion ? 0.01 : 0.45;
+  const [minElapsed, setMinElapsed] = useState(false);
+  const [timedOut, setTimedOut] = useState(false);
+  const [done, setDone] = useState(false);
+  const exiting = (minElapsed && appReady) || timedOut;
+  const phase = done ? 'done' : exiting ? 'exit' : 'show';
+  useScrollLock(!done);
 
   useEffect(() => {
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const timer = window.setTimeout(() => setPhase('exit'), reduce ? 400 : 1800);
-    return () => window.clearTimeout(timer);
-  }, []);
+    const min = window.setTimeout(() => setMinElapsed(true), reduceMotion ? 150 : MIN_MS);
+    const max = window.setTimeout(() => setTimedOut(true), MAX_MS);
+    return () => {
+      window.clearTimeout(min);
+      window.clearTimeout(max);
+    };
+  }, [reduceMotion]);
 
   useEffect(() => {
-    if (phase !== 'exit') return undefined;
-    const backup = window.setTimeout(() => setPhase('done'), fade * 1000 + 200);
+    if (!exiting) return undefined;
+    markIntroSeen();
+    // Backup in case the fade's completion event never fires (e.g. a hidden tab).
+    const backup = window.setTimeout(() => setDone(true), fade * 1000 + 200);
     return () => window.clearTimeout(backup);
-  }, [phase, fade]);
+  }, [exiting, fade]);
 
   useEffect(() => {
-    if (phase === 'done') onDone?.();
-  }, [phase, onDone]);
+    if (done) onDone?.();
+  }, [done, onDone]);
 
   if (phase === 'done') return null;
 
@@ -44,7 +63,7 @@ export default function LoadingScreen({ onDone }) {
       animate={{ opacity: phase === 'exit' ? 0 : 1 }}
       transition={{ duration: phase === 'exit' ? fade : 0, ease: EASE_OUT }}
       onAnimationComplete={() => {
-        if (phase === 'exit') setPhase('done');
+        if (phase === 'exit') setDone(true);
       }}
     >
       <span className="sr-only">{t('ui.loading')}</span>
@@ -54,6 +73,7 @@ export default function LoadingScreen({ onDone }) {
       />
       <div aria-hidden="true" className="relative flex flex-col items-center">
         <m.div
+          className="will-change-transform"
           animate={{ scale: [1, 1.06, 1] }}
           transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
         >

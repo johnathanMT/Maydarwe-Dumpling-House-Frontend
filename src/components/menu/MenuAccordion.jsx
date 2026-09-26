@@ -11,19 +11,19 @@ const GLASS =
  */
 export default function MenuAccordion() {
   const { t } = useTranslation();
-  const [active, setActive] = useState(null);
+  const [active, setActive] = useState(/** @type {number | null} */ (null));
 
   return (
     <ul
       aria-label={t('pages.menu.galleryLabel')}
-      className="flex h-[60vh] w-full gap-1 bg-ink-950"
+      className="flex h-[60vh] w-full gap-1 bg-ink-950 [contain:layout_paint]"
     >
       {MENU_GALLERY.map((dish, index) => {
         const open = active === index;
         return (
           <li
             key={dish.src}
-            className={`group min-w-0 flex-1 transition-all duration-500 ease-in-out hover:flex-[4] ${open ? 'flex-[4]' : ''}`}
+            className={`group min-w-0 flex-1 transition-[flex-grow] duration-500 ease-in-out hover:flex-[4] ${open ? 'flex-[4]' : ''}`}
           >
             <button
               type="button"
@@ -34,9 +34,10 @@ export default function MenuAccordion() {
             >
               <img
                 src={dish.src}
+                srcSet={dish.srcSet}
                 alt=""
                 className="absolute inset-0 h-full w-full object-cover"
-                sizes="(min-width: 1024px) 40vw, 80vw"
+                sizes="(min-width: 1024px) 50vw, 60vh"
                 loading={index < 2 ? 'eager' : 'lazy'}
                 decoding="async"
               />

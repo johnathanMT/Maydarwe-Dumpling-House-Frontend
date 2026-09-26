@@ -1,21 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useScrolledPast } from '../../hooks/useScroll';
 import { useTranslation } from 'react-i18next';
 import { ArrowUp } from 'lucide-react';
 import { scrollToTop } from '../../lib/lenisControl';
 
+/** Round "back to top" button that appears once the page is scrolled a little way down. */
 export default function BackToTop() {
   const { t } = useTranslation();
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => {
-      const next = window.scrollY > 420;
-      setVisible((prev) => (prev === next ? prev : next));
-    };
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+  const visible = useScrolledPast(420);
 
   return (
     <button

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useScrolledPast } from '../../hooks/useScroll';
 import { NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ShoppingBag } from 'lucide-react';
@@ -10,6 +10,11 @@ import BrandLogo from '../ui/BrandLogo';
 import LanguageToggle from '../ui/LanguageToggle';
 import MagneticWrapper from '../ui/MagneticWrapper';
 
+/**
+ * NavLink class for the desktop links.
+ * @param {{ isActive: boolean }} state
+ * @returns {string}
+ */
 const desktopLinkClass = ({ isActive }) =>
   [
     'relative whitespace-nowrap py-2 text-sm font-medium transition-colors lg:text-[0.95rem]',
@@ -55,14 +60,7 @@ function CartButton() {
 export default function Navbar() {
   const { t } = useTranslation();
   const { openOrder } = useUiActions();
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > 8);
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+  const isScrolled = useScrolledPast(8);
 
   return (
     <header

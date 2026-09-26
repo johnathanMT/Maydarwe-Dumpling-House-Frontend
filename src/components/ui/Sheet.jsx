@@ -1,48 +1,8 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { X } from 'lucide-react';
-import { pauseLenis, resumeLenis } from '../../lib/lenisControl';
-
-/* ---------- scroll lock (shared, counted, so overlays never fight) ---------- */
-
-let lockCount = 0;
-let savedOverflow = '';
-
-function lockScroll() {
-  if (lockCount === 0) {
-    savedOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    pauseLenis();
-  }
-  lockCount += 1;
-}
-
-function unlockScroll() {
-  lockCount = Math.max(0, lockCount - 1);
-  if (lockCount === 0) {
-    document.body.style.overflow = savedOverflow;
-    resumeLenis();
-  }
-}
-
-export function useScrollLock(active) {
-  useEffect(() => {
-    if (!active) return undefined;
-    lockScroll();
-    return unlockScroll;
-  }, [active]);
-}
-
-/* ---------- focus management ---------- */
-
-const FOCUSABLE =
-  'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), iframe, [tabindex]:not([tabindex="-1"])';
-
-function focusables(root) {
-  return Array.from(root.querySelectorAll(FOCUSABLE)).filter(
-    (el) => !el.hasAttribute('inert') && el.getClientRects().length > 0
-  );
-}
+import { useScrollLock } from '../../hooks/useScrollLock';
+import { useFocusTrap } from '../../hooks/useFocusTrap';
 
 /**
  * Accessible modal panel: slides in from the right ("drawer") or up from
@@ -52,7 +12,17 @@ function focusables(root) {
  * - On open: focus moves into the panel and is trapped there.
  * - Escape, the backdrop and the close button all call `onClose`.
  * - On close: focus returns to whatever opened it.
- * - Scroll lock is shared with every other Sheet.
+ * - Scroll lock is shared with every other Sheet (hooks/useScrollLock).
+ *
+ * @param {object} props
+ * @param {boolean} props.open
+ * @param {() => void} props.onClose
+ * @param {string} [props.labelledBy] id of the panel's heading.
+ * @param {string} [props.describedBy] id of the panel's description.
+ * @param {'drawer' | 'sheet'} [props.variant]
+ * @param {import('react').RefObject<HTMLElement | null>} [props.initialFocusRef]
+ * @param {string} [props.className]
+ * @param {import('react').ReactNode} props.children
  */
 export default function Sheet({
   open,
@@ -64,54 +34,11 @@ export default function Sheet({
   className = '',
   children,
 }) {
+  /** @type {import('react').RefObject<HTMLDivElement | null>} */
   const panelRef = useRef(null);
-  const returnFocusRef = useRef(null);
 
   useScrollLock(open);
-
-  useEffect(() => {
-    if (!open) return undefined;
-    const panel = panelRef.current;
-    returnFocusRef.current = document.activeElement;
-
-    const target = initialFocusRef?.current ?? focusables(panel)[0] ?? panel;
-    // Wait one frame so the panel is visible (not `inert`) before focusing.
-    const frame = window.requestAnimationFrame(() => target.focus({ preventScroll: true }));
-
-    const onKeyDown = (event) => {
-      if (event.key === 'Escape') {
-        event.stopPropagation();
-        onClose();
-        return;
-      }
-      if (event.key !== 'Tab') return;
-      const items = focusables(panel);
-      if (items.length === 0) {
-        event.preventDefault();
-        panel.focus();
-        return;
-      }
-      const first = items[0];
-      const last = items[items.length - 1];
-      if (event.shiftKey && (document.activeElement === first || document.activeElement === panel)) {
-        event.preventDefault();
-        last.focus();
-      } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault();
-        first.focus();
-      }
-    };
-
-    document.addEventListener('keydown', onKeyDown);
-    return () => {
-      window.cancelAnimationFrame(frame);
-      document.removeEventListener('keydown', onKeyDown);
-      const back = returnFocusRef.current;
-      if (back && typeof back.focus === 'function' && document.contains(back)) {
-        back.focus({ preventScroll: true });
-      }
-    };
-  }, [open, onClose, initialFocusRef]);
+  useFocusTrap(panelRef, { active: open, onEscape: onClose, initialFocusRef });
 
   const isDrawer = variant === 'drawer';
 
@@ -156,7 +83,10 @@ export default function Sheet({
   );
 }
 
-/** Round close button used in every Sheet header. */
+/**
+ * Round close button used in every Sheet header.
+ * @param {{ onClick: () => void, label?: string }} props
+ */
 export function SheetCloseButton({ onClick, label }) {
   const { t } = useTranslation();
   return (

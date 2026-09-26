@@ -4,18 +4,23 @@ import { AnimatePresence, m } from 'framer-motion';
 import { useCartActions } from '../context/CartContext';
 import { useLang } from '../lib/businessHours';
 import { usePageMeta } from '../lib/seo';
-import { DURATION, EASE_OUT, fadeUp, stagger } from '../lib/motion';
+import { DURATION } from '../lib/motion';
 import { useAddedFlash } from '../hooks/useAddedFlash';
 import PageHeader from '../components/ui/PageHeader';
 import { Reveal } from '../components/ui/Reveal';
-import DishCard from '../components/menu/DishCard';
+import MenuGrid from '../components/menu/MenuGrid';
+import MenuFilterBar from '../components/menu/MenuFilterBar';
 import SpecialOrders from '../components/menu/SpecialOrders';
 import MenuAccordion from '../components/menu/MenuAccordion';
 import { CATEGORIES, MENU_ITEMS, pickLocale } from '../data/menu';
 import { CATEGORY_ICONS } from '../components/menu/categoryIcons';
 
+/** @import { CategoryId, MenuItem } from '../types' */
+/** @import { MenuFilter, MenuFilterId } from '../components/menu/MenuFilterBar' */
+
 const CATEGORY_LIST = CATEGORIES.map((category) => ({ ...category, icon: CATEGORY_ICONS[category.id] }));
 
+/** @type {MenuFilter[]} */
 const FILTERS = [
   { id: 'all', labelKey: 'pages.menu.all' },
   { id: 'dumplings', labelKey: 'pages.menu.dumplings' },
@@ -23,35 +28,16 @@ const FILTERS = [
   { id: 'noodles', labelKey: 'pages.menu.noodles' },
 ];
 
-const ITEMS_BY_CATEGORY = Object.fromEntries(
-  CATEGORIES.map(({ id }) => [id, MENU_ITEMS.filter((item) => item.category === id)])
+/** Dishes per category, computed once. */
+const ITEMS_BY_CATEGORY = /** @type {Record<CategoryId, MenuItem[]>} */ (
+  Object.fromEntries(CATEGORIES.map(({ id }) => [id, MENU_ITEMS.filter((item) => item.category === id)]))
 );
-
-/** Sideways swipe on a phone; a grid from the md breakpoint up. */
-function MenuGrid({ items, language, addedId, onAdd }) {
-  return (
-    <m.ul
-      data-lenis-prevent
-      className="no-scrollbar -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain px-4 pb-6 md:mx-0 md:grid md:grid-cols-2 md:gap-6 md:overflow-visible md:px-0 lg:grid-cols-3 lg:gap-8"
-      variants={stagger(0.06)}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, amount: 0.1 }}
-    >
-      {items.map((item) => (
-        <m.li key={item.id} variants={fadeUp(14)} className="w-[85vw] shrink-0 snap-center sm:w-[70vw] md:w-auto md:shrink">
-          <DishCard item={item} language={language} added={addedId === item.id} onAdd={onAdd} />
-        </m.li>
-      ))}
-    </m.ul>
-  );
-}
 
 export default function Menu() {
   const { t } = useTranslation();
   const { addItem } = useCartActions();
   const language = useLang();
-  const [filter, setFilter] = useState('all');
+  const [filter, setFilter] = useState(/** @type {MenuFilterId} */ ('all'));
   const [addedId, onAdd] = useAddedFlash(addItem);
   usePageMeta('menu', { path: '/menu' });
 
@@ -65,43 +51,7 @@ export default function Menu() {
         <MenuAccordion />
       </Reveal>
 
-      <div className="sticky top-header z-30 border-b border-butter-200 bg-ivory/90 backdrop-blur-md">
-        <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
-          <div
-            role="group"
-            aria-label={t('pages.menu.filter')}
-            className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:px-0 [scrollbar-width:none]"
-          >
-            {FILTERS.map(({ id, labelKey }) => {
-              const active = filter === id;
-              return (
-                <button
-                  key={id}
-                  type="button"
-                  aria-pressed={active}
-                  onClick={() => setFilter(id)}
-                  className={`relative inline-flex min-h-12 shrink-0 items-center whitespace-nowrap rounded-full px-5 text-sm font-semibold transition-colors duration-200 ${
-                    active ? 'text-white' : 'bg-white text-ink-700 ring-1 ring-inset ring-butter-200 hover:bg-butter-50 hover:ring-butter-400 hover:text-ink-950'
-                  }`}
-                >
-                  {active ? (
-                    <m.span
-                      layoutId="menu-filter-pill"
-                      aria-hidden="true"
-                      className="absolute inset-0 rounded-full bg-primary-600 shadow-cta"
-                      transition={{ duration: 0.35, ease: EASE_OUT }}
-                    />
-                  ) : null}
-                  <span className="relative">{t(labelKey)}</span>
-                </button>
-              );
-            })}
-          </div>
-          <p className="text-sm text-ink-500" aria-live="polite">
-            {t('pages.menu.showing', { count: visibleCount })}
-          </p>
-        </div>
-      </div>
+      <MenuFilterBar filters={FILTERS} active={filter} onChange={setFilter} count={visibleCount} />
 
       <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 md:py-28 lg:px-8">
         <AnimatePresence mode="wait" initial={false}>

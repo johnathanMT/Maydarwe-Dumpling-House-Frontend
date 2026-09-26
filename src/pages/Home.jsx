@@ -32,10 +32,12 @@ export default function Home() {
       <HomeReel />
 
       {/* House favourites — photo band */}
-      <section
-        className="bg-parallax relative isolate bg-cover bg-center bg-no-repeat py-20 text-ivory md:py-32"
-        style={{ backgroundImage: `url('${FEATURED_SECTION_PHOTO}')` }}
-      >
+      <section className="parallax-band relative isolate overflow-hidden py-20 text-ivory md:py-32">
+        <div
+          aria-hidden="true"
+          className="parallax-layer z-0"
+          style={{ backgroundImage: `url('${FEATURED_SECTION_PHOTO}')` }}
+        />
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 z-0 bg-gradient-to-b from-primary-950/85 via-ink-950/72 to-ink-950/92"

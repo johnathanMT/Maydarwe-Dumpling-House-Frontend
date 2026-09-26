@@ -1,6 +1,11 @@
 import { useOpenStatus } from '../../lib/businessHours';
 
-/** "Open now · until 8:00 PM" / "Closed now · opens 9:00 AM", in the shop's time zone. */
+/**
+ * "Open now · until 8:00 PM" / "Closed now · opens 9:00 AM", in the shop's time zone.
+ * @param {object} props
+ * @param {string} [props.className]
+ * @param {'light' | 'dark'} [props.tone]
+ */
 export default function OpenStatusBadge({ className = '', tone = 'light' }) {
   const { isOpen, label } = useOpenStatus();
   const surface =

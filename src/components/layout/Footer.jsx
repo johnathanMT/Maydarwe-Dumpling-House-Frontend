@@ -6,6 +6,10 @@ import { Reveal } from '../ui/Reveal';
 import { BUSINESS, MAPS_URL, NAV_LINKS, telHref } from '../../constants/site';
 import { useBusinessCopy, useLang } from '../../lib/businessHours';
 
+/**
+ * @param {object} props
+ * @param {import('react').ReactNode} props.children
+ */
 function FooterHeading({ children }) {
   return <h2 className="font-display text-lg font-semibold text-white">{children}</h2>;
 }
@@ -21,7 +25,6 @@ export default function Footer() {
     <Reveal
       as="footer"
       distance={40}
-      viewport={{ once: true, amount: 0.15 }}
       className="bg-ink-950 text-ink-300"
     >
       <div aria-hidden="true" className="h-1 bg-gradient-to-r from-primary-700 via-primary-600 to-secondary-500" />

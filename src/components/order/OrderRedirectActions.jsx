@@ -7,6 +7,15 @@ import { useLang } from '../../lib/businessHours';
 import { formatOrderItems } from '../../lib/orderMessage';
 import Button from '../ui/Button';
 
+/** @import { CartLine, Language } from '../../types' */
+
+/**
+ * Pre-filled Messenger message for the current cart (a short greeting when it is empty).
+ * @param {import('i18next').TFunction} t
+ * @param {CartLine[]} lines
+ * @param {Language} language
+ * @returns {string}
+ */
 function messengerText(t, lines, language) {
   const items = formatOrderItems(lines, language);
   return items ? t('cart.messengerBody', { items }) : t('cart.messengerEmpty');
@@ -15,6 +24,8 @@ function messengerText(t, lines, language) {
 /**
  * Messenger (pre-filled cart text) plus Grab / foodpanda — shared by the
  * cart drawer and the header Order sheet so both stay identical.
+ * @param {object} props
+ * @param {string} [props.className]
  */
 export default function OrderRedirectActions({ className = '' }) {
   const { t } = useTranslation();

@@ -4,6 +4,12 @@ import Eyebrow from './Eyebrow';
  * Sunny header shared by Menu, About and Contact: butter yellow melting into ivory.
  * Plays a short CSS entrance (no JS needed, so it never delays first paint).
  * `sticker` is an optional small illustration shown at the right on wider screens.
+ * @param {object} props
+ * @param {import('react').ReactNode} props.kicker
+ * @param {import('react').ReactNode} props.title
+ * @param {import('react').ReactNode} [props.subtitle]
+ * @param {import('react').ReactNode} [props.sticker]
+ * @param {import('react').ReactNode} [props.children]
  */
 export default function PageHeader({ kicker, title, subtitle, sticker = null, children }) {
   return (

@@ -3,6 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { LOGO } from '../../assets/brand';
 import OptimizedImage from './OptimizedImage';
 
+/** @typedef {'nav' | 'footer' | 'mark'} BrandLogoSize */
+
+/** @type {Record<BrandLogoSize, string>} */
 const SIZE_CLASS = {
   nav: 'h-12 w-12 sm:h-16 sm:w-16',
   footer: 'h-24 w-24 sm:h-28 sm:w-28',
@@ -10,12 +13,19 @@ const SIZE_CLASS = {
 };
 
 // Rendered CSS width per size, so the browser fetches the smallest sharp file.
+/** @type {Record<BrandLogoSize, string>} */
 const SIZES = {
   nav: '(min-width: 640px) 64px, 48px',
   footer: '(min-width: 640px) 112px, 96px',
   mark: '40px',
 };
 
+/**
+ * The shop logo, linking home.
+ * @param {object} props
+ * @param {BrandLogoSize} [props.size]
+ * @param {string} [props.className]
+ */
 export default function BrandLogo({ size = 'nav', className = '' }) {
   const { t } = useTranslation();
 

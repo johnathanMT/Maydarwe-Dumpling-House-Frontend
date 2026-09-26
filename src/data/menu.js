@@ -8,6 +8,9 @@
  */
 import { toMyanmarDigits } from '../lib/digits.js';
 
+/** @import { Category, Language, Localized, MenuItem } from '../types' */
+
+/** @type {MenuItem[]} */
 export const MENU_ITEMS = [
   {
     id: 'chicken-pan-fried',
@@ -157,6 +160,7 @@ export const MENU_ITEMS = [
   },
 ];
 
+/** @type {Category[]} */
 export const CATEGORIES = [
   {
     id: 'dumplings',
@@ -177,13 +181,24 @@ export const CATEGORIES = [
 
 export const FEATURED_ITEMS = MENU_ITEMS.filter((item) => item.featured);
 
-/** 25000 → "Ks 25,000" (en) or "၂၅,၀၀၀ ကျပ်" (my). */
+/**
+ * 25000 → "Ks 25,000" (en) or "၂၅,၀၀၀ ကျပ်" (my).
+ * @param {number} amount In kyat.
+ * @param {Language} [language]
+ * @returns {string}
+ */
 export function formatPrice(amount, language = 'en') {
   const grouped = new Intl.NumberFormat('en-US').format(amount);
   if (language === 'my') return `${toMyanmarDigits(grouped)} ကျပ်`;
   return `Ks ${grouped}`;
 }
 
+/**
+ * The text for the current language.
+ * @param {Localized} value
+ * @param {Language} language
+ * @returns {string}
+ */
 export function pickLocale(value, language) {
   return language === 'my' ? value.my : value.en;
 }
