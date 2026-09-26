@@ -47,12 +47,20 @@ export const BUSINESS = {
     grab: 'https://app.grab.com/s/Tgdxro4N',
     foodpanda: 'https://foodpanda.go.link/lINRB',
     facebook: 'https://www.facebook.com/share/19MK2TSnJb/?mibextid=wwXIfr',
+    messengerPageId: 'maydarwedumpling',
   },
 };
 
 export const PRIMARY_PHONE = BUSINESS.phones[0];
 
 export const telHref = (phone) => `tel:${phone.e164}`;
+
+/** Messenger deep link with a pre-filled order: https://m.me/{pageId}?text=… */
+export function messengerOrderHref(text) {
+  const pageId = BUSINESS.links.messengerPageId.trim();
+  if (!pageId) return BUSINESS.links.facebook;
+  return `https://m.me/${encodeURIComponent(pageId)}?text=${encodeURIComponent(text)}`;
+}
 
 export const hasAddress = () => BUSINESS.address.en.trim().length > 0;
 

@@ -40,13 +40,20 @@
     "empty": "Your cart is empty.",
     "browse": "Browse the menu",
     "subtotal": "Subtotal",
-    "note": "Online checkout is coming soon. For now, please order by phone, Grab, foodpanda or Facebook.",
+    "note": "This list is for ordering. Send it on Messenger, or open Grab or foodpanda.",
     "call": "Call to order",
     "close": "Close cart",
     "remove": "Remove",
+    "clear": "Clear all",
     "increase": "Increase quantity",
     "decrease": "Decrease quantity",
-    "moreWays": "Other ways to order"
+    "moreWays": "Other ways to order",
+    "messenger": "Order via Messenger",
+    "messengerBody": "Hello, I would like to order the following — [{{items}}]",
+    "messengerEmpty": "Hello, I would like to place an order.",
+    "orderViaApps": "Order directly in the apps",
+    "grab": "Order on Grab",
+    "foodpanda": "Order on foodpanda"
   },
   "footer": {
     "about": "Handmade dumplings, made fresh every day.",

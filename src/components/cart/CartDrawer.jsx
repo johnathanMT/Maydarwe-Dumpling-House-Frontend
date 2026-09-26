@@ -1,14 +1,15 @@
 import { useId } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Minus, Phone, Plus, ShoppingBag } from 'lucide-react';
+import { Minus, Plus, Trash2 } from 'lucide-react';
 import { useCart, useCartActions } from '../../context/CartContext';
 import { useUiActions, useUiState } from '../../context/UiContext';
-import { PRIMARY_PHONE, telHref } from '../../constants/site';
 import { useLang } from '../../lib/businessHours';
 import Sheet, { SheetCloseButton } from '../ui/Sheet';
 import Button from '../ui/Button';
 import OptimizedImage from '../ui/OptimizedImage';
+import DumplingMascot from '../mascot/DumplingMascot';
+import OrderRedirectActions from '../order/OrderRedirectActions';
 import { PHOTOS } from '../../assets/photos';
 import { formatPrice, pickLocale } from '../../data/menu';
 
@@ -16,9 +17,9 @@ export default function CartDrawer() {
   const { t } = useTranslation();
   const language = useLang();
   const { lines, subtotal } = useCart();
-  const { updateQuantity, removeItem } = useCartActions();
+  const { updateQuantity, removeItem, clearCart } = useCartActions();
   const { isCartOpen } = useUiState();
-  const { closePanel, openOrder } = useUiActions();
+  const { closePanel } = useUiActions();
   const titleId = useId();
 
   return (
@@ -36,9 +37,7 @@ export default function CartDrawer() {
       {lines.length === 0 ? (
         <div className="grid flex-1 place-items-center px-8 text-center">
           <div>
-            <span className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-primary-50 text-primary-700">
-              <ShoppingBag className="h-6 w-6" strokeWidth={1.75} />
-            </span>
+            <DumplingMascot className="!w-[8.5rem] sm:!w-[10rem]" />
             <p className="mt-4 text-ink-600">{t('cart.empty')}</p>
             <Button as={Link} to="/menu" onClick={closePanel} size="sm" className="mt-6">
               {t('cart.browse')}
@@ -70,10 +69,10 @@ export default function CartDrawer() {
                     <button
                       type="button"
                       onClick={() => removeItem(line.id)}
-                      className="inline-flex min-h-12 min-w-12 items-center text-sm font-medium text-ink-500 hover:text-primary-700"
+                      aria-label={`${t('cart.remove')}: ${name}`}
+                      className="grid h-11 w-11 shrink-0 place-items-center rounded-full text-gray-400 transition-colors hover:bg-red-50 hover:text-red-500"
                     >
-                      {t('cart.remove')}
-                      <span className="sr-only">: {name}</span>
+                      <Trash2 className="h-4 w-4" strokeWidth={1.75} aria-hidden="true" />
                     </button>
                   </div>
                   <div className="mt-4 flex items-center justify-between">
@@ -106,18 +105,20 @@ export default function CartDrawer() {
           </ul>
 
           <div className="border-t border-ink-100 px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-5">
-            <div className="flex items-center justify-between text-ink-900">
-              <span className="font-medium">{t('cart.subtotal')}</span>
-              <span className="font-display text-2xl font-semibold tabular-nums">{formatPrice(subtotal, language)}</span>
+            <div className="flex items-center justify-between gap-3">
+              <span className="font-medium text-ink-900">{t('cart.subtotal')}</span>
+              <span className="font-display text-2xl font-semibold tabular-nums text-ink-900">
+                {formatPrice(subtotal, language)}
+              </span>
             </div>
-            <p className="mt-2 text-sm text-ink-500">{t('cart.note')}</p>
-            <Button as="a" href={telHref(PRIMARY_PHONE)} block className="mt-4">
-              <Phone className="h-4 w-4" strokeWidth={2.25} aria-hidden="true" />
-              {t('cart.call')} · <span className="tabular-nums">{PRIMARY_PHONE.display}</span>
-            </Button>
-            <Button variant="secondary" block className="mt-2" onClick={openOrder}>
-              {t('cart.moreWays')}
-            </Button>
+            <button
+              type="button"
+              onClick={clearCart}
+              className="mt-2 text-sm text-red-500 hover:text-red-600 hover:underline"
+            >
+              {t('cart.clear')}
+            </button>
+            <OrderRedirectActions className="mt-4" />
           </div>
         </>
       )}
