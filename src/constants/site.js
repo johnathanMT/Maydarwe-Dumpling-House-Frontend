@@ -13,7 +13,13 @@ export const CONTACT_PHONES = [
   { display: '09-421119495', href: 'tel:+959421119495' },
 ];
 
+export const CALL_ORDER_HREF = 'tel:09788167047';
+
 export const FACEBOOK_ORDER_URL = 'https://www.facebook.com/share/19MK2TSnJb/?mibextid=wwXIfr';
+
+export const GRAB_ORDER_URL = 'https://app.grab.com/s/Tgdxro4N';
+
+export const FOODPANDA_ORDER_URL = 'https://foodpanda.go.link/lINRB';
 
 export const SOCIAL_LINKS = [
   { name: 'Facebook', href: FACEBOOK_ORDER_URL },
