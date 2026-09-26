@@ -62,7 +62,7 @@ export default function Layout() {
 
       <main id="main" className="flex-1">
         <Suspense fallback={<PageFallback />}>
-          <Outlet />
+          <Outlet context={{ introReady: ready }} />
         </Suspense>
       </main>
 

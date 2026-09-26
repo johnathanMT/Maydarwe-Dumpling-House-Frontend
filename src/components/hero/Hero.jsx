@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useOutletContext } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { m } from 'framer-motion';
 import { ArrowRight, Phone } from 'lucide-react';
@@ -12,8 +12,7 @@ import { useBusinessCopy } from '../../lib/businessHours';
 import Button from '../ui/Button';
 import Eyebrow from '../ui/Eyebrow';
 import OpenStatusBadge from '../ui/OpenStatusBadge';
-import { Reveal } from '../ui/Reveal';
-import { DURATION, EASE_OUT } from '../../lib/motion';
+import { DURATION, EASE_OUT, fadeUp, stagger } from '../../lib/motion';
 import HeroShowcase from './HeroShowcase';
 
 /** "Order on [logo]" in English, "[logo] မှ မှာယူရန်" in Burmese. The link carries the full aria-label. */
@@ -45,69 +44,82 @@ function PartnerLink({ href, label, logoSrc, ring }) {
 }
 
 /**
- * Home hero on a sunny butter-yellow surface: the brand in red and ink, the story in one
- * paragraph, one primary action (call), the delivery apps, and a real
- * food photo that can turn into the interactive 3D dumpling.
- *
- * The title only rises, it never fades, so it counts as painted immediately
- * (good for LCP). The rest of the copy fades up as it enters the view.
+ * Home hero: a large maroon wordmark, a short tagline, one phone action,
+ * and the food photo. Copy rises in sequence after the opening curtain.
  */
 export default function Hero() {
   const { t } = useTranslation();
   const copy = useBusinessCopy();
+  const { introReady = true } = useOutletContext() ?? {};
 
   return (
     <section className="relative overflow-hidden bg-sunny text-ink-900">
-      <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 pb-20 pt-16 sm:px-6 sm:pt-20 md:grid-cols-[1.1fr_0.9fr] md:gap-12 md:pb-28 lg:gap-20 lg:px-8 lg:pb-32 lg:pt-28">
-        <div className="text-center md:text-left">
-          <Reveal distance={40}>
+      <div className="mx-auto grid max-w-7xl items-center gap-14 px-4 py-24 sm:px-6 md:grid-cols-[1.15fr_0.85fr] md:gap-12 lg:gap-16 lg:px-8 lg:py-28">
+        <m.div
+          className="text-center md:text-left"
+          variants={stagger(0.2, 0.05)}
+          initial="hidden"
+          animate={introReady ? 'show' : 'hidden'}
+        >
+          <m.div variants={fadeUp(20)}>
             <Eyebrow rule>{t('pages.home.kicker', copy)}</Eyebrow>
-          </Reveal>
+          </m.div>
 
-          {/* Stays opaque so the title can paint immediately. It only rises. */}
-          <m.h1
-            className="mt-5 font-display"
-            initial={{ y: 40 }}
-            whileInView={{ y: 0 }}
-            viewport={{ once: true, amount: 0.4 }}
-            transition={{ duration: DURATION.reveal, ease: EASE_OUT }}
-          >
-            <span className="block pb-1 text-[clamp(3.75rem,15.5vw,8rem)] font-extrabold leading-[1.05] text-primary-600">
+          <m.h1 className="mt-5 font-display" variants={fadeUp(20)}>
+            <span
+              className="block bg-gradient-to-b from-primary-400 via-primary-600 to-primary-900 bg-clip-text pb-1 font-extrabold text-transparent text-[clamp(3.75rem,10vw,8rem)] drop-shadow-[0_12px_24px_rgba(64,4,14,0.22)]"
+              style={{ lineHeight: 1.05 }}
+            >
               မေဓါဝီ
             </span>
-            <span className="mt-1 block text-[clamp(1.6rem,6.2vw,3.1rem)] font-bold leading-tight text-ink-950">
+            <span
+              className="mt-4 block font-medium text-secondary-800 text-[clamp(1.35rem,3.2vw,2.15rem)]"
+              style={{ lineHeight: 1.35 }}
+            >
               ဖက်ထုပ်အိုးကပ်
             </span>
           </m.h1>
 
-          <Reveal distance={40} className="mt-4">
-            <p className="font-display text-lg font-medium italic leading-relaxed text-secondary-800 sm:text-xl">
-              {t('brand.english')}
-            </p>
+          <m.p
+            className="mt-3 font-sans text-xs font-semibold uppercase text-ink-500 sm:text-sm"
+            style={{ letterSpacing: '0.32em' }}
+            variants={fadeUp(20)}
+          >
+            {t('brand.english')}
+          </m.p>
 
-            <div aria-hidden="true" className="gold-rule mx-auto mt-6 w-40 md:mx-0" />
+          <m.div variants={fadeUp(20)} aria-hidden="true" className="gold-rule mx-auto mt-6 w-28 md:mx-0" />
 
-            <p className="mx-auto mt-6 max-w-xl text-pretty text-base leading-loose text-ink-700 sm:text-lg md:mx-0">
-              {t('pages.home.sub')}
-            </p>
+          <m.p
+            className="mx-auto mt-6 max-w-xl text-pretty text-base leading-relaxed text-ink-600 sm:text-lg md:mx-0"
+            variants={fadeUp(20)}
+          >
+            {t('pages.home.sub')}
+          </m.p>
 
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:justify-center md:justify-start">
-              <Button as="a" href={telHref(PRIMARY_PHONE)} magnetic>
-                <Phone className="h-4 w-4" strokeWidth={2.25} aria-hidden="true" />
-                {t('pages.home.orderByPhone')}
-                <span className="tabular-nums text-primary-100">· {PRIMARY_PHONE.display}</span>
-              </Button>
-              <Button as={Link} to="/menu" variant="secondary" className="group" magnetic>
-                {t('pages.home.viewMenu')}
-                <ArrowRight
-                  className="h-4 w-4 transition-transform duration-200 ease-out-soft group-hover:translate-x-0.5"
-                  aria-hidden="true"
-                />
-              </Button>
-            </div>
-          </Reveal>
+          <m.div
+            className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:justify-center md:justify-start"
+            variants={fadeUp(20)}
+          >
+            <Button
+              as="a"
+              href={telHref(PRIMARY_PHONE)}
+              magnetic
+              className="!bg-primary-900 px-8 !shadow-[0_18px_40px_-16px_rgba(64,4,14,0.75)] hover:!bg-primary-800"
+            >
+              <Phone className="h-4 w-4" strokeWidth={2.25} aria-hidden="true" />
+              {t('pages.home.orderByPhone')}
+            </Button>
+            <Button as={Link} to="/menu" variant="secondary" className="group" magnetic>
+              {t('pages.home.viewMenu')}
+              <ArrowRight
+                className="h-4 w-4 transition-transform duration-200 ease-out-soft group-hover:translate-x-0.5"
+                aria-hidden="true"
+              />
+            </Button>
+          </m.div>
 
-          <div className="mt-3 flex gap-3 sm:justify-center md:justify-start">
+          <m.div className="mt-4 flex gap-3 sm:justify-center md:justify-start" variants={fadeUp(20)}>
             <PartnerLink href={BUSINESS.links.grab} label={t('order.grab')} logoSrc={GRAB_LOGO_SRC} ring="ring-partner-grab/60" />
             <PartnerLink
               href={BUSINESS.links.foodpanda}
@@ -115,15 +127,20 @@ export default function Hero() {
               logoSrc={FOODPANDA_LOGO_SRC}
               ring="ring-partner-foodpanda/50"
             />
-          </div>
+          </m.div>
 
-          <OpenStatusBadge className="mt-6" />
-        </div>
+          <m.div className="mt-8" variants={fadeUp(20)}>
+            <OpenStatusBadge />
+          </m.div>
+        </m.div>
 
-        {/* Moves but never fades: the photo is likely the largest paint on wide screens. */}
-        <div className="animate-rise-still [animation-delay:120ms]">
+        <m.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={introReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+          transition={{ duration: DURATION.reveal, ease: EASE_OUT, delay: introReady ? 0.2 : 0 }}
+        >
           <HeroShowcase />
-        </div>
+        </m.div>
       </div>
       <div aria-hidden="true" className="h-px bg-gradient-to-r from-transparent via-butter-400 to-transparent" />
     </section>
