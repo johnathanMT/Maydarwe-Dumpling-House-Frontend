@@ -43,7 +43,8 @@ const PRODUCTION_DIRECTIVES = {
   'style-src': ["'self'", "'unsafe-inline'"],
   'font-src': ["'self'", 'data:'],
   'img-src': IMG_ORIGINS,
-  'media-src': ["'self'"],
+  // Home cinematic reel (src/components/hero/HomeReel.jsx).
+  'media-src': ["'self'", 'https://res.cloudinary.com'],
   // three.js loads textures and the Draco decoder in workers created from blob: URLs.
   'worker-src': ["'self'", 'blob:'],
   'child-src': ["'self'", 'blob:'],

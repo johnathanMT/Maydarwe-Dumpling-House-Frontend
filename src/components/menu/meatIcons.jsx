@@ -1,6 +1,6 @@
 /**
- * Minimal line icons for a dish's main meat, shown as a badge on menu photos.
- * 24 × 24, drawn with `currentColor` so the colour comes from the text class.
+ * Minimal icons for a dish's main meat, shown as a badge on menu photos.
+ * Drawn with `currentColor` so the colour comes from the text class.
  */
 
 const STROKE = {
@@ -19,15 +19,20 @@ function MeatSvg({ className, children }) {
   );
 }
 
-/** A curled prawn: head, antennae, three shell segments and a tail fan. */
+/** A lobster's head: filled carapace, stalked eyes and two antennae. */
 export function PrawnIcon({ className = 'h-6 w-6' }) {
   return (
     <MeatSvg className={className}>
-      <path d="M16.8 5 C9.8 4.4 4.6 9.2 5 15.2 C5.3 19 8.5 21.2 12 20.3 L12.6 17.3 C10 17.8 8.2 16.3 8.2 14.6 C8.1 10.8 11.8 8.6 16.4 9 C18.8 9.4 20.9 8.4 22 6.9 C20.5 5.3 18.6 4.8 16.8 5 Z" />
-      <path d="M20.4 5.7 C21.1 3.9 21.9 2.8 23 2 M21.4 6.3 C22.2 5.7 22.7 5.4 23.2 5.3" />
-      <path d="M12.3 18.8 C14 17.1 15.8 16.7 16.9 17.2 C16.4 18.6 16.6 20.2 16 21.4 C14.8 21 13.4 20.2 12.3 18.8 Z" />
-      <path d="M8.4 8.1 L10.6 10.5 M5.3 12.4 L8.3 13.3 M5.9 17.2 L8.8 16" />
-      <circle cx="17.6" cy="7" r="0.95" fill="currentColor" stroke="none" />
+      <path d="M8.8 8.8C6.2 4.6 4.8 3 3 2.6" />
+      <path d="M15.2 8.8C17.8 4.6 19.2 3 21 2.6" />
+      <path d="M9.2 8.4L8.3 6" />
+      <path d="M14.8 8.4L15.7 6" />
+      <circle cx="8.1" cy="5.3" r="1.3" fill="currentColor" stroke="none" />
+      <circle cx="15.9" cy="5.3" r="1.3" fill="currentColor" stroke="none" />
+      <path
+        d="M7 11.2C6.8 7.6 9 5.9 12 5.9C15 5.9 17.2 7.6 17 11.2C16.8 15.8 14.6 19.5 12 20.7C9.4 19.5 7.2 15.8 7 11.2Z"
+        fill="currentColor"
+      />
     </MeatSvg>
   );
 }

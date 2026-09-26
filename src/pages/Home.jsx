@@ -6,6 +6,7 @@ import { useLang } from '../lib/businessHours';
 import { usePageMeta } from '../lib/seo';
 import { useAddedFlash } from '../hooks/useAddedFlash';
 import Hero from '../components/hero/Hero';
+import HomeReel from '../components/hero/HomeReel';
 import DishCard from '../components/menu/DishCard';
 import { CATEGORY_ICONS } from '../components/menu/categoryIcons';
 import ArrowLink from '../components/ui/ArrowLink';
@@ -26,6 +27,8 @@ export default function Home() {
   return (
     <div className="bg-ivory">
       <Hero />
+
+      <HomeReel />
 
       {/* House favourites */}
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20 lg:px-8 lg:py-24">

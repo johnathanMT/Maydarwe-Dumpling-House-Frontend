@@ -17,6 +17,10 @@ function cloudinaryPicture({ version, publicId, width, height, widths }) {
   };
 }
 
+/** Home cinematic reel, played edge-to-edge above the signature dishes. */
+export const HOME_REEL_SRC =
+  'https://res.cloudinary.com/dhlhzmmtt/video/upload/v1790345459/image-to-video/i2v_0a18f0607e7841f1987cf6bb2d5cb31f.mp4';
+
 /** Home hero: pork pan-fried dumplings (IMG_7926, 1008 × 1068 original). */
 export const HERO_PHOTO_REMOTE = cloudinaryPicture({
   version: 'v1790345036',
